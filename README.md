@@ -2,5 +2,5 @@ In he profileringsvak Project Tech, maken we een zogenaamde _matching website_ w
 
 <br>
 
-### JobMatch
-Voor dit project hebben we solicatie als thema gekozen. De website richt zich op het ondersteunen van bezoekers door hen, op basis van de informatie die zij zelf invoeren, te matchen met hun droombaan.
+### JobConnect
+Voor dit project hebben we sollicitatie als thema gekozen. De website richt zich op het ondersteunen van bezoekers door hen, op basis van de informatie die zij zelf invoeren, te matchen met hun droombaan. Het is een professioneel matching desktop website.
