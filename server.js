@@ -25,7 +25,7 @@ app.set('views', 'views')
 // MongoDB setup
 // ===============================
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
-
+console.log(uri)
 // Voeg deze variabele bovenin toe (bij de andere variabelen)
 let collection;
 
@@ -48,6 +48,12 @@ client.connect()
   .catch((err) => {
     console.log(`Database connection error - ${err}`);
   })
+
+
+// ===============================
+// Data
+// ===============================
+
 
 
 // ===============================
