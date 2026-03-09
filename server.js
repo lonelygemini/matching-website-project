@@ -39,11 +39,14 @@ const client = new MongoClient(uri, {
 
 // Pas de connectie aan zodat de 'collection' variabele gevuld wordt
 client.connect()
-  .then(() => {
+  .then(async () => {
     console.log('Database connection established');
     // Hier selecteer je de juiste database en collectie uit je .env
-    const db = client.db(process.env.DB_NAME);
-    collection = db.collection(process.env.DB_COLLECTION);
+    const db = client.db(process.env.DB_NAME_USERS);
+    collection = db.collection(process.env.DB_COLLECTION_USERS);
+    const Users = await collection.find({}).toArray();
+    //Print ze in je console
+    console.log(Users);
   })
   .catch((err) => {
     console.log(`Database connection error - ${err}`);
@@ -60,11 +63,23 @@ client.connect()
 // Route
 // ===============================
 
+//================================
+// index page
+//================================
+
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+
+// use res.render to load up an ejs view file
 
 // index page
 app.get('/', function(req, res) {
   res.render('pages/index');
 });
+
+//================================
+// inlog 
+//================================
 
 
 // ===============================

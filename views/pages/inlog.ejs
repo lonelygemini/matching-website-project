@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Formulieren </title>
+</head>
+<body>
+    <header>
+        <h1>An example form</h1>
+    </header>
+    <main>
+        <h2>Pleas provide us with your information:</h2>
+        <form action="/verwerkform" method="POST">
+            <% if (error){ %>
+            <p class="error"><%= error %></p> 
+            <% }%>
+
+            <fieldset>
+                <legend>Personal information:</legend>
+
+                <label for="email">Enter your E-mail</label>
+                <input type="email" id="email" name="email">
+
+                <label for="wachtwoord"> Enter your password</label>
+                <input type="password" name="wachtwoord" id="wachtwoord">
+            </fieldset>
+            <input type="submit" value="send">
+        </form>
+    </main>
+</body>
+</html>
