@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job-cards</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <% data.forEach(job => { %>
+      <section class="jobCard">
+        <div class="card-header">
+          <div>
+            <h1><%= job.title %></h1>
+            <h2><%= job.company %></h2>
+          </div>
+
+          <div class="extra">
+            <p><%= job.locations %></p>
+            <p><%- job.salary %></p> </div>
+        </div>
+
+        <div class="tekst">
+        <p><%= job.description %></p>
+        </div>
+
+      </section>
+    <% }) %>
+    
+</body>
+</html>
+

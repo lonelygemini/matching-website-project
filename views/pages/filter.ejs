@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filterpagina</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <aside>
+
+        <input type="checkbox" name="filter" value="alles" id="filter-alles" checked> 
+        <label for="filter-alles">alles</label>
+
+            <li><a href="#">v locatie</a>
+                <ul class="dropdown">
+                    <li>
+                    <input type="checkbox" name="Utrecht" value="Utrecht" id="check-utrecht">
+                    <label for="check-utrecht">Utrecht</label>
+                    </li>
+                    <li>
+                    <input type="checkbox" name="Noord-Holland" value="Noord-Holland" id="check-noordHolland">
+                    <label for="check-noordHolland">Noord-Holland</label>
+                    </li>
+                    <li>
+                    <input type="checkbox" name="Gelderland" value="Gelderland" id="check-gelderland">
+                    <label for="check-gelderland">Gelderland</label>
+                    </li>
+                </ul>
+            </li>
+        <input type="range" id="volume" name="volume" min="0" max="11" />
+        <label for="volume">Salaris.min</label>
+
+    </aside>
+
+</body>
+</html>
