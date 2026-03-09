@@ -80,6 +80,40 @@ app.get('/', function(req, res) {
 //================================
 // inlog 
 //================================
+app.get('/inlog', (req, res) => {
+  res.render('pages/inlog', {error:""})
+})
+app.get('/inlog', showForm)
+app.post('/verwerkform', verwerkForm)
+
+function showForm(req, res) {
+  res.render('pages/inlog')
+}
+async function verwerkForm(req, res) {
+  // We halen nu 'email' uit het formulier (zorg dat name="email" in je EJS staat)
+  const emailInput = req.body.email;
+  const wachtwoordInput = req.body.wachtwoord;
+
+  try {
+    const gebruikerGevonden = await collection.findOne({
+      // Verander 'username' naar 'email' zodat het matcht met je database!
+      email: emailInput, 
+      wachtwoord: wachtwoordInput
+    });
+
+    if (!gebruikerGevonden) {
+      return res.render('pages/inlog', { error: 'E-mail of wachtwoord onjuist' });
+    }
+
+    // Als hij hier komt, is de login gelukt
+    console.log('Login succesvol voor:', gebruikerGevonden.email);
+    return res.render('pages/submitted');
+
+  } catch (error) {
+    console.error('Database fout:', error);
+    return res.render('pages/inlog', { error: 'Database fout' });
+  }
+}
 
 
 // ===============================
