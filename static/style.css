@@ -26,6 +26,7 @@ ul {
     --searchbar-color:#EDECEC;
     --yellow-button-color:#FDFAD1;
     --warning-color:#D90000;
+    --cards: #e5f0f9;
 }
 
 @font-face {
@@ -70,6 +71,62 @@ p {
 /******************************/
 /*           HEADER           */
 /******************************/
+
+
+
+/******************************/
+/*        FILTER PAGINA       */
+/******************************/
+
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.dropdown {
+  display: none;
+  list-style: none;
+}
+
+li:hover .dropdown {
+  display: block;
+}
+
+/******************************/
+/*        JOB CARDS       */
+/******************************/
+
+
+
+.jobCard {
+  background-color: var(--cards);
+  margin: 1em;
+  padding: 2em;
+  border-radius: 1em;
+  width: 30%;
+}
+
+.card-header {
+  display: grid;
+  grid-template-columns: 1fr auto; /* Links pakt alle ruimte, Rechts pakt wat nodig is */
+  align-items: start;
+  width: 100%;
+
+}
+
+.jobCard h1 {
+  font-size: 1.1em;
+}
+
+.jobCard h2 {
+  font-size: 1em;
+  font-weight: normal;
+}
+
+.tekst {
+
+}
 
 
 

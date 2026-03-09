@@ -55,6 +55,17 @@ client.connect()
 // ===============================
 
 
+app.get('/kaartje', async (req, res) => {
+
+      const db = client.db(process.env.DB_NAME);
+      const collection = db.collection(process.env.DB_COLLECTION);
+
+      const data = await collection.find().toArray();
+      
+      res.render('partials/kaartje', { data: data }); 
+});
+
+
 
 // ===============================
 // Route
@@ -66,6 +77,9 @@ app.get('/', function(req, res) {
   res.render('pages/index');
 });
 
+app.get('/filter', (req, res) => {
+  res.render('pages/filter'); 
+});
 
 // ===============================
 // Route functions
