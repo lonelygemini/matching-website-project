@@ -8,6 +8,11 @@
 <body>
     <section>
         <h1><%= job.title %></h1>
+        <p><%= job.description %></p>
+        <p><strong>Bedrijf:</strong> <%= job.company %></p>
+        <p><strong>Locatie:</strong> <%= job.locations %></p>
+        <p><strong>Werk schema:</strong> <%= job.work_schedule %></p>
+        <p><strong>Salaris:</strong> €<%= job.salary_min %> - €<%= job.salary_max %></p>  
     </section>
 </body>
 </html>
