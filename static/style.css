@@ -23,6 +23,8 @@ ul {
     --common-background-color:#fafafa;
     --blue-background-color:#E6F0F9;
     --button-color:#3F66F3;
+    --blue-text-color:#3F66F3;
+    --button-text-color:white;
     --searchbar-color:#EDECEC;
     --yellow-button-color:#FDFAD1;
     --warning-color:#D90000;
@@ -31,14 +33,14 @@ ul {
 }
 
 @font-face {
-  font-family: 'Poppins-regular', sans-serif;
+  font-family: 'Poppins', sans-serif;
   src:url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Poppins-bold', sans-serif;
+  font-family: 'Poppins', sans-serif;
   src:url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
   font-weight: 700;
   font-style: normal;
@@ -50,22 +52,23 @@ ul {
 /******************************/
 
 h1 {
-    font-family:'Poppins-bold', sans-serif;
+    font-family:'Poppins', sans-serif;
     font-size: 3em;
     color:var(--text-color);
 }
 
 h2 {
-    font-family:'Poppins-bold', sans-serif;
+    font-family:'Poppins', sans-serif;
     font-size: 1.5em;
     color:var(--text-color);
 }
 
 p {
-    font-family:'Poppins-regular', sans-serif;
-    font-size: 0.8em;
-    color:var(--text-color);
+  font-family:'Poppins', sans-serif;
+  font-size: 0.8em;
+  color:var(--text-color);
 }
+
 
 
 
@@ -74,6 +77,17 @@ p {
 /******************************/
 
 /******************************/
+/*         INDEX PAGE         */
+/******************************/
+.indexpage {
+  display: flex;
+  flex-direction: column;   /* Zet de elementen (h1, p, div) onder elkaar */
+  justify-content: center;  /* Centreert verticaal (omdat de hoogte 100vh is) */
+  align-items: center;      /* Centreert horizontaal */
+  min-height: 100vh;        /* Gebruikt 100% van de hoogte van het scherm */
+  text-align: center;       /* Zorgt dat de tekst binnen de elementen ook gecentreerd is */
+  padding: 2rem;            /* Voorkomt dat de tekst de randen raakt op mobiel */
+}
 /*         OVERZICHT          */
 /******************************/
 
@@ -205,7 +219,111 @@ li:hover .dropdown {
 }
 
 
+/* Beperk de breedte van de paragraaf voor betere leesbaarheid */
+.indexpage p {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.actions a{
+  text-decoration: none; /* Verwijdert de onderstreping van de link */
+  padding: 1rem 4rem;    /* Padding aan de binnenkant */
+  border-radius: 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  transition: 0.3s;
+}
+.actions a:first-of-type{
+  background-color: var(--button-color);
+  color: var(--button-text-color);
+}
+.actions a:last-of-type{
+  background-color: var(--blue-background-color);
+  color: var(--blue-text-color);
+}
 
+.indexpage h1 {
+  text-align: center;
+  margin-bottom: 0;
+}
+.indexpage p{
+  text-align: center;
+  margin-top: 1em;
+}
+/******************************/
+/*          INLOG           */
+/******************************/
+form{
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: var(--blue-background-color);
+  border-radius: 2em;
+  padding: 4em;
+  padding-top: 6em;
+  padding-bottom: 6em;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+/* 2. Zorg dat de tekst aan de linkerkant niet te breed wordt */
+.formulier section:first-of-type {
+  flex: 1;
+}
+.formulier{
+  display: flex;
+  justify-content: space-between;
+  border-radius: 2em;
+  align-items: center;
+  max-width: 1000px;             /* Voorkomt dat ze te ver uit elkaar vliegen op grote schermen */
+  margin: 0 auto;                /* Centreert de hele boel op de pagina */
+  padding: 2rem;
+  gap: 4rem;
+  display: flex;
+  min-height: 100vh; /* Zorg dat de main de hele pagina vult */
+  ;}
+label {
+  font-family:'Poppins', sans-serif;
+  font-weight: 300;
+  display: flex;
+  flex-direction: column;
+  
+}
+fieldset {
+  border: none;
+  padding-left: 0;
+}
+form input[type="email"],
+form input[type="password"] {
+    margin-bottom: 2em;       /* Ruimte tussen de velden */
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+    width: 95%;               /* Zorgt dat ze de hele breedte van het blok pakken */
+}
+
+/* De blauwe knop onderaan */
+form input[type="submit"], form button {
+    background-color: #4a69bd;
+    color: white;
+    border: none;
+    padding: 1em;
+    border-radius: 1em;
+    cursor: pointer;
+    font-weight: 100;
+    margin-top: 3em;
+}
+section h1{
+  margin-bottom: 0.3em;
+}
+section {
+  margin-top: -25em;
+}
 /******************************/
 /*          FOOTER           */
 /******************************/

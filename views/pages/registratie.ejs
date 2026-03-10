@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registreren</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <main class="formulier">
+        <section>
+        <h1>Maak je account aan</h1>
+        <p>Registreer om verder te zoeken naar een baan, je voorkeuren te beheren en je opgeslagen vacatures te bekijken.<p>
+        </section>
+        <form action="/nieuweregistratie" method="POST">
+            <% if (error){ %>
+            <p class="error"><%= error %></p> 
+            <% }%> 
+
+            <fieldset>
+                    <label for="name">Voor en achternaam:</label>
+                    <input type="name" id="name" name="name">
+
+                    <label for="date">Geboortedatum:</label>
+                    <input type="date" name="datum" id="datum">
+
+                    <label for="email">E-mail:</label>
+                    <input type="email" name="email" id="email">
+
+                    <label for="age">Leeftijd:</label>
+                    <input type="age" name="leeftijd" id="leeftijd">
+
+                    <label for="location">Woonplaats</label>
+                    <input type="location" name="woonplaats" id="woonplaats">
+
+                    <label for="password">Wachtwoord:</label>
+                    <input type="password" name="wachtwoord" id="wachtwoord">
+            </fieldset>
+            <input type="submit" value="registreer">
+            <p>Heb je al een account? <a href="inlog">Log in</a></p>
+        </form>
+</body>
+</html>
