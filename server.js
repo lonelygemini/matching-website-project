@@ -111,5 +111,3 @@ app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`)
 })
 
-//const db = client.db(process.env.DB_NAME);
-//collection = db.collection(process.env.DB_COLLECTION);
