@@ -1,0 +1,44 @@
+<article class="favorite-job-card">
+
+  <div class="favorite-job-card__top">
+    <div class="favorite-job-card__title-wrap">
+      <h3 class="favorite-job-card__title"><%= job.title %></h3>
+      <p class="favorite-job-card__company"><%= job.company %></p>
+    </div>
+
+    <p class="favorite-job-card__date">
+      <%= new Date(job.date).toLocaleDateString() %>
+    </p>
+  </div>
+
+  <p class="favorite-job-card__description">
+    <%- job.description %>
+  </p>
+
+  <div class="favorite-job-card__meta">
+    <span>
+      <%= job.locations %>
+    </span>
+
+    <span>
+      <%= job.salary %>
+    </span>
+  </div>
+
+  <div class="favorite-job-card__actions">
+    <a href="<%= job.url %>" 
+       target="_blank"
+       class="favorite-job-card__button favorite-job-card__button--primary">
+      View details
+    </a>
+
+    <form action="/favorites/remove/<%= job._id %>" method="POST">
+      <button 
+        type="submit"
+        class="favorite-job-card__button favorite-job-card__button--secondary">
+        Remove favourite
+      </button>
+    </form>
+  </div>
+
+</article>
