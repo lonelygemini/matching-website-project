@@ -7,12 +7,14 @@
 </head>
 <body>
     <section>
-        <h1><%= job.title %></h1>
-        <p><%= job.description %></p>
-        <p><strong>Bedrijf:</strong> <%= job.company %></p>
-        <p><strong>Locatie:</strong> <%= job.locations %></p>
-        <p><strong>Werk schema:</strong> <%= job.work_schedule %></p>
-        <p><strong>Salaris:</strong> €<%= job.salary_min %> - €<%= job.salary_max %></p>  
+    <h1><%= job.title %></h1>
+    <p><%= job.description %></p>
+    <h2>Bedrijf</h2><p> <%= job.company %></p>
+    <h2>Locatie</h2><p> <%= job.locations %></p>
+    <h2>Werk schema</h2><p> <%= job.work_schedule %></p>
+    <h2>Salaris range</h2><p>€<%= job.salary_min %> - €<%= job.salary_max %></p>
+    <h2>Salaris type</h2><p><%= job.salary_type %></p>
+    <h2>Upload datum</h2><p><%= job.date %></p>
     </section>
 </body>
 </html>
