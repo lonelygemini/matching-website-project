@@ -193,8 +193,13 @@ li:hover .dropdown {
 
 .jobCard a {
   background-color: var(--button-color);
-  padding: 0.3em;
-  
+  padding: 0.6em;
+  border-radius: 0.6em;
+  color: var(--common-background-color);
+  font-family:'Poppins-regular', sans-serif;
+  font-weight: lighter;
+  padding-left: 3em;
+  padding-right: 3em;
 }
 
 .card-header {
@@ -214,6 +219,9 @@ li:hover .dropdown {
   font-weight: normal;
 }
 
+.tekst {
+  margin-bottom: 3em;
+}
 
 
 /* Beperk de breedte van de paragraaf voor betere leesbaarheid */

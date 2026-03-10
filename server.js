@@ -191,6 +191,21 @@ app.post('/nieuweregistratie', async (req, res) => {
   }
 });
 
+app.get('/filter', (req, res) => {
+  res.render('pages/filter'); 
+});
+
+app.get('/detail/:jobID', (req, res) => {
+  
+  const db = client.db(process.env.DB_NAME);
+  collection = db.collection(process.env.DB_COLLECTION);
+  
+  //in de db  zoeken
+  console.log(req.params.jobID)
+  res.send("job id = " +req.params.jobID); 
+});
+
+
 
 // ===============================
 // Route functions
@@ -211,3 +226,4 @@ app.use((req, res) => {
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`)
 })
+
