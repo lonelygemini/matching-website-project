@@ -81,6 +81,13 @@ app.get('/filter', (req, res) => {
   res.render('pages/filter'); 
 });
 
+app.get('/detail/:jobID', (req, res) => {
+
+  //in de db  zoeken
+  console.log(req.params.jobID)
+  res.send("job id = " +req.params.jobID); 
+});
+
 // ===============================
 // Route functions
 // ===============================
