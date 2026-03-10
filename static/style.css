@@ -28,6 +28,8 @@ ul {
     --searchbar-color:#EDECEC;
     --yellow-button-color:#FDFAD1;
     --warning-color:#D90000;
+    --cards: #e5f0f9;
+    --button-blue:#D0E9FF
 }
 
 @font-face {
@@ -86,6 +88,136 @@ p {
   text-align: center;       /* Zorgt dat de tekst binnen de elementen ook gecentreerd is */
   padding: 2rem;            /* Voorkomt dat de tekst de randen raakt op mobiel */
 }
+/*         OVERZICHT          */
+/******************************/
+
+
+.overzicht {
+  background-color: var(--blue-background-color);
+  padding: 3em;
+}
+
+.overzicht h1 {
+  margin: 0;
+}
+
+.overzicht input {
+  background-color: var(--common-background-color);
+  border: none;
+  padding: 1em 2em 1em 2em;
+  width: 30em;
+  border-radius: 1em;
+
+}
+
+.overzicht button {
+  background-color: var(--button-color);
+  color: var(--common-background-color);
+  border: 0; 
+  padding: 1em;
+  border-radius: 1em;
+}
+
+.overzicht li {
+  list-style: none;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 1em;
+}
+
+.overzicht ul {
+  background-color: var(--common-background-color);
+  padding: 2em;
+  width: 30%;
+  border-radius: 0.5em;
+}
+
+.overzicht h2 section:nth-of-type(1) {
+  font-size: 0.8em;
+  color: var(--button-color);
+  padding-top: 2em;
+}
+
+.popular-searches button {
+  background-color: var(--button-blue);
+  color: var(--button-color);
+  border: 0; 
+  padding: 1em 3em 1em 3em;
+  border-radius: 1em;
+  margin: 0.5em;
+}
+
+@media (min-width: 800px) {
+  .overzicht section:nth-of-type(2) {
+  width: 60%;
+  margin-top: 3em;
+}
+}
+
+.vacatures {
+  background-color: var(--common-background-color);
+}
+
+/******************************/
+/*        FILTER PAGINA       */
+/******************************/
+
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.dropdown {
+  display: none;
+  list-style: none;
+}
+
+li:hover .dropdown {
+  display: block;
+}
+
+
+/******************************/
+/*        JOB CARDS       */
+/******************************/
+
+
+
+.jobCard {
+  background-color: var(--cards);
+  margin: 1em;
+  padding: 2em;
+  border-radius: 1em;
+  width: 30%;
+}
+
+.jobCard a {
+  background-color: var(--button-color);
+  padding: 0.3em;
+  
+}
+
+.card-header {
+  display: grid;
+  grid-template-columns: 1fr auto; /* Links pakt alle ruimte, Rechts pakt wat nodig is */
+  align-items: start;
+  width: 100%;
+
+}
+
+.jobCard h1 {
+  font-size: 1.1em;
+}
+
+.jobCard h2 {
+  font-size: 1em;
+  font-weight: normal;
+}
+
+.tekst {
+
+}
+
 
 /* Beperk de breedte van de paragraaf voor betere leesbaarheid */
 .indexpage p {

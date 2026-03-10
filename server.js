@@ -50,7 +50,7 @@ client.connect()
   })
   .catch((err) => {
     console.log(`Database connection error - ${err}`);
-  })
+  });
 
 
 // ===============================
@@ -58,6 +58,34 @@ client.connect()
 // ===============================
 
 
+app.get('/kaartje', async (req, res) => {
+
+      const db = client.db(process.env.DB_NAME);
+      const collection = db.collection(process.env.DB_COLLECTION);
+
+      const data = await collection.find().toArray();
+      
+      res.render('partials/kaartje', { data: data }); 
+});
+
+app.get('/overzicht', async (req, res) => {
+
+  const search = req.query.search || "";
+
+  const jobs = await collection.find({
+    $or: [
+      { title: { $regex: search, $options: "i" } },
+      { locations: { $regex: search, $options: "i" } },
+      { company: { $regex: search, $options: "i" } }
+    ]
+  }).toArray();
+
+  res.render('pages/overzicht', {
+    jobs: jobs,
+    search: search
+  });
+
+});
 
 // ===============================
 // Route
@@ -140,6 +168,17 @@ app.post('/nieuweregistratie', async (req, res) => {
   } catch (err) {
     res.send("Er ging iets mis met opslaan.");
   }
+});
+
+app.get('/filter', (req, res) => {
+  res.render('pages/filter'); 
+});
+
+app.get('/detail/:jobID', (req, res) => {
+
+  //in de db  zoeken
+  console.log(req.params.jobID)
+  res.send("job id = " +req.params.jobID); 
 });
 
 // ===============================
