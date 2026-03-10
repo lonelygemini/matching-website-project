@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body class="overzicht">
+<main>
+    <section>
+        <h1>Vind jouw volgende kans!</h1>
+        <p>Zoek jouw perfecte baan.</p>
+
+        <form action="/overzicht" method="GET">
+        <input 
+            type="search"
+            name="search"
+            placeholder="Zoek op titel, locatie of bedrijf"
+            value="<%= search || '' %>">
+        <button type="submit">Zoek</button>
+        </form>
+
+        <% if (search) { %>
+        <ul>
+            <% jobs.forEach(job => { %>
+            <li>
+                <h2><%= job.title %></h2>
+                <p><%= job.company %></p>
+                <p><%= job.locations %></p>
+            </li>
+            <% }) %>
+        </ul>
+        <% } %>
+    </section>
+    <section>
+        <p>Populaire zoekresultaten</p>
+        <div class="popular-searches">
+            <button data-filter="PHP developer">PHP developer</button>
+            <button data-filter="Amsterdam">Amsterdam</button>
+            <button data-filter="Medior">Medior</button>
+            <button data-filter="Back-end developer">Back-end developer</button>
+            <button data-filter="Haarlem">Haarlem</button>
+            <button data-filter="ZZP">ZZP</button>
+            <button data-filter="BOLD company">BOLD company</button>
+        </div>
+    </section>
+
+    <section class="vacatures">
+        <h2>Uitgelichte vacatures</h2>
+    </section>
+
+</main>
+</body>
+</html>
