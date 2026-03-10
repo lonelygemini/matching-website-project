@@ -15,6 +15,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const app = express()
 const port = 1500
 
+
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
 
@@ -39,13 +40,14 @@ const client = new MongoClient(uri, {
 
 // Pas de connectie aan zodat de 'collection' variabele gevuld wordt
 client.connect()
-  .then(() => {
+  .then(async () => {
     console.log('Database connection established');
     // Hier selecteer je de juiste database en collectie uit je .env
+
   })
   .catch((err) => {
     console.log(`Database connection error - ${err}`);
-  })
+  });
 
 
 // ===============================
@@ -55,24 +57,138 @@ client.connect()
 
 app.get('/kaartje', async (req, res) => {
 
-      const db = client.db(process.env.DB_NAME);
-      const collection = db.collection(process.env.DB_COLLECTION);
+    const db = client.db(process.env.DB_NAME);
+    const collection = db.collection(process.env.DB_COLLECTION);
 
-      const data = await collection.find().toArray();
+    const data = await collection.find().toArray();
       
-      res.render('partials/kaartje', { data: data }); 
+    res.render('partials/kaartje', { data: data }); 
 });
 
+app.get('/overzicht', async (req, res) => {
 
+  const db = client.db(process.env.DB_NAME);
+  const collection = db.collection(process.env.DB_COLLECTION);
+
+  const search = req.query.search || "";
+
+  const jobs = await collection.find({
+    $or: [
+      { title: { $regex: search, $options: "i" } },
+      { locations: { $regex: search, $options: "i" } },
+      { company: { $regex: search, $options: "i" } }
+    ]
+  }).toArray();
+
+  res.render('pages/overzicht', {
+    jobs: jobs,
+    search: search
+  });
+
+});
+
+app.get('/filter', (req, res) => {
+  res.render('pages/filter'); 
+});
+
+app.get('/detail/:jobID', async (req, res) => {
+
+  const db = client.db(process.env.DB_NAME);
+  const collection = db.collection(process.env.DB_COLLECTION);
+
+  const jobID = req.params.jobID;
+
+  const job = await collection.findOne({
+    _id: new ObjectId(jobID)
+  });
+
+  res.render('pages/detail', { job: job });
+
+});
 
 // ===============================
 // Route
 // ===============================
 
+//================================
+// index page
+//================================
+
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+
+// use res.render to load up an ejs view file
 
 // index page
 app.get('/', function(req, res) {
   res.render('pages/index');
+});
+
+//================================
+// inlog 
+//================================
+app.get('/inlog', (req, res) => {
+  res.render('pages/inlog', {error:""})
+})
+app.get('/inlog', showForm)
+app.post('/verwerkform', verwerkForm)
+
+function showForm(req, res) {
+  res.render('pages/inlog')
+}
+async function verwerkForm(req, res) {
+  // We halen nu 'email' uit het formulier (zorg dat name="email" in je EJS staat)
+  const emailInput = req.body.email;
+  const wachtwoordInput = req.body.wachtwoord;
+
+  try {
+    const gebruikerGevonden = await collection.findOne({
+      // Verander 'username' naar 'email' zodat het matcht met je database!
+      email: emailInput, 
+      wachtwoord: wachtwoordInput
+    });
+
+    if (!gebruikerGevonden) {
+      return res.render('pages/inlog', { error: 'E-mail of wachtwoord onjuist' });
+    }
+
+    // Als hij hier komt, is de login gelukt
+    console.log('Login succesvol voor:', gebruikerGevonden.email);
+    return res.render('pages/submitted');
+
+  } catch (error) {
+    console.error('Database fout:', error);
+    return res.render('pages/inlog', { error: 'Database fout' });
+  }
+}
+
+// ===============================
+// Registratie
+// ===============================
+app.get('/registratie', (req, res) => {
+  res.render('pages/registratie', {error:""})
+})
+
+app.get('/registratie', (req, res) => {
+  res.render('pages/registratie');
+});// Route om de ingevulde data te verwerken
+
+app.post('/nieuweregistratie', async (req, res) => {
+  const nieuwUser = {
+    name: req.body.name,
+    datum: req.body.datum,
+    email: req.body.email,
+    leeftijd: req.body.leeftijd,
+    woonplaats: req.body.woonplaats,
+    wachtwoord: req.body.wachtwoord, // Tip: In de toekomst hier bcrypt gebruiken!
+  };
+  try {
+    await collection.insertOne(nieuwUser);
+    // We sturen de naam mee naar de bevestigingspagina
+    res.render('pages/submitted', { naam: nieuwUser.username });
+  } catch (err) {
+    res.send("Er ging iets mis met opslaan.");
+  }
 });
 
 app.get('/filter', (req, res) => {
