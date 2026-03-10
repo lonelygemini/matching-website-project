@@ -42,8 +42,6 @@ client.connect()
   .then(() => {
     console.log('Database connection established');
     // Hier selecteer je de juiste database en collectie uit je .env
-    const db = client.db(process.env.DB_NAME);
-    collection = db.collection(process.env.DB_COLLECTION);
   })
   .catch((err) => {
     console.log(`Database connection error - ${err}`);
@@ -82,11 +80,16 @@ app.get('/filter', (req, res) => {
 });
 
 app.get('/detail/:jobID', (req, res) => {
-
+  
+  const db = client.db(process.env.DB_NAME);
+  collection = db.collection(process.env.DB_COLLECTION);
+  
   //in de db  zoeken
   console.log(req.params.jobID)
   res.send("job id = " +req.params.jobID); 
 });
+
+
 
 // ===============================
 // Route functions
@@ -107,3 +110,6 @@ app.use((req, res) => {
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`)
 })
+
+//const db = client.db(process.env.DB_NAME);
+//collection = db.collection(process.env.DB_COLLECTION);
