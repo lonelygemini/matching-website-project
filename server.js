@@ -113,8 +113,34 @@ async function verwerkForm(req, res) {
     console.error('Database fout:', error);
     return res.render('pages/inlog', { error: 'Database fout' });
   }
-}
+}// ===============================
+// Registratie
+// ===============================
+app.get('/registratie', (req, res) => {
+  res.render('pages/registratie', {error:""})
+})
 
+app.get('/registratie', (req, res) => {
+  res.render('pages/registratie');
+});// Route om de ingevulde data te verwerken
+
+app.post('/nieuweregistratie', async (req, res) => {
+  const nieuwUser = {
+    name: req.body.name,
+    datum: req.body.datum,
+    email: req.body.email,
+    leeftijd: req.body.leeftijd,
+    woonplaats: req.body.woonplaats,
+    wachtwoord: req.body.wachtwoord, // Tip: In de toekomst hier bcrypt gebruiken!
+  };
+  try {
+    await collection.insertOne(nieuwUser);
+    // We sturen de naam mee naar de bevestigingspagina
+    res.render('pages/submitted', { naam: nieuwUser.username });
+  } catch (err) {
+    res.send("Er ging iets mis met opslaan.");
+  }
+});
 
 // ===============================
 // Route functions
