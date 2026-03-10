@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+    <title>Inloggen </title>
+</head>
+<body>
+    <main class="formulier">
+        <section>
+        <h1>Welkom terug</h1>
+        <p>Log in om verder te zoeken naar een baan, je voorkeuren te beheren en je opgeslagen vacatures te bekijken.<p>
+        </section>
+        <form action="/verwerkform" method="POST">
+            <% if (error){ %>
+            <p class="error"><%= error %></p> 
+            <% }%> 
+
+            <fieldset>
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email">
+
+                <label for="wachtwoord">Wachtwoord:</label>
+                <input type="password" name="wachtwoord" id="wachtwoord">
+            </fieldset>
+            <input type="submit" value="log in">
+            <p>Nieuw bij ons platform? Registreer <a href="registratie">hier</a></p>
+        </form>
+    </main>
+</body>
+</html>
