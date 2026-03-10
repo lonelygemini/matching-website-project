@@ -39,15 +39,18 @@ const client = new MongoClient(uri, {
 
 // Pas de connectie aan zodat de 'collection' variabele gevuld wordt
 client.connect()
-  .then(() => {
+  .then(async () => {
     console.log('Database connection established');
-    // Hier selecteer je de juiste database en collectie uit je .env
     const db = client.db(process.env.DB_NAME);
     collection = db.collection(process.env.DB_COLLECTION);
+    //Haal alle documenten op
+    const jobs = await collection.find({}).toArray();
+    //Print ze in je console
+    //console.log(jobs);
   })
   .catch((err) => {
     console.log(`Database connection error - ${err}`);
-  })
+  });
 
 
 // ===============================
@@ -65,7 +68,24 @@ app.get('/kaartje', async (req, res) => {
       res.render('partials/kaartje', { data: data }); 
 });
 
+app.get('/overzicht', async (req, res) => {
 
+  const search = req.query.search || "";
+
+  const jobs = await collection.find({
+    $or: [
+      { title: { $regex: search, $options: "i" } },
+      { locations: { $regex: search, $options: "i" } },
+      { company: { $regex: search, $options: "i" } }
+    ]
+  }).toArray();
+
+  res.render('pages/overzicht', {
+    jobs: jobs,
+    search: search
+  });
+
+});
 
 // ===============================
 // Route
@@ -76,6 +96,7 @@ app.get('/kaartje', async (req, res) => {
 app.get('/', function(req, res) {
   res.render('pages/index');
 });
+
 
 app.get('/filter', (req, res) => {
   res.render('pages/filter'); 
