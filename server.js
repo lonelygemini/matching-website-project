@@ -15,6 +15,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const app = express()
 const port = 1500
 
+
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
 
@@ -42,11 +43,7 @@ client.connect()
   .then(async () => {
     console.log('Database connection established');
     // Hier selecteer je de juiste database en collectie uit je .env
-    const db = client.db(process.env.DB_NAME_USERS);
-    collection = db.collection(process.env.DB_COLLECTION_USERS);
-    const Users = await collection.find({}).toArray();
-    //Print ze in je console
-    console.log(Users);
+
   })
   .catch((err) => {
     console.log(`Database connection error - ${err}`);
@@ -60,15 +57,18 @@ client.connect()
 
 app.get('/kaartje', async (req, res) => {
 
-      const db = client.db(process.env.DB_NAME);
-      const collection = db.collection(process.env.DB_COLLECTION);
+    const db = client.db(process.env.DB_NAME);
+    const collection = db.collection(process.env.DB_COLLECTION);
 
-      const data = await collection.find().toArray();
+    const data = await collection.find().toArray();
       
-      res.render('partials/kaartje', { data: data }); 
+    res.render('partials/kaartje', { data: data }); 
 });
 
 app.get('/overzicht', async (req, res) => {
+
+  const db = client.db(process.env.DB_NAME);
+  const collection = db.collection(process.env.DB_COLLECTION);
 
   const search = req.query.search || "";
 
@@ -141,7 +141,9 @@ async function verwerkForm(req, res) {
     console.error('Database fout:', error);
     return res.render('pages/inlog', { error: 'Database fout' });
   }
-}// ===============================
+}
+
+// ===============================
 // Registratie
 // ===============================
 app.get('/registratie', (req, res) => {
