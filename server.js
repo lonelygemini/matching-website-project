@@ -87,6 +87,25 @@ app.get('/overzicht', async (req, res) => {
 
 });
 
+app.get('/filter', (req, res) => {
+  res.render('pages/filter'); 
+});
+
+app.get('/detail/:jobID', async (req, res) => {
+
+  const db = client.db(process.env.DB_NAME);
+  const collection = db.collection(process.env.DB_COLLECTION);
+
+  const jobID = req.params.jobID;
+
+  const job = await collection.findOne({
+    _id: new ObjectId(jobID)
+  });
+
+  res.render('pages/detail', { job: job });
+
+});
+
 // ===============================
 // Route
 // ===============================
@@ -172,16 +191,6 @@ app.post('/nieuweregistratie', async (req, res) => {
   }
 });
 
-app.get('/filter', (req, res) => {
-  res.render('pages/filter'); 
-});
-
-app.get('/detail/:jobID', (req, res) => {
-
-  //in de db  zoeken
-  console.log(req.params.jobID)
-  res.send("job id = " +req.params.jobID); 
-});
 
 // ===============================
 // Route functions
