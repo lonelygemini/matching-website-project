@@ -8,12 +8,15 @@ require('dotenv').config()
 // ===============================
 const express = require('express')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
-
+const fetchFn = global.fetch
+  ? global.fetch
+  : (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args))
 // ===============================
 // Express setup
 // ===============================
 const app = express()
 const port = 1500
+
 
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
@@ -42,11 +45,7 @@ client.connect()
   .then(async () => {
     console.log('Database connection established');
     // Hier selecteer je de juiste database en collectie uit je .env
-    const db = client.db(process.env.DB_NAME_USERS);
-    collection = db.collection(process.env.DB_COLLECTION_USERS);
-    const Users = await collection.find({}).toArray();
-    //Print ze in je console
-    console.log(Users);
+
   })
   .catch((err) => {
     console.log(`Database connection error - ${err}`);
@@ -56,19 +55,23 @@ client.connect()
 // ===============================
 // Data
 // ===============================
-
+    //const db = client.db(process.env.DB_NAME);
+    //collection = db.collection(process.env.DB_COLLECTION);
 
 app.get('/kaartje', async (req, res) => {
 
-      const db = client.db(process.env.DB_NAME);
-      const collection = db.collection(process.env.DB_COLLECTION);
+    const db = client.db(process.env.DB_NAME);
+    const collection = db.collection(process.env.DB_COLLECTION);
 
-      const data = await collection.find().toArray();
+    const data = await collection.find().toArray();
       
-      res.render('partials/kaartje', { data: data }); 
+    res.render('partials/kaartje', { data: data }); 
 });
 
 app.get('/overzicht', async (req, res) => {
+
+  const db = client.db(process.env.DB_NAME);
+  const collection = db.collection(process.env.DB_COLLECTION);
 
   const search = req.query.search || "";
 
@@ -84,6 +87,25 @@ app.get('/overzicht', async (req, res) => {
     jobs: jobs,
     search: search
   });
+
+});
+
+app.get('/filter', (req, res) => {
+  res.render('pages/filter'); 
+});
+
+app.get('/detail/:jobID', async (req, res) => {
+
+  const db = client.db(process.env.DB_NAME);
+  const collection = db.collection(process.env.DB_COLLECTION);
+
+  const jobID = req.params.jobID;
+
+  const job = await collection.findOne({
+    _id: new ObjectId(jobID)
+  });
+
+  res.render('pages/detail', { job: job });
 
 });
 
@@ -141,7 +163,9 @@ async function verwerkForm(req, res) {
     console.error('Database fout:', error);
     return res.render('pages/inlog', { error: 'Database fout' });
   }
-}// ===============================
+}
+
+// ===============================
 // Registratie
 // ===============================
 app.get('/registratie', (req, res) => {
@@ -178,11 +202,52 @@ app.get('/filter', (req, res) => {
 });
 
 app.get('/detail/:jobID', (req, res) => {
-
+  
+  const db = client.db(process.env.DB_NAME);
+  collection = db.collection(process.env.DB_COLLECTION);
+  
   //in de db  zoeken
   console.log(req.params.jobID)
   res.send("job id = " +req.params.jobID); 
 });
+
+app.get('/favourites', (req, res) => {
+  const jobs = [
+    {
+      _id: '1',
+      title: 'Medior Business Developer Warmte',
+      company: 'Alliander',
+      date: 'Wed, 04 Mar 2026 03:48:58 GMT',
+      description: 'Als Medior Business <b>Developer</b> Warmte versnel je de warmtetransitie...',
+      locations: 'Amsterdam, Noord-Holland',
+      salary: '€5310 - 9016 per month',
+      url: '#'
+    },
+    {
+      _id: '2',
+      title: 'Frontend Developer',
+      company: 'Booking.com',
+      date: 'Tue, 02 Mar 2026 03:48:58 GMT',
+      description: 'Work on modern frontend applications and scalable UI systems...',
+      locations: 'Amsterdam',
+      salary: '€4500 - 6500 per month',
+      url: '#'
+    },
+    {
+      _id: '3',
+      title: 'Node.js Backend Developer',
+      company: 'Adyen',
+      date: 'Mon, 01 Mar 2026 03:48:58 GMT',
+      description: 'Build backend services for global payment infrastructure...',
+      locations: 'Amsterdam',
+      salary: '€5200 - 7200 per month',
+      url: '#'
+    }
+  ];
+
+  res.render('pages/favorites', { jobs });
+});
+
 
 // ===============================
 // Route functions
@@ -203,3 +268,4 @@ app.use((req, res) => {
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`)
 })
+
