@@ -157,7 +157,7 @@ async function verwerkForm(req, res) {
 
     // Als hij hier komt, is de login gelukt
     console.log('Login succesvol voor:', gebruikerGevonden.email);
-    return res.render('pages/submitted');
+    return res.render('pages/overzicht', { search: "" });
 
   } catch (error) {
     console.error('Database fout:', error);
@@ -188,7 +188,10 @@ app.post('/nieuweregistratie', async (req, res) => {
   try {
     await collection.insertOne(nieuwUser);
     // We sturen de naam mee naar de bevestigingspagina
-    res.render('pages/submitted', { naam: nieuwUser.username });
+    res.render('pages/overzicht', { 
+      Naam: nieuwUser.name, 
+      search: "" 
+  });
   } catch (err) {
     res.send("Er ging iets mis met opslaan.");
   }

@@ -95,9 +95,44 @@ span {
 
 
 
+
 /******************************/
 /*           HEADER           */
 /******************************/
+header {
+  display: flex !important;      
+  justify-content: space-between; 
+  align-items: center;
+  width: 100%;                  
+  box-sizing: border-box;        
+  padding: 1rem 3rem;            
+  background-color: var(--blue-background-color);
+}
+
+header nav {
+  align-items: center;
+  display: flex;
+  gap: 2rem;                     
+}
+header a{
+    font-family:'Poppins', sans-serif;
+    font-size: 0.9em;
+    color:var(--text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    
+}
+header a:hover {
+  text-decoration: underline;
+  color: var(--blue-text-color);
+}
+header img {
+  height: 4em;    
+  width: auto;    
+  display: block;  
+}
+
+
 
 /******************************/
 /*         INDEX PAGE         */
@@ -107,7 +142,7 @@ span {
   flex-direction: column;   /* Zet de elementen (h1, p, div) onder elkaar */
   justify-content: center;  /* Centreert verticaal (omdat de hoogte 100vh is) */
   align-items: center;      /* Centreert horizontaal */
-  min-height: 100vh;        /* Gebruikt 100% van de hoogte van het scherm */
+  min-height: 80vh;        /* Gebruikt 100% van de hoogte van het scherm */
   text-align: center;       /* Zorgt dat de tekst binnen de elementen ook gecentreerd is */
   padding: 2rem;            /* Voorkomt dat de tekst de randen raakt op mobiel */
 }
@@ -485,7 +520,6 @@ span {
   display: flex;
   min-height: 100vh; /* Zorg dat de main de hele pagina vult */
   ;}
-
 .formulier label {
   font-family:'Poppins', sans-serif;
   font-weight: 300;
@@ -493,12 +527,10 @@ span {
   flex-direction: column;
   
 }
-
- .formulier fieldset {
+.formulier fieldset {
   border: none;
   padding-left: 0;
 }
-
 .formulier form input[type="email"],
 .formulier form input[type="password"] {
     margin-bottom: 2em;       /* Ruimte tussen de velden */
@@ -525,6 +557,50 @@ span {
 .formulier section {
   margin-top: -25em;
 }
+
+/******************************/
+/*          Registratie       */
+/******************************/
+/* Het registratieformulier grid-layout geven */
+#registratie-form fieldset {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Verdeelt de fieldset in twee gelijke banen */
+  gap: 2rem;                       /* Ruimte tussen de linker- en rechterkant */
+  border: none;
+  padding: 0;
+}
+
+/* Zorg dat de labels en inputs binnen de div's netjes onder elkaar staan */
+#registratie-form fieldset div {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;                       /* Ruimte tussen de individuele invoervelden */
+}
+
+
+#registratie-form > div:last-of-type {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; 
+  width: 100%;           
+  margin-top: 2rem;
+}
+
+#registratie-form input[type="submit"] {
+  width: 14.3em;       
+}
+
+.formulier form input[type="name"],
+.formulier form input[type="age"],
+.formulier form input[type="date"],
+.formulier form input[type="location"] {
+    margin-bottom: 2em;       /* Ruimte tussen de velden */
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+    width: 95%;               /* Zorgt dat ze de hele breedte van het blok pakken */
+}
+
 /******************************/
 /*          FOOTER           */
 /******************************/
