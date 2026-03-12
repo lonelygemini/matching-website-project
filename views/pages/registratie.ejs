@@ -13,15 +13,16 @@
 <body>
     <main class="formulier">
         <section>
-        <h1>hallo</h1>
+        <h1>Maak je account aan</h1>
         <p>Registreer om verder te zoeken naar een baan, je voorkeuren te beheren en je opgeslagen vacatures te bekijken.<p>
         </section>
-        <form action="/nieuweregistratie" method="POST">
+        <form action="/nieuweregistratie" method="POST" id="registratie-form">
             <% if (error){ %>
             <p class="error"><%= error %></p> 
             <% }%> 
 
             <fieldset>
+                <div>
                     <label for="name">Voor en achternaam:</label>
                     <input type="name" id="name" name="name">
 
@@ -30,7 +31,8 @@
 
                     <label for="email">E-mail:</label>
                     <input type="email" name="email" id="email">
-
+                </div>
+                <div>
                     <label for="age">Leeftijd:</label>
                     <input type="age" name="leeftijd" id="leeftijd">
 
@@ -39,9 +41,12 @@
 
                     <label for="password">Wachtwoord:</label>
                     <input type="password" name="wachtwoord" id="wachtwoord">
+                </div>
             </fieldset>
-            <input type="submit" value="registreer">
-            <p>Heb je al een account? <a href="inlog">Log in</a></p>
+            <div>
+                <input type="submit" value="registreer">
+                <p>Heb je al een account? <a href="inlog">Log in</a></p>
+            </div>
         </form>
 </body>
 </html>
