@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favourites</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="favorites-page">
+    <section class="favorites-header">
+      <h1>← Je Favoriete Jobs</h1>
+    </section>
+
+    <section class="fav-box">
+      <aside class="favorites-sidebar">
+        <a href="/profile">Mijn Profiel</a>
+        <a href="/favourites" class="active">Favorieten</a>
+      </aside>
+
+      <div class="favorites-right">
+        <div class="favorites-top">
+          <p>
+            Hier vind je alle jobs die je hebt opgeslagen. Bekijk ze op elk gewenst moment en ga verder met je aanvraagprocedure.
+          </p>
+
+          <a href="/filter" class="favorites-top-button">Zoek meer jobs</a>
+          
+        </div>
+
+  <% if (jobs && jobs.length > 0) { %>
+    <div class="favorite-jobs-list">
+      <% jobs.forEach(job => { %>
+        <%- include('../partials/bookmark-card', { job: job }) %>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="favorites-empty">
+      <h2>Ben je nog op zoek naar een baan?</h2>
+    </div>
+  <% } %>
+</div>
+
+      </div>
+    </section>
+  </main>
+</body>

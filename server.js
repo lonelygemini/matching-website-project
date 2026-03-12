@@ -8,7 +8,9 @@ require('dotenv').config()
 // ===============================
 const express = require('express')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
-
+const fetchFn = global.fetch
+  ? global.fetch
+  : (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args))
 // ===============================
 // Express setup
 // ===============================
@@ -53,7 +55,8 @@ client.connect()
 // ===============================
 // Data
 // ===============================
-
+    //const db = client.db(process.env.DB_NAME);
+    //collection = db.collection(process.env.DB_COLLECTION);
 
 app.get('/kaartje', async (req, res) => {
 
@@ -205,6 +208,42 @@ app.get('/detail/:jobID', (req, res) => {
   res.send("job id = " +req.params.jobID); 
 });
 
+app.get('/favourites', (req, res) => {
+  const jobs = [
+    {
+      _id: '1',
+      title: 'Medior Business Developer Warmte',
+      company: 'Alliander',
+      date: 'Wed, 04 Mar 2026 03:48:58 GMT',
+      description: 'Als Medior Business <b>Developer</b> Warmte versnel je de warmtetransitie...',
+      locations: 'Amsterdam, Noord-Holland',
+      salary: '€5310 - 9016 per month',
+      url: '#'
+    },
+    {
+      _id: '2',
+      title: 'Frontend Developer',
+      company: 'Booking.com',
+      date: 'Tue, 02 Mar 2026 03:48:58 GMT',
+      description: 'Work on modern frontend applications and scalable UI systems...',
+      locations: 'Amsterdam',
+      salary: '€4500 - 6500 per month',
+      url: '#'
+    },
+    {
+      _id: '3',
+      title: 'Node.js Backend Developer',
+      company: 'Adyen',
+      date: 'Mon, 01 Mar 2026 03:48:58 GMT',
+      description: 'Build backend services for global payment infrastructure...',
+      locations: 'Amsterdam',
+      salary: '€5200 - 7200 per month',
+      url: '#'
+    }
+  ];
+
+  res.render('pages/favorites', { jobs });
+});
 
 
 // ===============================
