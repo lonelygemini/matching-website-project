@@ -188,6 +188,7 @@ span {
 a {
   text-decoration: none;
   color: black;
+  font-size: 0.9em;
 }
 
 .dropdown {
@@ -198,6 +199,12 @@ a {
 li:hover .dropdown {
   display: block;
 }
+
+/******************************/
+/*        RANGE SLIDER PAGINA       */
+/******************************/
+
+
 
 
 /******************************/
@@ -216,13 +223,14 @@ li:hover .dropdown {
 
 .jobCard a {
   background-color: var(--button-color);
-  padding: 0.6em;
+  padding: 0.4em;
   border-radius: 0.6em;
   color: var(--common-background-color);
   font-family:'Poppins-regular', sans-serif;
   font-weight: lighter;
-  padding-left: 3em;
-  padding-right: 3em;
+  font-size: 1.25em;
+  padding-left: 2em;
+  padding-right: 2em;
 }
 
 .card-header {
@@ -528,3 +536,39 @@ span {
 /******************************/
 /*          FOOTER           */
 /******************************/
+
+.footer {
+  margin-top: 9.38em;
+  padding: 6.25em;
+  background-color: #badcfb;
+  display: flex;
+  gap: 10em;
+  justify-content: center;
+}
+
+.footer a {
+  font-size: 1em;
+}
+
+.link1 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9em;
+  text-align: center;
+}
+
+.link2 h3{
+  text-align: center;
+  padding-right: 4em;
+}
+
+form input {
+  width: 25em;
+  height: 2.8em;
+  border-radius: 0.25em;
+  text-align: center;
+}
+
+.link3 p {
+  width: 60%;
+}

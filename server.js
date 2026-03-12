@@ -249,7 +249,9 @@ app.get('/favourites', (req, res) => {
 // ===============================
 // Route functions
 // ===============================
-
+app.get('/footer', (req, res) => {
+  res.render('partials/footer'); 
+});
 
 // ===============================
 // 404 handler
@@ -265,4 +267,8 @@ app.use((req, res) => {
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`)
 })
+
+//================================
+// range slider voor filter balk 
+//================================
 
