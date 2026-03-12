@@ -92,6 +92,15 @@ span {
     color:var(--text-color);
 }
 
+button {
+  font-family:'Poppins-regular', sans-serif;
+  background-color: var(--button-color);
+  color: var(--common-background-color);
+  border: 0; 
+  padding: 1em;
+  border-radius: 1em;
+}
+
 
 
 
@@ -133,14 +142,6 @@ span {
 
 }
 
-.overzicht button {
-  background-color: var(--button-color);
-  color: var(--common-background-color);
-  border: 0; 
-  padding: 1em;
-  border-radius: 1em;
-}
-
 .overzicht li {
   list-style: none;
   border-bottom: 1px solid #e5e5e5;
@@ -154,10 +155,14 @@ span {
   border-radius: 0.5em;
 }
 
-.overzicht h2 section:nth-of-type(1) {
+.overzicht li h2 {
   font-size: 0.8em;
   color: var(--button-color);
   padding-top: 2em;
+}
+
+.overzicht li p {
+  font-size: 0.5em;
 }
 
 .popular-searches button {
@@ -245,6 +250,43 @@ li:hover .dropdown {
 .tekst {
   margin-bottom: 3em;
 }
+
+/******************************/
+/*          DETAIL            */
+/******************************/
+
+.detail {
+  background-color: var(--common-background-color);
+  margin-left: 3em;
+}
+
+.detail section:nth-of-type(1) {
+  background-color: var(--blue-background-color);
+  padding: 4em;
+  border-radius: 2em 0em 0em 2em;
+}
+
+.job-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2em;
+  margin-top: 2em;
+}
+
+.job-info h2 {
+  font-size: 1rem;
+  margin-bottom: 0.2em;
+}
+
+.job-info p {
+  margin-bottom: 1em;
+}
+
+.detail button {
+  margin-top: 3em;
+}
+
+
 
 /******************************/
 /*        FAVORIETEN       */
@@ -454,6 +496,8 @@ span {
   text-align: center;
   margin-top: 1em;
 }
+
+
 /******************************/
 /*          INLOG           */
 /******************************/

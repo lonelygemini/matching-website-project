@@ -1,9 +1,9 @@
 {
   "name": "matching-site-jobs",
   "version": "1.0.0",
-  "description": "",
+  "description": "Job vacancy website",
   "license": "ISC",
-  "author": "",
+  "author": "Team 4",
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
