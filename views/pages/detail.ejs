@@ -3,16 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Detail pagina</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
-<body>
+<body class="detail">
+    <h1><%= job.title %></h1>
     <section>
-        <h1><%= job.title %></h1>
         <p><%= job.description %></p>
-        <p><strong>Bedrijf:</strong> <%= job.company %></p>
-        <p><strong>Locatie:</strong> <%= job.locations %></p>
-        <p><strong>Werk schema:</strong> <%= job.work_schedule %></p>
-        <p><strong>Salaris:</strong> €<%= job.salary_min %> - €<%= job.salary_max %></p>  
+        <div class="job-info">
+            <div>
+                <h2>Bedrijf</h2><p><%= job.company %></p>
+                <h2>Locatie</h2><p><%= job.locations %></p>
+                <h2>Werk schema</h2><p><%= job.work_schedule %></p>
+            </div>
+            <div>
+                <h2>Salaris range</h2><p>€<%= job.salary_min %> - €<%= job.salary_max %></p>
+                <h2>Salaris type</h2><p><%= job.salary_type %></p>
+                <h2>Upload datum</h2><p><%= job.date %></p>
+            </div>
+        </div>
+        <button type="button">Aan favorieten toevoegen</button>
     </section>
+
+    <section class="vacatures">
+        <h2>Uitgelichte vacatures</h2>
+        <div class="carousel">
+            <%- include('../partials/kaartje', { data: randomJobs }) %>
+        </div>
+    </section>
+    
 </body>
 </html>

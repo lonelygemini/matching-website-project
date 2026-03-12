@@ -152,11 +152,14 @@ header img {
 
 .overzicht {
   background-color: var(--blue-background-color);
-  padding: 3em;
 }
 
 .overzicht h1 {
   margin: 0;
+}
+
+.overzicht section:nth-of-type(1),  .overzicht section:nth-of-type(2){
+  padding: 3em;
 }
 
 .overzicht input {
@@ -166,14 +169,6 @@ header img {
   width: 30em;
   border-radius: 1em;
 
-}
-
-.overzicht button {
-  background-color: var(--button-color);
-  color: var(--common-background-color);
-  border: 0; 
-  padding: 1em;
-  border-radius: 1em;
 }
 
 .overzicht li {
@@ -189,10 +184,14 @@ header img {
   border-radius: 0.5em;
 }
 
-.overzicht h2 section:nth-of-type(1) {
+.overzicht li h2 {
   font-size: 0.8em;
   color: var(--button-color);
   padding-top: 2em;
+}
+
+.overzicht li p {
+  font-size: 0.5em;
 }
 
 .popular-searches button {
@@ -204,16 +203,35 @@ header img {
   margin: 0.5em;
 }
 
+.overzicht button, .detail button {
+  font-family:'Poppins-regular', sans-serif;
+  background-color: var(--button-color);
+  color: var(--common-background-color);
+  border: 0; 
+  padding: 1em;
+  border-radius: 1em;
+}
+
+
 @media (min-width: 800px) {
   .overzicht section:nth-of-type(2) {
   width: 60%;
-  margin-top: 3em;
 }
 }
 
 .vacatures {
   background-color: var(--common-background-color);
+  padding: 3em;
+  margin-top: 4em;
+  width: 100%;
 }
+
+.carousel{
+  display: flex;
+  overflow-x: auto;
+  gap: 1em;
+}
+
 
 /******************************/
 /*        FILTER PAGINA       */
@@ -246,7 +264,9 @@ li:hover .dropdown {
   margin: 1em;
   padding: 2em;
   border-radius: 1em;
-  width: 30%;
+  max-width: 100%;
+  scroll-snap-align:start;
+  flex: 0 0 350px;
 }
 
 .jobCard a {
@@ -255,15 +275,14 @@ li:hover .dropdown {
   border-radius: 0.6em;
   color: var(--common-background-color);
   font-family:'Poppins-regular', sans-serif;
-  font-weight: lighter;
-  padding-left: 3em;
-  padding-right: 3em;
+  font-size: 0.8em;
 }
 
 .card-header {
   display: grid;
-  grid-template-columns: 1fr auto; /* Links pakt alle ruimte, Rechts pakt wat nodig is */
+   grid-template-columns: 7fr 3fr; /* Links pakt alle ruimte, Rechts pakt wat nodig is */
   align-items: start;
+  gap: 0.5em;
   width: 100%;
 
 }
@@ -280,6 +299,45 @@ li:hover .dropdown {
 .tekst {
   margin-bottom: 3em;
 }
+
+/******************************/
+/*          DETAIL            */
+/******************************/
+
+.detail {
+  background-color: var(--common-background-color);
+  margin-left: 3em;
+}
+
+
+
+.detail section:nth-of-type(1) {
+  background-color: var(--blue-background-color);
+  padding: 4em;
+  border-radius: 2em 0em 0em 2em;
+}
+
+.job-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2em;
+  margin-top: 2em;
+}
+
+.job-info h2 {
+  font-size: 1rem;
+  margin-bottom: 0.2em;
+}
+
+.job-info p {
+  margin-bottom: 1em;
+}
+
+.detail button {
+  margin-top: 3em;
+}
+
+
 
 /******************************/
 /*        FAVORIETEN       */
@@ -489,6 +547,8 @@ span {
   text-align: center;
   margin-top: 1em;
 }
+
+
 /******************************/
 /*          INLOG           */
 /******************************/
