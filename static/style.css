@@ -92,15 +92,6 @@ span {
     color:var(--text-color);
 }
 
-button {
-  font-family:'Poppins-regular', sans-serif;
-  background-color: var(--button-color);
-  color: var(--common-background-color);
-  border: 0; 
-  padding: 1em;
-  border-radius: 1em;
-}
-
 
 
 
@@ -174,16 +165,33 @@ button {
   margin: 0.5em;
 }
 
+.overzicht button, .detail button {
+  font-family:'Poppins-regular', sans-serif;
+  background-color: var(--button-color);
+  color: var(--common-background-color);
+  border: 0; 
+  padding: 1em;
+  border-radius: 1em;
+}
+
+
 @media (min-width: 800px) {
   .overzicht section:nth-of-type(2) {
   width: 60%;
-  margin-top: 3em;
 }
 }
 
 .vacatures {
   background-color: var(--common-background-color);
 }
+
+.carousel{
+  display:flex;
+  gap:20px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+}
+
 
 /******************************/
 /*        FILTER PAGINA       */
@@ -216,7 +224,8 @@ li:hover .dropdown {
   margin: 1em;
   padding: 2em;
   border-radius: 1em;
-  width: 30%;
+  max-width: 450px;
+  scroll-snap-align:start;
 }
 
 .jobCard a {
