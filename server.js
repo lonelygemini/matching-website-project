@@ -133,6 +133,7 @@ app.get('/', function(req, res) {
 app.get('/inlog', (req, res) => {
   res.render('pages/inlog', {error:""})
 })
+
 app.get('/inlog', showForm)
 app.post('/verwerkform', verwerkForm)
 
@@ -140,6 +141,8 @@ function showForm(req, res) {
   res.render('pages/inlog')
 }
 async function verwerkForm(req, res) {
+  const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
   // We halen nu 'email' uit het formulier (zorg dat name="email" in je EJS staat)
   const emailInput = req.body.email;
   const wachtwoordInput = req.body.wachtwoord;
@@ -177,6 +180,8 @@ app.get('/registratie', (req, res) => {
 });// Route om de ingevulde data te verwerken
 
 app.post('/nieuweregistratie', async (req, res) => {
+  const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
   const nieuwUser = {
     name: req.body.name,
     datum: req.body.datum,
