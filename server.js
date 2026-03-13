@@ -83,9 +83,15 @@ app.get('/overzicht', async (req, res) => {
     ]
   }).toArray();
 
+  // 🔹 5 willekeurige jobs
+  const randomJobs = await collection.aggregate([
+    { $sample: { size: 5 } }
+  ]).toArray();
+
   res.render('pages/overzicht', {
     jobs: jobs,
-    search: search
+    search: search,
+    randomJobs: randomJobs
   });
 
 });
@@ -105,7 +111,15 @@ app.get('/detail/:jobID', async (req, res) => {
     _id: new ObjectId(jobID)
   });
 
-  res.render('pages/detail', { job: job });
+  // 5 willekeurige vacatures
+  const randomJobs = await collection.aggregate([
+    { $sample: { size: 5 } }
+  ]).toArray();
+
+  res.render('pages/detail', {
+    job: job,
+    randomJobs: randomJobs
+  });
 
 });
 
