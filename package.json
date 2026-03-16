@@ -1,9 +1,9 @@
 {
   "name": "matching-site-jobs",
   "version": "1.0.0",
-  "description": "",
+  "description": "Job vacancy website",
   "license": "ISC",
-  "author": "",
+  "author": "Team 4",
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
@@ -14,6 +14,7 @@
     "ejs": "^4.0.1",
     "express": "^5.2.1",
     "mongodb": "^7.1.0",
+    "multer": "^2.1.1",
     "nodemon": "^3.1.14"
   }
 }

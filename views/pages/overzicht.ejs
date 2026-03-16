@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Overzicht</title>
     <link rel="stylesheet" href="/style.css">
 </head>
+<header>
+    <%- include('../partials/header') %>
+</header>
 <body class="overzicht">
 <main>
     <section>
@@ -25,9 +28,9 @@
         <ul>
             <% jobs.forEach(job => { %>
             <li>
-                <h2><%= job.title %></h2>
-                <p><%= job.company %></p>
-                <p><%= job.locations %></p>
+                <a href="/detail/<%= job._id %>"><h2><%= job.title %></h2></a>
+                <a href="/detail/<%= job._id %>"><p><%= job.company %></p></a>
+                <a href="/detail/<%= job._id %>"><p><%= job.locations %></p></a>
             </li>
             <% }) %>
         </ul>
@@ -48,6 +51,9 @@
 
     <section class="vacatures">
         <h2>Uitgelichte vacatures</h2>
+        <div class="carousel">
+            <%- include('../partials/kaartje', { data: randomJobs }) %>
+        </div>
     </section>
 
 </main>
