@@ -307,6 +307,19 @@ li:hover .dropdown {
   margin-bottom: 3em;
 }
 
+.jobCard a.button-primary,
+.jobCard button.button-primary {
+  display: inline-block;
+  padding: 16px 16px;
+  background: #4367f2;
+  color: white;
+  text-decoration: none;
+  border: none;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+}
+
 /******************************/
 /*          DETAIL            */
 /******************************/
