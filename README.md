@@ -83,6 +83,8 @@ matching-website-project/
 ├── .env
 ├── .gitattributes
 ├── .gitignore
+├── .eslint.config.mjs
+├── .eslintignore
 ├── package-lock.json
 ├── package.json
 ├── README.md

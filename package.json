@@ -7,7 +7,8 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
   },
   "dependencies": {
     "dotenv": "^17.3.1",
@@ -15,5 +16,15 @@
     "express": "^5.2.1",
     "mongodb": "^7.1.0",
     "nodemon": "^3.1.14"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.3",
+    "globals": "^17.4.0"
+  },
+  "extends": "eslint:recommended",
+  "env": {
+    "node": true,
+    "es2021": true
   }
 }
