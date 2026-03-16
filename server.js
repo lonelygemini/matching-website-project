@@ -7,6 +7,7 @@ require('dotenv').config()
 // Dependencies
 // ===============================
 const express = require('express')
+const session = require('express-session')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const fetchFn = global.fetch
   ? global.fetch
@@ -17,6 +18,14 @@ const fetchFn = global.fetch
 const app = express()
 const port = 1500
 
+app.use(session({
+  secret: 'emergencykey',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false
+  }
+}))
 
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
@@ -154,6 +163,8 @@ function showForm(req, res) {
   res.render('pages/inlog')
 }
 async function verwerkForm(req, res) {
+    const db = client.db(process.env.DB_NAME_USER);
+  const collection = db.collection(process.env.DB_COLLECTION_USER);
   // We halen nu 'email' uit het formulier (zorg dat name="email" in je EJS staat)
   const emailInput = req.body.email;
   const wachtwoordInput = req.body.wachtwoord;
@@ -168,6 +179,11 @@ async function verwerkForm(req, res) {
     if (!gebruikerGevonden) {
       return res.render('pages/inlog', { error: 'E-mail of wachtwoord onjuist' });
     }
+
+    req.session.user = { 
+      _id: gebruikerGevonden._id, 
+      email: gebruikerGevonden.email 
+    };
 
     // Als hij hier komt, is de login gelukt
     console.log('Login succesvol voor:', gebruikerGevonden.email);
@@ -191,6 +207,9 @@ app.get('/registratie', (req, res) => {
 });// Route om de ingevulde data te verwerken
 
 app.post('/nieuweregistratie', async (req, res) => {
+  const db = client.db(process.env.DB_NAME_USER);
+  const collection = db.collection(process.env.DB_COLLECTION_USER);
+
   const nieuwUser = {
     name: req.body.name,
     datum: req.body.datum,
@@ -198,6 +217,7 @@ app.post('/nieuweregistratie', async (req, res) => {
     leeftijd: req.body.leeftijd,
     woonplaats: req.body.woonplaats,
     wachtwoord: req.body.wachtwoord, // Tip: In de toekomst hier bcrypt gebruiken!
+    favorites: []
   };
   try {
     await collection.insertOne(nieuwUser);
@@ -223,6 +243,58 @@ app.get('/detail/:jobID', (req, res) => {
   //in de db  zoeken
   console.log(req.params.jobID)
   res.send("job id = " +req.params.jobID); 
+});
+
+// ===============================
+// Favourites
+// ===============================
+
+app.post('/favorites/add/:jobID', async (req, res) => {
+  const db = client.db(process.env.DB_NAME_USER);
+  const collection = db.collection(process.env.DB_COLLECTION_USER);
+
+  if (!req.session.user) {
+    return res.redirect('/inlog');
+  }
+
+  const userId = req.session.user._id;
+  const jobID = req.params.jobID;
+
+  try {
+    await collection.updateOne(
+      { _id: new ObjectId(userId) },
+      { $addToSet: { favorites: jobID } }
+    );
+
+    res.redirect('/favourites');
+  } catch (error) {
+    console.error(error);
+    res.send('Fout bij toevoegen aan favorieten');
+  }
+});
+
+app.post('/favorites/remove/:jobID', async (req, res) => {
+  const db = client.db(process.env.DB_NAME_USER);
+  const collection = db.collection(process.env.DB_COLLECTION_USER);
+
+  if (!req.session.user) {
+    return res.redirect('/inlog');
+  }
+
+  const userId = req.session.user._id;
+  const jobID = req.params.jobID;
+
+  try {
+    await collection.updateOne(
+      { _id: new ObjectId(userId) },
+      { $pull: { favorites: jobID } }
+    );
+
+    res.redirect('/favourites');
+  } catch (error) {
+    console.error(error);
+    res.send('Fout bij verwijderen uit favorieten');
+  }
 });
 
 app.get('/favourites', (req, res) => {
