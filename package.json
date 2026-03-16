@@ -2,7 +2,7 @@
   "name": "matching-site-jobs",
   "version": "1.0.0",
   "description": "Job vacancy website",
-  "license": "ISC",
+  "license": "MIT",
   "author": "Team 4",
   "type": "commonjs",
   "main": "index.js",

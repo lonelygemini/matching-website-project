@@ -1,4 +1,4 @@
-### JobConnect
+# JobConnect
 
 In het profileringsvak Project Tech, maken we (Team 4) een zogenaamde _matching website_ waar bezoekers content kunnen selecteren, filteren en/of sorteren, en aan elkaar kunnen worden gematcht op basis van gelijke interesses of omdat ze iets voor elkaar kunnen betekenen.
 
@@ -99,9 +99,25 @@ matching-website-project/
 - **.env** → environment variables  
 
 ## Contributing
-Alleen leden van profileringsvak Project Tech, Team 4 mogen aanpassingen doen en pull request sturen. 
-Mocht er aanpassingen zijn die aangeraden worden buiten dit team vragen we jou contact op te nemen met dit Team.
+Bijdragen aan dit project zijn momenteel beperkt tot leden van Project Tech – Team 4.
 
+Als je geen onderdeel bent van Team 4 maar wel suggesties, verbeteringen of een bug hebt gevonden, kun je een Issue openen in de repository op GitHub. Het team zal de suggestie bekijken en beslissen of deze wordt meegenomen.
+
+### Voor Team 4 leden
+
+Wanneer je bijdraagt aan het project:
+
+- Maak een nieuwe branch voor je feature of bugfix
+- Schrijf duidelijke en beschrijvende commits
+- Test je wijzigingen voordat je ze indient
+- Maak een Pull Request naar de main branch
+
+Alle pull requests worden eerst door een ander teamlid beoordeeld voordat ze worden samengevoegd.
+
+Door bij te dragen aan dit project ga je ermee akkoord dat jouw bijdragen vallen onder de MIT License. 
 
 ## Code of Conduct
 /hoe wij communiceren/ 
+
+## License
+MIT License © 2026 Team 4
