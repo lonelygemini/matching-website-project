@@ -6,8 +6,8 @@
     <title>Overzicht</title>
     <link rel="stylesheet" href="/style.css">
 </head>
-<body class="overzicht">
-<main>
+<body>
+<main class="overzicht">
     <section>
         <h1>Vind jouw volgende kans!</h1>
         <p>Zoek jouw perfecte baan.</p>
@@ -33,9 +33,9 @@
         </ul>
         <% } %>
     </section>
-    <section>
-        <p>Populaire zoekresultaten</p>
-        <div class="popular-searches">
+    <section class="popular-searches">
+            <h2>Populaire zoekresultaten</h2>
+        <div>
             <button data-filter="PHP developer">PHP developer</button>
             <button data-filter="Amsterdam">Amsterdam</button>
             <button data-filter="Medior">Medior</button>
@@ -45,6 +45,7 @@
             <button data-filter="BOLD company">BOLD company</button>
         </div>
     </section>
+</main>
 
     <section class="vacatures">
         <h2>Uitgelichte vacatures</h2>
@@ -52,7 +53,5 @@
             <%- include('../partials/kaartje', { data: randomJobs }) %>
         </div>
     </section>
-
-</main>
 </body>
 </html>
