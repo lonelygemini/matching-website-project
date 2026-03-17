@@ -18,6 +18,14 @@ const fetchFn = global.fetch
 const app = express()
 const port = 1500
 
+app.use(session({
+  secret: 'emergencykey',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false
+  }
+}))
 
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
@@ -203,10 +211,14 @@ async function verwerkForm(req, res) {
     if (!gebruikerGevonden) {
       return res.render('pages/inlog', { error: 'E-mail of wachtwoord onjuist' });
     }
+    req.session.user = { 
+      _id: gebruikerGevonden._id, 
+      email: gebruikerGevonden.email 
+    };
 
     // Als hij hier komt, is de login gelukt
     console.log('Login succesvol voor:', gebruikerGevonden.email);
-    return res.render('pages/overzicht', { search: "" });
+    return res.redirect('/overzicht')
 
   } catch (error) {
     console.error('Database fout:', error);
@@ -346,28 +358,29 @@ app.get('/favourites', async (req, res) => {
 // profiel
 // ===============================
 app.get('/profiel', async (req, res) => {
-    // 1. Check of er wel een ID in de sessie zit
-    // if (!req.session.gebruikerId) {
-    //     return res.redirect('/inlog'); // Niet ingelogd? Terug naar af.
-    // }
+  // 1. Check of de gebruiker in de sessie staat
+  if (!req.session.user) {
+      return res.redirect('/inlog'); // Niet ingelogd? Terug naar inloggen.
+  }
 
-    try {
-        const db = client.db(process.env.DB_NAME_USERS);
-        const collection = db.collection(process.env.DB_COLLECTION_USERS);
+  try {
+      const db = client.db(process.env.DB_NAME_USERS);
+      const collection = db.collection(process.env.DB_COLLECTION_USERS);
 
-        // 2. Zoek specifiek op de ID uit de sessie
-        const gebruiker = await collection.findOne({ 
-            // _id: new ObjectId(req.session.gebruikerId) 
-            _id: new ObjectId('69b00612465d73d36cd36db0')
-        });
+      // 2. Zoek de gebruiker op basis van de ID in de sessie
+      // We gebruiken req.session.user._id die je in verwerkForm hebt opgeslagen
+      const gebruiker = await collection.findOne({ 
+          _id: new ObjectId(req.session.user._id) 
+      });
 
-        // 3. Render de pagina met deze specifieke data
-        res.render('pages/profiel', { 
-            data: gebruiker 
-        });
-    } catch (error) {
-        res.status(500).send("Fout bij laden profiel");
-    }
+      // 3. Stuur de gevonden gegevens naar de pagina
+      res.render('pages/profiel', { 
+          data: gebruiker 
+      });
+  } catch (error) {
+      console.error("Fout bij laden profiel:", error);
+      res.status(500).send("Fout bij laden profiel");
+  }
 });
 // app.get('/profiel', async (req, res) => {
 //   // 1. Maak verbinding met de specifieke Users database

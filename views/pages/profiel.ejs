@@ -15,10 +15,30 @@
         <%- include('../partials/header') %>
     </header> 
     <main class="profiel">
+        <a href="/profiel">Profiel</a>
+        <a href="/favorites">Favorieten</a>
+       <h1>Mijn profiel</h1>
+        <!-- hier moet nog de profielfoto -->
+       <section class="data">
         <div>
-            <h1>Welkom, <%= data.name %>!</h1> <p>Email: <%= data.email %></p>
-            <p>Woonplaats: <%= data.woonplaats %></p>
+            <p>Naam:</p>
+            <p><%= data.name %></p>
+            <p>Geboortedatum:</p>
+            <p><%= data.datum %></p>
         </div>
+        <div>
+            <p>Email: </p>
+            <p><%= data.email %></p>
+            <p>Leeftijd </p>
+            <p><%= data.leeftijd %></p>
+        </div>
+        <div>
+            <p>Woonplaats: </p>
+            <p><%= data.woonplaats %></p>
+            <p>Wachtwoord: </p>
+            <p><%= data.wachtwoord %></p>
+        </div>
+        </section>
     </main>
         
 </body>
