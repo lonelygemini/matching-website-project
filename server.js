@@ -17,6 +17,22 @@ const fetchFn = global.fetch
 const app = express()
 const port = 1500
 
+// ===============================
+// multer 
+// ===============================
+const multer = require ('multer')
+const upload = multer({dest:'static/upload/'})
+
+
+// ===============================
+// session 
+// ===============================
+const session = require('express-session')
+app.use(session({
+  secret: 'je_geheime_code_hier', // Verzin een willekeurige zin
+  resave: false,
+  saveUninitialized: true
+}));
 
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
@@ -188,6 +204,7 @@ function showForm(req, res) {
 async function verwerkForm(req, res) {
   const db = client.db(process.env.DB_NAME_USERS);
   const collection = db.collection(process.env.DB_COLLECTION_USERS);
+  
   // We halen nu 'email' uit het formulier (zorg dat name="email" in je EJS staat)
   const emailInput = req.body.email;
   const wachtwoordInput = req.body.wachtwoord;
@@ -200,12 +217,15 @@ async function verwerkForm(req, res) {
     });
 
     if (!gebruikerGevonden) {
-      return res.render('pages/inlog', { error: 'E-mail of wachtwoord onjuist' });
-    }
+      // Hier gebeurt de magie: we slaan de ID op
+      req.session.gebruikerId = gebruikerGevonden._id; 
+          
+      // Gebruik nu redirect naar de profielpagina
+      res.redirect('/profiel');    }
 
     // Als hij hier komt, is de login gelukt
     console.log('Login succesvol voor:', gebruikerGevonden.email);
-    return res.render('pages/overzicht', { search: "" });
+    return res.redirect('/overzicht')
 
   } catch (error) {
     console.error('Database fout:', error);
@@ -216,6 +236,7 @@ async function verwerkForm(req, res) {
 // ===============================
 // Registratie
 // ===============================
+
 app.get('/registratie', (req, res) => {
   res.render('pages/registratie', {error:""})
 })
@@ -224,7 +245,8 @@ app.get('/registratie', (req, res) => {
   res.render('pages/registratie');
 });// Route om de ingevulde data te verwerken
 
-app.post('/nieuweregistratie', async (req, res) => {
+app.post('/nieuweregistratie',upload.single('profielfoto'), async (req, res) => {
+  console.log(req.file)
   const db = client.db(process.env.DB_NAME_USERS);
   const collection = db.collection(process.env.DB_COLLECTION_USERS);
   const nieuwUser = {
@@ -238,10 +260,7 @@ app.post('/nieuweregistratie', async (req, res) => {
   try {
     await collection.insertOne(nieuwUser);
     // We sturen de naam mee naar de bevestigingspagina
-    res.render('pages/overzicht', { 
-      Naam: nieuwUser.name, 
-      search: "" 
-  });
+    res.redirect('/overzicht');
   } catch (err) {
     res.send("Er ging iets mis met opslaan.");
   }
@@ -298,7 +317,57 @@ app.get('/favourites', (req, res) => {
   res.render('pages/favorites', { jobs });
 });
 
+// ===============================
+// profiel
+// ===============================
+app.get('/profiel', async (req, res) => {
+    // 1. Check of er wel een ID in de sessie zit
+    // if (!req.session.gebruikerId) {
+    //     return res.redirect('/inlog'); // Niet ingelogd? Terug naar af.
+    // }
 
+    try {
+        const db = client.db(process.env.DB_NAME_USERS);
+        const collection = db.collection(process.env.DB_COLLECTION_USERS);
+
+        // 2. Zoek specifiek op de ID uit de sessie
+        const gebruiker = await collection.findOne({ 
+            // _id: new ObjectId(req.session.gebruikerId) 
+            _id: new ObjectId('69b00612465d73d36cd36db0')
+        });
+
+        // 3. Render de pagina met deze specifieke data
+        res.render('pages/profiel', { 
+            data: gebruiker 
+        });
+    } catch (error) {
+        res.status(500).send("Fout bij laden profiel");
+    }
+});
+// app.get('/profiel', async (req, res) => {
+//   // 1. Maak verbinding met de specifieke Users database
+//   const db = client.db(process.env.DB_NAME_USERS); 
+//   // 2. Selecteer de juiste collectie
+//   const collection = db.collection(process.env.DB_COLLECTION_USERS);
+
+//   try {
+//       // 3. Haal de gebruikers op en zet ze in een array
+
+     
+//       const gebruikers = await collection.findOne({
+//         _id: new ObjectId(userID)
+//       })
+
+//       // 4. Stuur de data naar de EJS pagina
+//       // LET OP: de naam links (data) moet gelijk zijn aan wat je in EJS gebruikt
+//       res.render('pages/profiel', { 
+//           data: gebruikers 
+//       });
+//   } catch (error) {
+//       console.error("Fout bij ophalen profiel:", error);
+//       res.status(500).send("Database fout");
+//   }
+// });
 // ===============================
 // Route functions
 // ===============================

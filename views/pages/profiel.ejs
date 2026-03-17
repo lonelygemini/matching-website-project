@@ -4,11 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>profiel</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
 </head>
-<header>
-    <%- include('../partials/header') %>
-</header>
 <body>
-    <h1>Welkom bij je profiel</h1>
+    <header>  
+        <%- include('../partials/header') %>
+    </header> 
+    <main class="profiel">
+        <div>
+            <h1>Welkom, <%= data.name %>!</h1> <p>Email: <%= data.email %></p>
+            <p>Woonplaats: <%= data.woonplaats %></p>
+        </div>
+    </main>
+        
 </body>
 </html>
