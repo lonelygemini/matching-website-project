@@ -1,34 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="style.css">
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filterpagina</title>
-    <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
-    <aside>
+    <main>
+        <aside>
+            <form action="/filter" method="GET">
 
-        <input type="checkbox" name="filter" value="alles" id="filter-alles" checked> 
-        <label for="filter-alles">alles</label>
+                <input type="checkbox" name="location" value="alles" id="filter-alles">
+                <label for="filter-alles">Alles</label>
 
-            <li><a href="#">v locatie</a>
-                <ul class="dropdown">
-                    <li>
-                    <input type="checkbox" name="Utrecht" value="Utrecht" id="check-utrecht">
-                    <label for="check-utrecht">Utrecht</label>
-                    </li>
-                    <li>
-                    <input type="checkbox" name="Noord-Holland" value="Noord-Holland" id="check-noordHolland">
-                    <label for="check-noordHolland">Noord-Holland</label>
-                    </li>
-                    <li>
-                    <input type="checkbox" name="Gelderland" value="Gelderland" id="check-gelderland">
-                    <label for="check-gelderland">Gelderland</label>
-                    </li>
-                </ul>
-            </li>
-    </aside>
+                <li><a href="#"> locatie</a>
+                    <ul class="dropdownlocatie">
+                        <li>
+                            <input type="checkbox" name="location" value="Utrecht" id="check-utrecht">
+                            <label for="check-utrecht">Utrecht</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="location" value="Noord-Holland" id="check-noordHolland">
+                            <label for="check-noordHolland">Noord-Holland</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="location" value="Gelderland" id="check-gelderland">
+                            <label for="check-gelderland">Gelderland</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="location" value="Zuid-Holland" id="check-zuidHolland">
+                            <label for="check-zuidHolland">Zuid-Holland</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="location" value="Flevoland" id="check-Flevoland">
+                            <label for="check-Flevoland">Flevoland</label>
+                        </li>
+                    </ul>
 
+                    <div class="werkschema">
+                        <input type="radio" name="work_schedule" value="fulltime" id="filter-fulltime">
+                        <label for="filter-fulltime">Fulltime</label>
+
+                        <input type="radio" name="work_schedule" value="parttime" id="filter-parttime">
+                        <label for="filter-parttime">Parttime</label>
+                    </div>
+
+                <li><a href="#">Bedrijf</a>
+                    <ul class="dropdownbedrijf">
+
+                        <li>
+                            <input type="checkbox" name="company" value="CareerValue">
+                            <label>CareerValue</label>
+                        </li>
+
+                        <li>
+                            <input type="checkbox" name="company" value="BOLD Company">
+                            <label>BOLD Company</label>
+                        </li>
+
+                        <li>
+                            <input type="checkbox" name="company" value="YoungCapital">
+                            <label>YoungCapital</label>
+                        </li>
+
+                    </ul>
+
+                    <button type="submit">Filters toepassen</button>
+
+
+            </form>
+        </aside>
+        <section class="job-list">
+
+            <% if (jobs && jobs.length> 0) { %>
+                <% jobs.forEach(job=> { %>
+                    <article class="job-cardd">
+                        <%- include('../partials/kaartje', { data:jobs }) %>
+                    </article>
+
+                    <% }) %>
+                        <% } else { %>
+                            <p>Geen vacatures gevonden</p>
+                            <% } %>
+        </section>
+    </main>
 </body>
+
 </html>
