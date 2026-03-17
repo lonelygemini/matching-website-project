@@ -7,6 +7,7 @@ require('dotenv').config()
 // Dependencies
 // ===============================
 const express = require('express')
+const session = require('express-session')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const fetchFn = global.fetch
   ? global.fetch
@@ -17,22 +18,6 @@ const fetchFn = global.fetch
 const app = express()
 const port = 1500
 
-// ===============================
-// multer 
-// ===============================
-const multer = require ('multer')
-const upload = multer({dest:'static/upload/'})
-
-
-// ===============================
-// session 
-// ===============================
-const session = require('express-session')
-app.use(session({
-  secret: 'je_geheime_code_hier', // Verzin een willekeurige zin
-  resave: false,
-  saveUninitialized: true
-}));
 
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
@@ -204,7 +189,6 @@ function showForm(req, res) {
 async function verwerkForm(req, res) {
   const db = client.db(process.env.DB_NAME_USERS);
   const collection = db.collection(process.env.DB_COLLECTION_USERS);
-  
   // We halen nu 'email' uit het formulier (zorg dat name="email" in je EJS staat)
   const emailInput = req.body.email;
   const wachtwoordInput = req.body.wachtwoord;
@@ -217,15 +201,12 @@ async function verwerkForm(req, res) {
     });
 
     if (!gebruikerGevonden) {
-      // Hier gebeurt de magie: we slaan de ID op
-      req.session.gebruikerId = gebruikerGevonden._id; 
-          
-      // Gebruik nu redirect naar de profielpagina
-      res.redirect('/profiel');    }
+      return res.render('pages/inlog', { error: 'E-mail of wachtwoord onjuist' });
+    }
 
     // Als hij hier komt, is de login gelukt
     console.log('Login succesvol voor:', gebruikerGevonden.email);
-    return res.redirect('/overzicht')
+    return res.render('pages/overzicht', { search: "" });
 
   } catch (error) {
     console.error('Database fout:', error);
@@ -245,8 +226,7 @@ app.get('/registratie', (req, res) => {
   res.render('pages/registratie');
 });// Route om de ingevulde data te verwerken
 
-app.post('/nieuweregistratie',upload.single('profielfoto'), async (req, res) => {
-  console.log(req.file)
+app.post('/nieuweregistratie', async (req, res) => {
   const db = client.db(process.env.DB_NAME_USERS);
   const collection = db.collection(process.env.DB_COLLECTION_USERS);
   const nieuwUser = {
@@ -256,6 +236,7 @@ app.post('/nieuweregistratie',upload.single('profielfoto'), async (req, res) => 
     leeftijd: req.body.leeftijd,
     woonplaats: req.body.woonplaats,
     wachtwoord: req.body.wachtwoord, // Tip: In de toekomst hier bcrypt gebruiken!
+    favorites: []
   };
   try {
     await collection.insertOne(nieuwUser);
@@ -280,39 +261,79 @@ app.get('/detail/:jobID', (req, res) => {
   res.send("job id = " +req.params.jobID); 
 });
 
-app.get('/favourites', (req, res) => {
-  const jobs = [
-    {
-      _id: '1',
-      title: 'Medior Business Developer Warmte',
-      company: 'Alliander',
-      date: 'Wed, 04 Mar 2026 03:48:58 GMT',
-      description: 'Als Medior Business <b>Developer</b> Warmte versnel je de warmtetransitie...',
-      locations: 'Amsterdam, Noord-Holland',
-      salary: '€5310 - 9016 per month',
-      url: '#'
-    },
-    {
-      _id: '2',
-      title: 'Frontend Developer',
-      company: 'Booking.com',
-      date: 'Tue, 02 Mar 2026 03:48:58 GMT',
-      description: 'Work on modern frontend applications and scalable UI systems...',
-      locations: 'Amsterdam',
-      salary: '€4500 - 6500 per month',
-      url: '#'
-    },
-    {
-      _id: '3',
-      title: 'Node.js Backend Developer',
-      company: 'Adyen',
-      date: 'Mon, 01 Mar 2026 03:48:58 GMT',
-      description: 'Build backend services for global payment infrastructure...',
-      locations: 'Amsterdam',
-      salary: '€5200 - 7200 per month',
-      url: '#'
-    }
-  ];
+// ===============================
+// Favourites
+// ===============================
+
+app.post('/favorites/add/:jobID', async (req, res) => {
+  const db = client.db(process.env.DB_NAME_USER);
+  const collection = db.collection(process.env.DB_COLLECTION_USER);
+
+  if (!req.session.user) {
+    return res.redirect('/inlog');
+  }
+
+  const userId = req.session.user._id;
+  const jobID = req.params.jobID;
+
+  try {
+    await collection.updateOne(
+      { _id: new ObjectId(userId) },
+      { $addToSet: { favorites: jobID } }
+    );
+
+    res.redirect('/favourites');
+  } catch (error) {
+    console.error(error);
+    res.send('Fout bij toevoegen aan favorieten');
+  }
+});
+
+app.post('/favorites/remove/:jobID', async (req, res) => {
+  const db = client.db(process.env.DB_NAME_USER);
+  const collection = db.collection(process.env.DB_COLLECTION_USER);
+
+  if (!req.session.user) {
+    return res.redirect('/inlog');
+  }
+
+  const userId = req.session.user._id;
+  const jobID = req.params.jobID;
+
+  try {
+    await collection.updateOne(
+      { _id: new ObjectId(userId) },
+      { $pull: { favorites: jobID } }
+    );
+
+    res.redirect('/favourites');
+  } catch (error) {
+    console.error(error);
+    res.send('Fout bij verwijderen uit favorieten');
+  }
+});
+
+app.get('/favourites', async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/inlog');
+  }
+
+  const usersDb = client.db(process.env.DB_NAME_USER);
+  const usersCollection = usersDb.collection(process.env.DB_COLLECTION_USER);
+
+  const jobsDb = client.db(process.env.DB_NAME);
+  const jobsCollection = jobsDb.collection(process.env.DB_COLLECTION);
+
+  try {
+    const user = await usersCollection.findOne({
+      _id: new ObjectId(req.session.user._id)
+    });
+
+    const favoriteIds = (user.favorites || []).map(id => new ObjectId(id));
+
+    const jobs = await jobsCollection.find({
+      _id: { $in: favoriteIds }
+    }).toArray();
 
   res.render('pages/favorites', { jobs });
 });
