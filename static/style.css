@@ -152,10 +152,24 @@ header img {
 
 .overzicht {
   background-color: var(--blue-background-color);
+  padding-bottom: 3em;
+  background-image: url("image/head_achtergrond.png");
+  background-size: cover;      /* afbeelding vult de hele section */
+  background-position: center; /* afbeelding gecentreerd */
+  background-repeat: no-repeat; 
+
+  background-attachment: fixed; 
 }
 
 .overzicht h1 {
-  margin: 0;
+  color: var(--blue-text-color);
+  margin-bottom: 0em;
+}
+
+.overzicht section h1 + p {
+  margin-top: 0;
+  text-align: center;
+  font-size: 1em;
 }
 
 .overzicht section:nth-of-type(1),  .overzicht section:nth-of-type(2){
@@ -165,10 +179,18 @@ header img {
 .overzicht input {
   background-color: var(--common-background-color);
   border: none;
-  padding: 1em 2em 1em 2em;
+  padding: 1em 1em 1em 1em;
   width: 30em;
   border-radius: 1em;
+  max-height: 4em;
+  font-family:'Poppins', sans-serif;
+}
 
+.overzicht form {
+  display: flex;
+  justify-content: center; /* horizontaal centreren */
+  align-items: flex-end;   /* alles aan de onderkant uitlijnen */
+  gap: 0.5em;
 }
 
 .overzicht li {
@@ -180,8 +202,13 @@ header img {
 .overzicht ul {
   background-color: var(--common-background-color);
   padding: 2em;
-  width: 30%;
   border-radius: 0.5em;
+  transition: 1s ease;
+  justify-content: center;
+  gap: 0.5em;
+  max-width: 400px;
+  width: 100%;
+  margin: 0.5em auto;
 }
 
 .overzicht li h2 {
@@ -203,6 +230,26 @@ header img {
   margin: 0.5em;
 }
 
+.popular-searches {
+  display: flex;
+  flex-direction: column; /* p boven div */
+  align-items: center;    /* alles centreren */
+  gap: 1em;     
+}
+
+.popular-searches div {
+  display: flex;           
+  flex-wrap: wrap;         
+  justify-content: center; 
+  gap: 0.5em;              
+}
+
+@media (max-width: 800px) {
+ .overzicht section:nth-of-type(2) {
+  justify-content: right;
+}
+}
+
 .overzicht button, .detail button {
   font-family:'Poppins-regular', sans-serif;
   background-color: var(--button-color);
@@ -213,17 +260,17 @@ header img {
 }
 
 
-@media (min-width: 800px) {
-  .overzicht section:nth-of-type(2) {
+/*@media (min-width: 800px) {
+ .overzicht section:nth-of-type(2) {
   width: 60%;
 }
-}
+}*/
 
 .vacatures {
   background-color: var(--common-background-color);
   padding: 3em;
-  margin-top: 4em;
   width: 100%;
+
 }
 
 .carousel{
@@ -282,7 +329,7 @@ li:hover .dropdown {
   border-radius: 0.6em;
   color: var(--common-background-color);
   font-family:'Poppins-regular', sans-serif;
-  font-size: 0.8em;
+  font-size: 0.9em;
 }
 
 .card-header {
@@ -316,6 +363,14 @@ li:hover .dropdown {
   margin-left: 3em;
 }
 
+.vacatures h1 {
+  margin-top: 0em;
+}
+
+.overzicht h1:nth-of-type(1) {
+  margin-top: 2em;
+  text-align: center;
+}
 
 
 .detail section:nth-of-type(1) {
