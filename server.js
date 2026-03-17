@@ -105,9 +105,40 @@ app.get('/overzicht', async (req, res) => {
 
 });
 
-app.get('/filter', (req, res) => {
-  res.render('pages/filter'); 
+
+app.get("/filter", async (req, res) => {
+
+    const db = client.db(process.env.DB_NAME);
+  const collection = db.collection(process.env.DB_COLLECTION);
+
+  const location = req.query.location;
+  const company = req.query.company;
+  const work_schedule = req.query.work_schedule;
+
+  let query = {};
+
+  if (location && location !== "alles") {
+    query.locations = { $regex: location, $options: "i" };
+  }
+
+  if (company) {
+    if (Array.isArray(company)) {
+      query.company = { $in: company };
+    } else {
+      query.company = company;
+    }
+  }
+
+  if (work_schedule) {
+    query.work_schedule = work_schedule;
+  }
+
+  const jobs = await db.collection("jobs").find(query).toArray();
+
+  res.render("pages/filter", { jobs });
+
 });
+
 
 app.get('/detail/:jobID', async (req, res) => {
 
@@ -156,6 +187,7 @@ app.get('/', function(req, res) {
 app.get('/inlog', (req, res) => {
   res.render('pages/inlog', {error:""})
 })
+
 app.get('/inlog', showForm)
 app.post('/verwerkform', verwerkForm)
 

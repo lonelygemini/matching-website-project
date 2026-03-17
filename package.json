@@ -2,12 +2,13 @@
   "name": "matching-site-jobs",
   "version": "1.0.0",
   "description": "Job vacancy website",
-  "license": "ISC",
+  "license": "MIT",
   "author": "Team 4",
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
   },
   "dependencies": {
     "dotenv": "^17.3.1",
@@ -17,5 +18,15 @@
     "mongodb": "^7.1.0",
     "multer": "^2.1.1",
     "nodemon": "^3.1.14"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.3",
+    "globals": "^17.4.0"
+  },
+  "extends": "eslint:recommended",
+  "env": {
+    "node": true,
+    "es2021": true
   }
 }
