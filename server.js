@@ -100,7 +100,7 @@ app.get('/overzicht', async (req, res) => {
 
 app.get("/filter", async (req, res) => {
 
-    const db = client.db(process.env.DB_NAME);
+  const db = client.db(process.env.DB_NAME);
   const collection = db.collection(process.env.DB_COLLECTION);
 
   const location = req.query.location;
@@ -336,6 +336,10 @@ app.get('/favourites', async (req, res) => {
     }).toArray();
 
   res.render('pages/favorites', { jobs });
+} catch (error) {
+  console.error(error);
+  res.send('Fout bij ophalen van favorieten');
+}
 });
 
 // ===============================
