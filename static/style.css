@@ -307,16 +307,37 @@ li:hover .dropdown {
   margin-bottom: 3em;
 }
 
-.jobCard a.button-primary,
-.jobCard button.button-primary {
-  display: inline-block;
-  padding: 16px 16px;
-  background: #4367f2;
-  color: white;
+.jobCard-actions {
+  display: flex;
+  gap: 1em;
+  align-items: stretch;
+  flex-wrap: wrap; /* zorgt dat ze op klein scherm netjes onder elkaar mogen */
+}
+
+.jobCard-actions > * {
+  flex: 1;
+}
+
+.jobCard-actions .favorite-form {
+  margin: 0;
+  display: flex;
+}
+
+.jobCard-actions a.button-primary,
+.jobCard-actions button.button-primary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1em;
+  margin: 0;
+  background-color: var(--button-color);
+  color: var(--common-background-color);
+  border: 0;
+  border-radius: 1em;
+  font-size: 0.9em;
   text-decoration: none;
-  border: none;
-  font-size: 14px;
-  font-family: 'Poppins', sans-serif;
   cursor: pointer;
 }
 
@@ -374,7 +395,7 @@ li:hover .dropdown {
 }
 
 .fav-box {
-  background-color: #eaf3fb;
+  background-color: var(--blue-background-color);
   border-radius: 20px;
   min-height: 760px;
   padding: 68px 58px 48px 58px;
@@ -393,15 +414,15 @@ li:hover .dropdown {
 
 .favorites-sidebar a {
   text-decoration: none;
-  color: #2f2f2f;
+  color: var(--text-color);
   font-size: 18px;
   font-weight: 700;
   width: fit-content;
 }
 
 .favorites-sidebar a.active {
-  background-color: #4367f2;
-  color: white;
+  background-color: var(--button-color);
+  color: var(--common-background-color);
   padding: 14px 28px;
   border-radius: 12px;
 }
@@ -424,14 +445,14 @@ li:hover .dropdown {
   max-width: 470px;
   font-size: 15px;
   line-height: 1.45;
-  color: #404040;
+  color: var(--text-color);
 }
 
 .favorites-top-button {
   display: inline-block;
   text-decoration: none;
-  background-color: #4367f2;
-  color: white;
+  background-color: var(--button-color);
+  color: var(--common-background-color);
   padding: 16px 28px;
   border-radius: 12px;
   font-size: 16px;
@@ -447,7 +468,7 @@ li:hover .dropdown {
 
 .favorite-job-card {
   width: 420px;
-  background-color: #f8f8f8;
+  background-color: var(--common-background-color);
   border-radius: 20px;
   padding: 24px;
   box-sizing: border-box;
@@ -464,26 +485,26 @@ li:hover .dropdown {
   margin: 0 0 8px 0;
   font-size: 18px;
   font-weight: 700;
-  color: #2f2f2f;
+  color: var(--text-color);
 }
 
 .favorite-job-card__company {
   margin: 0;
   font-size: 14px;
-  color: #4a4a4a;
+  color: var(--text-color);
 }
 
 .favorite-job-card__date {
   margin: 0;
   font-size: 14px;
-  color: #5a5a5a;
+  color: var(--text-color);
 }
 
 .favorite-job-card__description {
   margin: 0 0 20px 0;
   font-size: 14px;
   line-height: 22px;
-  color: #3f3f3f;
+  color: var(--text-color);
 }
 
 .favorite-job-card__meta {
@@ -494,40 +515,49 @@ li:hover .dropdown {
 
 span {
   display: inline-block;
-  background-color: #f5efbf;
+  background-color: var(--yellow-button-color);
   border-radius: 12px;
   padding: 12px 16px;
   font-size: 14px;
-  color: #3a3a3a;
+  color: var(--text-color);
 }
 
 .favorite-job-card__actions {
   display: flex;
   gap: 12px;
+  align-items: stretch;
+}
+
+.favorite-job-card__actions > * {
+  flex: 1;
+}
+
+.favorite-job-card__form {
+  margin: 0;
+  display: flex;
 }
 
 .favorite-job-card__button {
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  width: 190px;
-  height: 44px;
-  border-radius: 12px;
-  text-decoration: none;
-  font-size: 14px;
+  width: 100%;
+  border-radius: 1em;
+  min-height: 44px;
   box-sizing: border-box;
+  margin: 0;
 }
 
 .favorite-job-card__button--primary {
-  background-color: #4367f2;
-  color: #ffffff;
+  background-color: var(--button-color);
+  color: var(--common-background-color);
   border: none;
 }
 
 .favorite-job-card__button--secondary {
   background-color: transparent;
-  color: #4367f2;
-  border: 1px solid #4367f2;
+  color: var(--button-color);
+  border: 1px solid var(--button-color);
 }
 
 /* Beperk de breedte van de paragraaf voor betere leesbaarheid */
@@ -622,8 +652,8 @@ span {
 
 /* De blauwe knop onderaan */
 .formulier form input[type="submit"], form button {
-    background-color: #4a69bd;
-    color: white;
+    background-color: var(--button-color);
+    color: var(--common-background-color);
     border: none;
     padding: 1em;
     border-radius: 1em;
