@@ -21,6 +21,23 @@
     <a href="/inlog">Inloggen</a>
 <% } %>
         </a>
+    
+        <nav>
+            <a href="filter">Vind uw baan</a>
+            <a href="favorites">Favorieten</a>
+            
+            <% if (user) { %>
+    <a href="/uitlog">Uitloggen</a>
+
+    <a href="/profiel">
+        <img src="/images/profiel.png" alt="profiel icoon">
+    </a>
+<% } else { %>
+    <a href="/inlog">Inloggen</a>
+<% } %>
+
+        </nav>
+    </header>
     </nav>
     <script src="/script.js"></script>
 </header>
