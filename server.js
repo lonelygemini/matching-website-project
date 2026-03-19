@@ -112,10 +112,10 @@ app.get('/overzicht', async (req, res) => {
 });
 
 
+
 app.get("/filter", async (req, res) => {
 
-    const db = client.db(process.env.DB_NAME);
-  const collection = db.collection(process.env.DB_COLLECTION);
+  const db = client.db(process.env.DB_NAME);
 
   const location = req.query.location;
   const company = req.query.company;
@@ -141,7 +141,8 @@ app.get("/filter", async (req, res) => {
 
   const jobs = await db.collection("jobs").find(query).toArray();
 
-  res.render("pages/filter", { jobs });
+  res.render("pages/filter", { jobs,
+  filters: req.query });
 
 });
 
@@ -201,8 +202,8 @@ function showForm(req, res) {
   res.render('pages/inlog')
 }
 async function verwerkForm(req, res) {
-    const db = client.db(process.env.DB_NAME_USER);
-  const collection = db.collection(process.env.DB_COLLECTION_USER);
+  const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
   // We halen nu 'email' uit het formulier (zorg dat name="email" in je EJS staat)
   const emailInput = req.body.email;
   const wachtwoordInput = req.body.wachtwoord;
@@ -217,7 +218,6 @@ async function verwerkForm(req, res) {
     if (!gebruikerGevonden) {
       return res.render('pages/inlog', { error: 'E-mail of wachtwoord onjuist' });
     }
-
     req.session.user = { 
       _id: gebruikerGevonden._id, 
       email: gebruikerGevonden.email 
@@ -225,7 +225,7 @@ async function verwerkForm(req, res) {
 
     // Als hij hier komt, is de login gelukt
     console.log('Login succesvol voor:', gebruikerGevonden.email);
-    return res.redirect('/overzicht');
+    return res.redirect('/overzicht')
 
   } catch (error) {
     console.error('Database fout:', error);
@@ -245,6 +245,7 @@ app.get('/uitlog', (req, res) => {
 // ===============================
 // Registratie
 // ===============================
+
 app.get('/registratie', (req, res) => {
   res.render('pages/registratie', {error:""})
 })
@@ -254,9 +255,8 @@ app.get('/registratie', (req, res) => {
 });// Route om de ingevulde data te verwerken
 
 app.post('/nieuweregistratie', async (req, res) => {
-  const db = client.db(process.env.DB_NAME_USER);
-  const collection = db.collection(process.env.DB_COLLECTION_USER);
-
+  const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
   const nieuwUser = {
     name: req.body.name,
     datum: req.body.datum,
@@ -294,8 +294,8 @@ app.get('/detail/:jobID', (req, res) => {
 // ===============================
 
 app.post('/favorites/add/:jobID', async (req, res) => {
-  const db = client.db(process.env.DB_NAME_USER);
-  const collection = db.collection(process.env.DB_COLLECTION_USER);
+  const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
 
   if (!req.session.user) {
     return res.redirect('/inlog');
@@ -318,8 +318,8 @@ app.post('/favorites/add/:jobID', async (req, res) => {
 });
 
 app.post('/favorites/remove/:jobID', async (req, res) => {
-  const db = client.db(process.env.DB_NAME_USER);
-  const collection = db.collection(process.env.DB_COLLECTION_USER);
+  const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
 
   if (!req.session.user) {
     return res.redirect('/inlog');
@@ -346,8 +346,8 @@ app.get('/favorites', async (req, res) => {
     return res.redirect('/inlog');
   }
 
-  const usersDb = client.db(process.env.DB_NAME_USER);
-  const usersCollection = usersDb.collection(process.env.DB_COLLECTION_USER);
+  const usersDb = client.db(process.env.DB_NAME_USERS);
+  const usersCollection = usersDb.collection(process.env.DB_COLLECTION_USERS);
 
   const jobsDb = client.db(process.env.DB_NAME);
   const jobsCollection = jobsDb.collection(process.env.DB_COLLECTION);
@@ -363,14 +363,65 @@ app.get('/favorites', async (req, res) => {
       _id: { $in: favoriteIds }
     }).toArray();
 
-    res.render('pages/favorites', { jobs });
-  } catch (error) {
-    console.error(error);
-    res.send('Fout bij ophalen van favorieten');
-  }
+  res.render('pages/favorites', { jobs });
+} catch (error) {
+  console.error(error);
+  res.send('Fout bij ophalen van favorieten');
+}
 });
 
+// ===============================
+// profiel
+// ===============================
+app.get('/profiel', async (req, res) => {
+  // 1. Check of de gebruiker in de sessie staat
+  if (!req.session.user) {
+      return res.redirect('/inlog'); // Niet ingelogd? Terug naar inloggen.
+  }
 
+  try {
+      const db = client.db(process.env.DB_NAME_USERS);
+      const collection = db.collection(process.env.DB_COLLECTION_USERS);
+
+      // 2. Zoek de gebruiker op basis van de ID in de sessie
+      // We gebruiken req.session.user._id die je in verwerkForm hebt opgeslagen
+      const gebruiker = await collection.findOne({ 
+          _id: new ObjectId(req.session.user._id) 
+      });
+
+      // 3. Stuur de gevonden gegevens naar de pagina
+      res.render('pages/profiel', { 
+          data: gebruiker 
+      });
+  } catch (error) {
+      console.error("Fout bij laden profiel:", error);
+      res.status(500).send("Fout bij laden profiel");
+  }
+});
+// app.get('/profiel', async (req, res) => {
+//   // 1. Maak verbinding met de specifieke Users database
+//   const db = client.db(process.env.DB_NAME_USERS); 
+//   // 2. Selecteer de juiste collectie
+//   const collection = db.collection(process.env.DB_COLLECTION_USERS);
+
+//   try {
+//       // 3. Haal de gebruikers op en zet ze in een array
+
+     
+//       const gebruikers = await collection.findOne({
+//         _id: new ObjectId(userID)
+//       })
+
+//       // 4. Stuur de data naar de EJS pagina
+//       // LET OP: de naam links (data) moet gelijk zijn aan wat je in EJS gebruikt
+//       res.render('pages/profiel', { 
+//           data: gebruikers 
+//       });
+//   } catch (error) {
+//       console.error("Fout bij ophalen profiel:", error);
+//       res.status(500).send("Database fout");
+//   }
+// });
 // ===============================
 // Route functions
 // ===============================
