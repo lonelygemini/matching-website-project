@@ -106,10 +106,10 @@ app.get('/overzicht', async (req, res) => {
 });
 
 
+
 app.get("/filter", async (req, res) => {
 
-    const db = client.db(process.env.DB_NAME);
-  const collection = db.collection(process.env.DB_COLLECTION);
+  const db = client.db(process.env.DB_NAME);
 
   const location = req.query.location;
   const company = req.query.company;
@@ -135,7 +135,8 @@ app.get("/filter", async (req, res) => {
 
   const jobs = await db.collection("jobs").find(query).toArray();
 
-  res.render("pages/filter", { jobs });
+  res.render("pages/filter", { jobs,
+  filters: req.query });
 
 });
 
@@ -258,7 +259,7 @@ app.post('/nieuweregistratie', async (req, res) => {
       Naam: nieuwUser.name, 
       search: "" 
   });
-  } catch (err) {
+  } catch (error) {
     res.send("Er ging iets mis met opslaan.");
   }
 });
