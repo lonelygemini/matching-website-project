@@ -8,6 +8,11 @@
 
 body { 
   margin: 0;
+  
+}
+
+html, body {
+  overflow-x: hidden;
 }
 
 ul {
@@ -282,23 +287,83 @@ header img {
 /******************************/
 
 
-a {
+.filterpagina a {
   text-decoration: none;
   color: black;
   font-size: 0.9em;
+
+}
+
+.filterpagina li {
+  list-style-type: none;
 }
 
 .dropdown {
-  display: none;
+
   list-style: none;
 }
 
-li:hover .dropdown {
-  display: block;
+
+
+.filterpagina input  {
+  margin: 0;
+  font-size: 0.2em;
+  gap: 3em;
+}
+
+aside form {
+  display: flex;
+  flex-direction: column; /* zorgt dat alles onder elkaar komt */
+  gap: 20px; /* ruimte tussen blokken */
+}
+
+.layout form a {
+  font-size: 1em;
+  font-weight: 600;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 0.6em;
+  
+}
+
+.job-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.filterpagina {
+  background-color: rgb(179, 221, 255);
+
 }
 
 
+.filterpagina form {
+  background-color: var(--blue-background-color);
+  margin-top: 0.8em;
+  margin-left: 1em;
+  border-radius: 1em;
+  padding-bottom: 5em;
+  width: 100%;
+  padding-top: 1em;
 
+  
+}
+
+
+aside form p {
+  font-size: 1em;
+  font-weight: 600;
+  color: black;
+  margin-left: 2.2em;
+}
+
+.buttonsubmit button {
+  margin-left: 2.5em;
+
+}
 /******************************/
 /*        RANGE SLIDER PAGINA       */
 /******************************/
@@ -314,7 +379,7 @@ li:hover .dropdown {
 
 .jobCard {
   background-color: var(--cards);
-  margin: 1em;
+  margin: 0.8em;
   padding: 2em;
   border-radius: 1em;
   max-width: 100%;
@@ -781,16 +846,18 @@ span {
 /******************************/
 
 .footer {
-  margin-top: 9.38em;
+  margin-top: 3em;
   padding: 6.25em;
-  background-color: #badcfb;
+  background-color: #c2dffa;
   display: flex;
-  gap: 10em;
+  gap: 9em;
+  padding-left: 10em;
   justify-content: center;
 }
 
 .footer a {
   font-size: 1em;
+  font-family:'Poppins', sans-serif;
 }
 
 .link1 {
@@ -808,10 +875,34 @@ span {
 form input {
   width: 25em;
   height: 2.8em;
-  border-radius: 0.25em;
+  border-radius: 0.5em;
   text-align: center;
+}
+
+.footer form input {
+  padding: 0.4em;
+  font-family:'Poppins', sans-serif;
+
 }
 
 .link3 p {
   width: 60%;
+}
+
+.link3 img {
+  height: 5em;
+  width: 8em;
+}
+
+.footer button {
+  background-color: var(--button-color);
+  font-family:'Poppins', sans-serif;
+}
+
+.footer h3 {
+  font-family:'Poppins', sans-serif;
+}
+
+.footer p {
+  font-family:'Poppins', sans-serif;
 }
