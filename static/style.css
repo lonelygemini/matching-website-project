@@ -29,7 +29,7 @@ ul {
     --yellow-button-color:#FDFAD1;
     --warning-color:#D90000;
     --cards: #e5f0f9;
-    --button-blue:#D0E9FF
+    --button-blue:#D0E9FF;
 }
 
 @font-face {
@@ -106,7 +106,7 @@ header {
   width: 100%;                  
   box-sizing: border-box;        
   padding: 1rem 3rem;            
-  background-color: var(--blue-background-color);
+  background-color: var(--common-background-color);
 }
 
 header nav {
@@ -763,6 +763,17 @@ span {
     border: 1px solid #ccc;
     border-radius: 1em;
     width: 95%;               /* Zorgt dat ze de hele breedte van het blok pakken */
+}
+/******************************/
+/*          PROFIEL           */
+/******************************/
+.data {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.profiel div p:nth-of-type(1), 
+.profiel div p:nth-of-type(3) {
+  font-weight: bold;
 }
 
 /******************************/
