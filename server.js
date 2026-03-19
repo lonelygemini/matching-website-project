@@ -278,8 +278,8 @@ app.get('/detail/:jobID', (req, res) => {
 // ===============================
 
 app.post('/favorites/add/:jobID', async (req, res) => {
-  const db = client.db(process.env.DB_NAME_USER);
-  const collection = db.collection(process.env.DB_COLLECTION_USER);
+  const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
 
   if (!req.session.user) {
     return res.redirect('/inlog');
@@ -302,8 +302,8 @@ app.post('/favorites/add/:jobID', async (req, res) => {
 });
 
 app.post('/favorites/remove/:jobID', async (req, res) => {
-  const db = client.db(process.env.DB_NAME_USER);
-  const collection = db.collection(process.env.DB_COLLECTION_USER);
+  const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
 
   if (!req.session.user) {
     return res.redirect('/inlog');
@@ -330,8 +330,8 @@ app.get('/favourites', async (req, res) => {
     return res.redirect('/inlog');
   }
 
-  const usersDb = client.db(process.env.DB_NAME_USER);
-  const usersCollection = usersDb.collection(process.env.DB_COLLECTION_USER);
+  const usersDb = client.db(process.env.DB_NAME_USERS);
+  const usersCollection = usersDb.collection(process.env.DB_COLLECTION_USERS);
 
   const jobsDb = client.db(process.env.DB_NAME);
   const jobsCollection = jobsDb.collection(process.env.DB_COLLECTION);
