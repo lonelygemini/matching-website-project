@@ -196,8 +196,8 @@ function showForm(req, res) {
   res.render('pages/inlog')
 }
 async function verwerkForm(req, res) {
-    const db = client.db(process.env.DB_NAME_USER);
-  const collection = db.collection(process.env.DB_COLLECTION_USER);
+    const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
   // We halen nu 'email' uit het formulier (zorg dat name="email" in je EJS staat)
   const emailInput = req.body.email;
   const wachtwoordInput = req.body.wachtwoord;
@@ -240,8 +240,8 @@ app.get('/registratie', (req, res) => {
 });// Route om de ingevulde data te verwerken
 
 app.post('/nieuweregistratie', async (req, res) => {
-  const db = client.db(process.env.DB_NAME_USER);
-  const collection = db.collection(process.env.DB_COLLECTION_USER);
+  const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
 
   const nieuwUser = {
     name: req.body.name,
@@ -255,11 +255,8 @@ app.post('/nieuweregistratie', async (req, res) => {
   try {
     await collection.insertOne(nieuwUser);
     // We sturen de naam mee naar de bevestigingspagina
-    res.render('pages/overzicht', { 
-      Naam: nieuwUser.name, 
-      search: "" 
-  });
-  } catch (error) {
+    res.redirect('/overzicht'); 
+  } catch (err) {
     res.send("Er ging iets mis met opslaan.");
   }
 });
@@ -283,8 +280,8 @@ app.get('/detail/:jobID', (req, res) => {
 // ===============================
 
 app.post('/favorites/add/:jobID', async (req, res) => {
-  const db = client.db(process.env.DB_NAME_USER);
-  const collection = db.collection(process.env.DB_COLLECTION_USER);
+  const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
 
   if (!req.session.user) {
     return res.redirect('/inlog');
@@ -307,8 +304,8 @@ app.post('/favorites/add/:jobID', async (req, res) => {
 });
 
 app.post('/favorites/remove/:jobID', async (req, res) => {
-  const db = client.db(process.env.DB_NAME_USER);
-  const collection = db.collection(process.env.DB_COLLECTION_USER);
+  const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
 
   if (!req.session.user) {
     return res.redirect('/inlog');
@@ -335,8 +332,8 @@ app.get('/favorites', async (req, res) => {
     return res.redirect('/inlog');
   }
 
-  const usersDb = client.db(process.env.DB_NAME_USER);
-  const usersCollection = usersDb.collection(process.env.DB_COLLECTION_USER);
+  const usersDb = client.db(process.env.DB_NAME_USERS);
+  const usersCollection = usersDb.collection(process.env.DB_COLLECTION_USERS);
 
   const jobsDb = client.db(process.env.DB_NAME);
   const jobsCollection = jobsDb.collection(process.env.DB_COLLECTION);
