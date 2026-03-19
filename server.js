@@ -254,11 +254,8 @@ app.post('/nieuweregistratie', async (req, res) => {
   try {
     await collection.insertOne(nieuwUser);
     // We sturen de naam mee naar de bevestigingspagina
-    res.render('pages/overzicht', { 
-      Naam: nieuwUser.name, 
-      search: "" 
-  });
-  } catch (error) {
+    res.redirect('/overzicht'); 
+  } catch (err) {
     res.send("Er ging iets mis met opslaan.");
   }
 });
