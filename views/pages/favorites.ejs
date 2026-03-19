@@ -7,15 +7,20 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+  <header>
+    <%- include('../partials/header') %>
+  </header>
   <main class="favorites-page">
     <section class="favorites-header">
-      <h1>← Je Favoriete Jobs</h1>
+      <a href="javascript:history.back()">
+  <h1>← Je Favoriete Jobs</h1>
+</a>
     </section>
 
     <section class="fav-box">
       <aside class="favorites-sidebar">
         <a href="/profile">Mijn Profiel</a>
-        <a href="/favourites" class="active">Favorieten</a>
+        <a href="/favorites" class="active">Favorieten</a>
       </aside>
 
       <div class="favorites-right">
@@ -24,7 +29,7 @@
             Hier vind je alle jobs die je hebt opgeslagen. Bekijk ze op elk gewenst moment en ga verder met je aanvraagprocedure.
           </p>
 
-          <a href="/filter" class="favorites-top-button">Zoek meer jobs</a>
+          <a href="/overzicht" class="favorites-top-button">Zoek meer jobs</a>
           
         </div>
 
