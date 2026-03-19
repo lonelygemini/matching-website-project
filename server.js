@@ -106,10 +106,10 @@ app.get('/overzicht', async (req, res) => {
 });
 
 
+
 app.get("/filter", async (req, res) => {
 
   const db = client.db(process.env.DB_NAME);
-  const collection = db.collection(process.env.DB_COLLECTION);
 
   const location = req.query.location;
   const company = req.query.company;
@@ -135,7 +135,8 @@ app.get("/filter", async (req, res) => {
 
   const jobs = await db.collection("jobs").find(query).toArray();
 
-  res.render("pages/filter", { jobs });
+  res.render("pages/filter", { jobs,
+  filters: req.query });
 
 });
 
@@ -253,8 +254,11 @@ app.post('/nieuweregistratie', async (req, res) => {
   try {
     await collection.insertOne(nieuwUser);
     // We sturen de naam mee naar de bevestigingspagina
-    res.redirect('/overzicht');
-  } catch (err) {
+    res.render('pages/overzicht', { 
+      Naam: nieuwUser.name, 
+      search: "" 
+  });
+  } catch (error) {
     res.send("Er ging iets mis met opslaan.");
   }
 });
@@ -294,7 +298,7 @@ app.post('/favorites/add/:jobID', async (req, res) => {
       { $addToSet: { favorites: jobID } }
     );
 
-    res.redirect('/favourites');
+    res.redirect('/favorites');
   } catch (error) {
     console.error(error);
     res.send('Fout bij toevoegen aan favorieten');
@@ -318,14 +322,14 @@ app.post('/favorites/remove/:jobID', async (req, res) => {
       { $pull: { favorites: jobID } }
     );
 
-    res.redirect('/favourites');
+    res.redirect('/favorites');
   } catch (error) {
     console.error(error);
     res.send('Fout bij verwijderen uit favorieten');
   }
 });
 
-app.get('/favourites', async (req, res) => {
+app.get('/favorites', async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/inlog');
   }

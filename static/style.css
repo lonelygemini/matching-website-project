@@ -146,40 +146,44 @@ header img {
   text-align: center;       /* Zorgt dat de tekst binnen de elementen ook gecentreerd is */
   padding: 2rem;            /* Voorkomt dat de tekst de randen raakt op mobiel */
 }
+
+
+/******************************/
 /*         OVERZICHT          */
 /******************************/
-
 
 .overzicht {
   background-color: var(--blue-background-color);
   padding-bottom: 3em;
-  background-image: url("image/head_achtergrond.png");
-  background-size: cover;      /* afbeelding vult de hele section */
-  background-position: center; /* afbeelding gecentreerd */
-  background-repeat: no-repeat; 
-
+  background-image: url("images/head_achtergrond.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   background-attachment: fixed; 
 }
 
 .overzicht h1 {
   color: var(--blue-text-color);
   margin-bottom: 0em;
+  font-size: 3rem; /* expliciet gemaakt */
+  text-align: center;
 }
 
 .overzicht section h1 + p {
   margin-top: 0;
   text-align: center;
-  font-size: 1em;
+  font-size: 1rem; /* was 1em */
 }
 
-.overzicht section:nth-of-type(1),  .overzicht section:nth-of-type(2){
+.overzicht section:nth-of-type(1),
+.overzicht section:nth-of-type(2) {
   padding: 3em;
 }
 
 .overzicht input {
   background-color: var(--common-background-color);
   border: none;
-  padding: 1em 1em 1em 1em;
+  padding: 1em;
   width: 30em;
   border-radius: 1em;
   max-height: 4em;
@@ -188,8 +192,8 @@ header img {
 
 .overzicht form {
   display: flex;
-  justify-content: center; /* horizontaal centreren */
-  align-items: flex-end;   /* alles aan de onderkant uitlijnen */
+  justify-content: center;
+  align-items: flex-end;
   gap: 0.5em;
 }
 
@@ -212,28 +216,20 @@ header img {
 }
 
 .overzicht li h2 {
-  font-size: 0.8em;
+  font-size: 1.2rem; 
   color: var(--button-color);
   padding-top: 2em;
 }
 
 .overzicht li p {
-  font-size: 0.5em;
+  font-size: 1rem; 
 }
 
-.popular-searches button {
-  background-color: var(--button-blue);
-  color: var(--button-color);
-  border: 0; 
-  padding: 1em 3em 1em 3em;
-  border-radius: 1em;
-  margin: 0.5em;
-}
 
 .popular-searches {
   display: flex;
-  flex-direction: column; /* p boven div */
-  align-items: center;    /* alles centreren */
+  flex-direction: column;
+  align-items: center;
   gap: 1em;     
 }
 
@@ -245,12 +241,13 @@ header img {
 }
 
 @media (max-width: 800px) {
- .overzicht section:nth-of-type(2) {
-  justify-content: right;
-}
+  .overzicht section:nth-of-type(2) {
+    justify-content: right;
+  }
 }
 
-.overzicht button, .detail button {
+.overzicht section a,
+.detail button {
   font-family:'Poppins-regular', sans-serif;
   background-color: var(--button-color);
   color: var(--common-background-color);
@@ -345,6 +342,8 @@ li:hover .dropdown {
 
 .jobCard h1 {
   font-size: 1.1em;
+  color: var(--text-color);
+  text-align: left;
 }
 
 .jobCard h2 {
@@ -396,23 +395,21 @@ li:hover .dropdown {
 
 .detail {
   background-color: var(--common-background-color);
-  margin-left: 3em;
 }
 
-.vacatures h1 {
-  margin-top: 0em;
-}
-
-.overzicht h1:nth-of-type(1) {
-  margin-top: 2em;
-  text-align: center;
+.detail > h1 {
+  margin-left: 2em;
+  margin-top: 3em;
+  font-size: 2em;
 }
 
 
-.detail section:nth-of-type(1) {
+
+.detail > section:nth-of-type(1) {
   background-color: var(--blue-background-color);
   padding: 4em;
   border-radius: 2em 0em 0em 2em;
+  margin-left: 3em;
 }
 
 .job-info {
