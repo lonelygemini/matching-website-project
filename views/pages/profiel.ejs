@@ -4,11 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>profiel</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
 </head>
-<header>
-    <%- include('../partials/header') %>
-</header>
 <body>
-    <h1>Welkom bij je profiel</h1>
+    <header>  
+        <%- include('../partials/header') %>
+    </header> 
+    <main class="profiel">
+        <a href="/profiel">Profiel</a>
+        <a href="/favorites">Favorieten</a>
+       <h1>Mijn profiel</h1>
+        <!-- hier moet nog de profielfoto -->
+       <section class="data">
+        <div>
+            <p>Naam:</p>
+            <p><%= data.name %></p>
+            <p>Geboortedatum:</p>
+            <p><%= data.datum %></p>
+        </div>
+        <div>
+            <p>Email: </p>
+            <p><%= data.email %></p>
+            <p>Leeftijd </p>
+            <p><%= data.leeftijd %></p>
+        </div>
+        <div>
+            <p>Woonplaats: </p>
+            <p><%= data.woonplaats %></p>
+            <p>Wachtwoord: </p>
+            <p><%= data.wachtwoord %></p>
+        </div>
+        </section>
+    </main>
+        
 </body>
 </html>

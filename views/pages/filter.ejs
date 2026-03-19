@@ -27,7 +27,7 @@
                             <label for="check-utrecht">Utrecht</label>
                         </li>
                         <li>
-                            <input type="checkbox" name="location" value="Noord-Holland" id="check-noordHolland">
+                            <input type="checkbox" name="location" value="Noord-Holland" id="check-noordHolland" <%= filters.location === "Noord-Holland" ? "checked" : "" %>>
                             <label for="check-noordHolland">Noord-Holland</label>
                         </li>
                         <li>
@@ -35,7 +35,7 @@
                             <label for="check-gelderland">Gelderland</label>
                         </li>
                         <li>
-                            <input type="checkbox" name="location" value="Zuid-Holland" id="check-zuidHolland">
+                            <input type="checkbox" name="location" value="Zuid-Holland" id="check-zuidHolland" <%= filters.location === "Zuid-Holland" ? "checked" : "" %>>
                             <label for="check-zuidHolland">Zuid-Holland</label>
                         </li>
                         <li>
@@ -73,9 +73,7 @@
                     </ul>
 
                     <div class="werkschema">
-                        <p>Werkschema</p>
-
-                        <input type="radio" name="work_schedule" value="fulltime" id="filter-fulltime">
+                        <input type="radio" name="work_schedule" value="fulltime" id="filter-fulltime" <%= filters.work_schedule === "fulltime" ? "checked" : "" %>>
                         <label for="filter-fulltime">Fulltime</label>
 
                         <input type="radio" name="work_schedule" value="parttime" id="filter-parttime">
@@ -93,8 +91,8 @@
                         </li>
 
                         <li>
-                            <input type="checkbox" name="company" value="BOLD Company">
-                            <label>BOLDCompany</label>
+                            <input type="checkbox" name="company" value="BOLD Company" <%= filters.company === "BOLD Company" ? "checked" : "" %>>>
+                            <label>BOLD Company</label>
                         </li>
 
                         <li>

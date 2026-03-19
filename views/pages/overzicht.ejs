@@ -36,18 +36,18 @@
         </ul>
         <% } %>
     </section>
-    <section>
-        <p>Populaire zoekresultaten</p>
-        <div class="popular-searches">
-            <button data-filter="PHP developer">PHP developer</button>
-            <button data-filter="Amsterdam">Amsterdam</button>
-            <button data-filter="Medior">Medior</button>
-            <button data-filter="Back-end developer">Back-end developer</button>
-            <button data-filter="Haarlem">Haarlem</button>
-            <button data-filter="ZZP">ZZP</button>
-            <button data-filter="BOLD company">BOLD company</button>
+    <section class="popular-searches">
+        <h2>Populaire zoekresultaten</h2>
+        <div>
+            <a href="/filter?location=Noord-Holland">Noord-Holland</a>
+            <a href="/filter?work_schedule=fulltime">Fulltime</a>
+            <a href="/filter?company=BOLD Company">BOLD company</a>
+            <a href="/filter?location=Zuid-Holland">Zuid-Holland</a>
+            <a href="">PHP developer</a>
+            <a href="">Back-end developer</a>
         </div>
     </section>
+</main>
 
     <section class="vacatures">
         <h2>Uitgelichte vacatures</h2>
@@ -55,8 +55,6 @@
             <%- include('../partials/kaartje', { data: randomJobs }) %>
         </div>
     </section>
-
-</main>
 </body>
 <footer>
     <%- include('../partials/footer') %>

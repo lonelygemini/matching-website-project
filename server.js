@@ -7,6 +7,7 @@ require('dotenv').config()
 // Dependencies
 // ===============================
 const express = require('express')
+const session = require('express-session')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const fetchFn = global.fetch
   ? global.fetch
@@ -17,6 +18,14 @@ const fetchFn = global.fetch
 const app = express()
 const port = 1500
 
+app.use(session({
+  secret: 'emergencykey',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false
+  }
+}))
 
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
@@ -97,10 +106,10 @@ app.get('/overzicht', async (req, res) => {
 });
 
 
+
 app.get("/filter", async (req, res) => {
 
   const db = client.db(process.env.DB_NAME);
-  const collection = db.collection(process.env.DB_COLLECTION);
 
   const location = req.query.location;
   const company = req.query.company;
@@ -126,7 +135,8 @@ app.get("/filter", async (req, res) => {
 
   const jobs = await db.collection("jobs").find(query).toArray();
 
-  res.render("pages/filter", { jobs });
+  res.render("pages/filter", { jobs,
+  filters: req.query });
 
 });
 
@@ -178,6 +188,7 @@ app.get('/', function(req, res) {
 app.get('/inlog', (req, res) => {
   res.render('pages/inlog', {error:""})
 })
+
 app.get('/inlog', showForm)
 app.post('/verwerkform', verwerkForm)
 
@@ -185,6 +196,8 @@ function showForm(req, res) {
   res.render('pages/inlog')
 }
 async function verwerkForm(req, res) {
+  const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
   // We halen nu 'email' uit het formulier (zorg dat name="email" in je EJS staat)
   const emailInput = req.body.email;
   const wachtwoordInput = req.body.wachtwoord;
@@ -199,10 +212,14 @@ async function verwerkForm(req, res) {
     if (!gebruikerGevonden) {
       return res.render('pages/inlog', { error: 'E-mail of wachtwoord onjuist' });
     }
+    req.session.user = { 
+      _id: gebruikerGevonden._id, 
+      email: gebruikerGevonden.email 
+    };
 
     // Als hij hier komt, is de login gelukt
     console.log('Login succesvol voor:', gebruikerGevonden.email);
-    return res.render('pages/overzicht', { search: "" });
+    return res.redirect('/overzicht')
 
   } catch (error) {
     console.error('Database fout:', error);
@@ -213,6 +230,7 @@ async function verwerkForm(req, res) {
 // ===============================
 // Registratie
 // ===============================
+
 app.get('/registratie', (req, res) => {
   res.render('pages/registratie', {error:""})
 })
@@ -222,6 +240,8 @@ app.get('/registratie', (req, res) => {
 });// Route om de ingevulde data te verwerken
 
 app.post('/nieuweregistratie', async (req, res) => {
+  const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
   const nieuwUser = {
     name: req.body.name,
     datum: req.body.datum,
@@ -229,6 +249,7 @@ app.post('/nieuweregistratie', async (req, res) => {
     leeftijd: req.body.leeftijd,
     woonplaats: req.body.woonplaats,
     wachtwoord: req.body.wachtwoord, // Tip: In de toekomst hier bcrypt gebruiken!
+    favorites: []
   };
   try {
     await collection.insertOne(nieuwUser);
@@ -237,7 +258,7 @@ app.post('/nieuweregistratie', async (req, res) => {
       Naam: nieuwUser.name, 
       search: "" 
   });
-  } catch (err) {
+  } catch (error) {
     res.send("Er ging iets mis met opslaan.");
   }
 });
@@ -256,44 +277,139 @@ app.get('/detail/:jobID', (req, res) => {
   res.send("job id = " +req.params.jobID); 
 });
 
-app.get('/favourites', (req, res) => {
-  const jobs = [
-    {
-      _id: '1',
-      title: 'Medior Business Developer Warmte',
-      company: 'Alliander',
-      date: 'Wed, 04 Mar 2026 03:48:58 GMT',
-      description: 'Als Medior Business <b>Developer</b> Warmte versnel je de warmtetransitie...',
-      locations: 'Amsterdam, Noord-Holland',
-      salary: '€5310 - 9016 per month',
-      url: '#'
-    },
-    {
-      _id: '2',
-      title: 'Frontend Developer',
-      company: 'Booking.com',
-      date: 'Tue, 02 Mar 2026 03:48:58 GMT',
-      description: 'Work on modern frontend applications and scalable UI systems...',
-      locations: 'Amsterdam',
-      salary: '€4500 - 6500 per month',
-      url: '#'
-    },
-    {
-      _id: '3',
-      title: 'Node.js Backend Developer',
-      company: 'Adyen',
-      date: 'Mon, 01 Mar 2026 03:48:58 GMT',
-      description: 'Build backend services for global payment infrastructure...',
-      locations: 'Amsterdam',
-      salary: '€5200 - 7200 per month',
-      url: '#'
-    }
-  ];
+// ===============================
+// Favourites
+// ===============================
 
-  res.render('pages/favorites', { jobs });
+app.post('/favorites/add/:jobID', async (req, res) => {
+  const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
+
+  if (!req.session.user) {
+    return res.redirect('/inlog');
+  }
+
+  const userId = req.session.user._id;
+  const jobID = req.params.jobID;
+
+  try {
+    await collection.updateOne(
+      { _id: new ObjectId(userId) },
+      { $addToSet: { favorites: jobID } }
+    );
+
+    res.redirect('/favorites');
+  } catch (error) {
+    console.error(error);
+    res.send('Fout bij toevoegen aan favorieten');
+  }
 });
 
+app.post('/favorites/remove/:jobID', async (req, res) => {
+  const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
 
+  if (!req.session.user) {
+    return res.redirect('/inlog');
+  }
+
+  const userId = req.session.user._id;
+  const jobID = req.params.jobID;
+
+  try {
+    await collection.updateOne(
+      { _id: new ObjectId(userId) },
+      { $pull: { favorites: jobID } }
+    );
+
+    res.redirect('/favorites');
+  } catch (error) {
+    console.error(error);
+    res.send('Fout bij verwijderen uit favorieten');
+  }
+});
+
+app.get('/favorites', async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect('/inlog');
+  }
+
+  const usersDb = client.db(process.env.DB_NAME_USERS);
+  const usersCollection = usersDb.collection(process.env.DB_COLLECTION_USERS);
+
+  const jobsDb = client.db(process.env.DB_NAME);
+  const jobsCollection = jobsDb.collection(process.env.DB_COLLECTION);
+
+  try {
+    const user = await usersCollection.findOne({
+      _id: new ObjectId(req.session.user._id)
+    });
+
+    const favoriteIds = (user.favorites || []).map(id => new ObjectId(id));
+
+    const jobs = await jobsCollection.find({
+      _id: { $in: favoriteIds }
+    }).toArray();
+
+  res.render('pages/favorites', { jobs });
+} catch (error) {
+  console.error(error);
+  res.send('Fout bij ophalen van favorieten');
+}
+});
+
+// ===============================
+// profiel
+// ===============================
+app.get('/profiel', async (req, res) => {
+  // 1. Check of de gebruiker in de sessie staat
+  if (!req.session.user) {
+      return res.redirect('/inlog'); // Niet ingelogd? Terug naar inloggen.
+  }
+
+  try {
+      const db = client.db(process.env.DB_NAME_USERS);
+      const collection = db.collection(process.env.DB_COLLECTION_USERS);
+
+      // 2. Zoek de gebruiker op basis van de ID in de sessie
+      // We gebruiken req.session.user._id die je in verwerkForm hebt opgeslagen
+      const gebruiker = await collection.findOne({ 
+          _id: new ObjectId(req.session.user._id) 
+      });
+
+      // 3. Stuur de gevonden gegevens naar de pagina
+      res.render('pages/profiel', { 
+          data: gebruiker 
+      });
+  } catch (error) {
+      console.error("Fout bij laden profiel:", error);
+      res.status(500).send("Fout bij laden profiel");
+  }
+});
+// app.get('/profiel', async (req, res) => {
+//   // 1. Maak verbinding met de specifieke Users database
+//   const db = client.db(process.env.DB_NAME_USERS); 
+//   // 2. Selecteer de juiste collectie
+//   const collection = db.collection(process.env.DB_COLLECTION_USERS);
+
+//   try {
+//       // 3. Haal de gebruikers op en zet ze in een array
+
+     
+//       const gebruikers = await collection.findOne({
+//         _id: new ObjectId(userID)
+//       })
+
+//       // 4. Stuur de data naar de EJS pagina
+//       // LET OP: de naam links (data) moet gelijk zijn aan wat je in EJS gebruikt
+//       res.render('pages/profiel', { 
+//           data: gebruikers 
+//       });
+//   } catch (error) {
+//       console.error("Fout bij ophalen profiel:", error);
+//       res.status(500).send("Database fout");
+//   }
+// });
 // ===============================
 // Route functions
 // ===============================

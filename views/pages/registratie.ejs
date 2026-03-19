@@ -16,10 +16,11 @@
         <h1>Maak je account aan</h1>
         <p>Registreer om verder te zoeken naar een baan, je voorkeuren te beheren en je opgeslagen vacatures te bekijken.<p>
         </section>
-        <form action="/nieuweregistratie" method="POST" id="registratie-form">
+        <form action="/nieuweregistratie" method="POST" id="registratie-form" enctype="multipart/form-data"> 
             <% if (error){ %>
             <p class="error"><%= error %></p> 
             <% }%> 
+            <input name="profielfoto" type="file" accept="image*">
 
             <fieldset>
                 <div>
