@@ -9,17 +9,19 @@
     <title>Filterpagina</title>
 
 </head>
-
-<body>
+<header>
+    <%- include('../partials/header') %>
+</header>
+<body class="filterpagina">
     <main>
+        <div class="layout">
         <aside>
             <form action="/filter" method="GET">
 
-                <input type="checkbox" name="location" value="alles" id="filter-alles">
-                <label for="filter-alles">Alles</label>
+           
 
-                <li><a href="#"> locatie</a>
-                    <ul class="dropdownlocatie">
+                    <ul class="dropdown">
+                        <p>Locatie</p>
                         <li>
                             <input type="checkbox" name="location" value="Utrecht" id="check-utrecht">
                             <label for="check-utrecht">Utrecht</label>
@@ -40,19 +42,51 @@
                             <input type="checkbox" name="location" value="Flevoland" id="check-Flevoland">
                             <label for="check-Flevoland">Flevoland</label>
                         </li>
+                        <li>
+                            <input type="checkbox" name="location" value="Groningen" id="check-Groningen">
+                            <label for="check-Groningen">Groningen</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="location" value="Brabant" id="check-Brabant">
+                            <label for="check-Brabant">Brabant</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="location" value="Zeeland" id="check-Zeeland">
+                            <label for="check-Zeeland">Zeeland</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="location" value="Limburg" id="check-Limburg">
+                            <label for="check-Limburg">Limburg</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="location" value="Friesland" id="check-Friesland">
+                            <label for="check-Friesland">Friesland</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="location" value="Drenthe" id="check-Drenthe">
+                            <label for="check-Drenthe">Drenthe</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="location" value="Overijssel" id="check-Overijssel">
+                            <label for="check-Overijssel">Overijssel</label>
+                        </li>
                     </ul>
 
                     <div class="werkschema">
+                        <p>Werkschema</p>
+
                         <input type="radio" name="work_schedule" value="fulltime" id="filter-fulltime">
                         <label for="filter-fulltime">Fulltime</label>
 
                         <input type="radio" name="work_schedule" value="parttime" id="filter-parttime">
                         <label for="filter-parttime">Parttime</label>
+
+                        <input type="radio" name="work_schedule" value="ZZP" id="filter-ZZP">
+                        <label for="filter-ZZP">ZZP</label>
                     </div>
 
-                <li><a href="#">Bedrijf</a>
-                    <ul class="dropdownbedrijf">
-
+                    <ul class="dropdown">
+                        <p>Bedrijf</p>
                         <li>
                             <input type="checkbox" name="company" value="CareerValue">
                             <label>CareerValue</label>
@@ -60,7 +94,7 @@
 
                         <li>
                             <input type="checkbox" name="company" value="BOLD Company">
-                            <label>BOLD Company</label>
+                            <label>BOLDCompany</label>
                         </li>
 
                         <li>
@@ -68,9 +102,28 @@
                             <label>YoungCapital</label>
                         </li>
 
+                        <li>
+                            <input type="checkbox" name="company" value="Devoteam">
+                            <label>Devoteam</label>
+                        </li>
+
+                        <li>
+                            <input type="checkbox" name="company" value="Avanade">
+                            <label>Avanade</label>
+                        </li>
+
+                        <li>
+                            <input type="checkbox" name="company" value="Devoteam">
+                            <label>Iets anders...</label>
+                        </li>
+
+
+
                     </ul>
 
+                    <div class="buttonsubmit">
                     <button type="submit">Filters toepassen</button>
+                </div>
 
 
             </form>
@@ -88,7 +141,11 @@
                             <p>Geen vacatures gevonden</p>
                             <% } %>
         </section>
+    </div>
     </main>
 </body>
+<footer>
+    <%- include('../partials/footer') %>
+</footer>
 
 </html>
