@@ -27,6 +27,11 @@ app.use(session({
   }
 }))
 
+app.use((req, res, next) => {
+  res.locals.user = req.session.user;
+  next();
+});
+
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
 
@@ -183,7 +188,7 @@ app.get('/', function(req, res) {
 });
 
 //================================
-// inlog 
+// inlog & uitlog
 //================================
 app.get('/inlog', (req, res) => {
   res.render('pages/inlog', {error:""})
@@ -226,6 +231,15 @@ async function verwerkForm(req, res) {
     return res.render('pages/inlog', { error: 'Database fout' });
   }
 }
+
+app.get('/uitlog', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.send('Fout bij uitloggen');
+    }
+    res.redirect('/');
+  });
+});
 
 // ===============================
 // Registratie
