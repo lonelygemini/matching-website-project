@@ -227,6 +227,24 @@ async function verwerkForm(req, res) {
   }
 }
 
+app.get('/uitlog', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.send('Fout bij uitloggen');
+    }
+    res.redirect('/');
+  });
+});
+
+app.get('/uitlog', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.send('Fout bij uitloggen');
+    }
+    res.redirect('/');
+  });
+});
+
 // ===============================
 // Registratie
 // ===============================
