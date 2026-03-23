@@ -544,9 +544,14 @@ margin-left: 4em;
 
 
 .favorites-header h1 {
-  margin: 0 0 28px 0;
+  margin: 28px 0 28px 0;
   font-size: 38px;
   font-weight: 700;
+}
+
+.favorites-header a {
+  text-decoration: none;
+  color: var(--text-color);
 }
 
 .fav-box {
