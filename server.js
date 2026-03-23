@@ -27,6 +27,11 @@ app.use(session({
   }
 }))
 
+app.use((req, res, next) => {
+  res.locals.user = req.session.user;
+  next();
+});
+
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
 
