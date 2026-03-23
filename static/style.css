@@ -596,7 +596,8 @@ aside form p {
 }
 
 .favorite-job-card {
-  width: 420px;
+  width: 100%;
+  max-width: 26rem;
   background-color: var(--common-background-color);
   border-radius: 20px;
   padding: 24px;
@@ -850,9 +851,9 @@ span {
 .profiel {
   background-color: var(--blue-background-color);
   border-top-left-radius: 3em;
-  padding: 5em;  
+  padding: 3em;  
   display: flex; 
-  gap: 10em; 
+  gap: 3em; 
 }
 
 .profiel aside nav a {
@@ -883,12 +884,12 @@ span {
   text-decoration: none; 
   font-weight: bold;
   font-family:'Poppins-regular', sans-serif;
-  margin-top: 10em;
+  margin-top: 2rem;
 }
 .data {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: 2em;
 }
 .data div p {
@@ -898,6 +899,19 @@ span {
 .profiel div p:nth-of-type(1), 
 .profiel div p:nth-of-type(3) {
   font-weight: bold;
+}
+
+.logout-btn {
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  color: var(--button-color);
+
+  padding: 0.9em 1.2em;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+
+  transition: all 0.2s ease;
 }
 
 
