@@ -79,12 +79,6 @@ h3 {
     color:var(--text-color);
 }
 
-p {
-    font-family:'Poppins-regular', sans-serif;
-    font-size: 0.8em;
-    color:var(--text-color);
-}
-
 
 span {
     font-family:'Poppins-regular', sans-serif;
@@ -540,13 +534,14 @@ aside form p {
 
 
 
-/******************************/
+/***********************                                   *******/
 /*        FAVORIETEN       */
 /******************************/
 
 .favorites-page {
-  padding: 24px 34px 32px 34px;
+margin-left: 4em;
 }
+
 
 .favorites-header h1 {
   margin: 0 0 28px 0;
@@ -556,10 +551,9 @@ aside form p {
 
 .fav-box {
   background-color: var(--blue-background-color);
-  border-radius: 20px;
   min-height: 760px;
   padding: 68px 58px 48px 58px;
-
+  border-top-left-radius: 3em; 
   display: grid;
   grid-template-columns: 170px 1fr;
   column-gap: 72px;
@@ -577,12 +571,16 @@ aside form p {
   color: var(--text-color);
   font-size: 18px;
   font-weight: 700;
+  font-family:'Poppins', sans-serif;
+  font-size: 1em;
   width: fit-content;
 }
 
 .favorites-sidebar a.active {
   background-color: var(--button-color);
   color: var(--common-background-color);
+  font-family:'Poppins', sans-serif;
+  font-size: 1em;
   padding: 14px 28px;
   border-radius: 12px;
 }
@@ -613,9 +611,10 @@ aside form p {
   text-decoration: none;
   background-color: var(--button-color);
   color: var(--common-background-color);
+  font-family:'Poppins', sans-serif;
+  font-size: 1em;
   padding: 16px 28px;
   border-radius: 12px;
-  font-size: 16px;
   min-width: 220px;
   text-align: center;
 }
@@ -690,6 +689,7 @@ span {
 
 .favorite-job-card__actions > * {
   flex: 1;
+  font-family:'Poppins', sans-serif;
 }
 
 .favorite-job-card__form {
