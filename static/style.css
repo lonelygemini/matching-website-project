@@ -20,6 +20,7 @@ ul {
   padding: 0;
 }
 
+
 /******************************/
 /*     CUSTOM PROPERTIES      */
 /******************************/
@@ -84,7 +85,16 @@ p {
     font-size: 0.8em;
     color:var(--text-color);
 }
+a {
+  font-family:'Poppins-regular', sans-serif;
+}
 
+
+/* a {
+  font-family:'Poppins-bold', sans-serif;
+    font-size: 1.5em;
+    color:var(--text-color);
+} */
 
 span {
     font-family:'Poppins-regular', sans-serif;
@@ -116,7 +126,6 @@ header nav {
 }
 
 header a{
-    font-family:'Poppins', sans-serif;
     font-size: 0.9em;
     color:var(--text-color);
     text-decoration: none;
@@ -294,7 +303,6 @@ header button {
 
 .overzicht section a,
 .detail button {
-  font-family:'Poppins-regular', sans-serif;
   background-color: var(--button-color);
   color: var(--common-background-color);
   border: 0; 
@@ -433,7 +441,6 @@ aside form p {
   padding: 0.4em;
   border-radius: 0.6em;
   color: var(--common-background-color);
-  font-family:'Poppins-regular', sans-serif;
   font-size: 0.9em;
 }
 
@@ -545,46 +552,8 @@ aside form p {
 /******************************/
 
 .favorites-page {
-  padding: 24px 34px 32px 34px;
-}
-
-.favorites-header h1 {
-  margin: 0 0 28px 0;
-  font-size: 38px;
-  font-weight: 700;
-}
-
-.fav-box {
-  background-color: var(--blue-background-color);
-  border-radius: 20px;
-  min-height: 760px;
-  padding: 68px 58px 48px 58px;
-
-  display: grid;
-  grid-template-columns: 170px 1fr;
-  column-gap: 72px;
-  align-items: start;
-}
-
-.favorites-sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.favorites-sidebar a {
-  text-decoration: none;
-  color: var(--text-color);
-  font-size: 18px;
-  font-weight: 700;
-  width: fit-content;
-}
-
-.favorites-sidebar a.active {
-  background-color: var(--button-color);
-  color: var(--common-background-color);
-  padding: 14px 28px;
-  border-radius: 12px;
+  margin-left: 4em;
+  margin-bottom: 2em;
 }
 
 .favorites-right {
@@ -618,7 +587,7 @@ aside form p {
   font-size: 16px;
   min-width: 220px;
   text-align: center;
-}
+} 
 
 .favorite-jobs-list {
   display: flex;
@@ -736,7 +705,6 @@ span {
   text-decoration: none; /* Verwijdert de onderstreping van de link */
   padding: 1rem 4rem;    /* Padding aan de binnenkant */
   border-radius: 1rem;
-  font-family: 'Poppins', sans-serif;
   font-weight: 500;
   transition: 0.3s;
 }
@@ -870,24 +838,134 @@ span {
     border-radius: 1em;
     width: 95%;               /* Zorgt dat ze de hele breedte van het blok pakken */
 }
+
+
 /******************************/
-/*          PROFIEL           */
+/* PROFIEL           */
 /******************************/
+.mainprofiel {
+  margin-left: 4em;
+  margin-bottom: 2em;
+}
+.profiel {
+  position: relative; 
+  background-color: var(--blue-background-color);
+  border-top-left-radius: 3em;
+  padding: 5em;  
+  display: flex; 
+  gap: 10em; 
+}
+
+.profiel aside nav a {
+  display: block;
+  margin-bottom: 1em;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  font-size: 1.3em;
+  padding-left: 2.3em;
+  transition: 0.3s;
+}
+.profiel aside nav a.active {
+  background-color: var(--button-color);
+  border-radius: 0.5em;
+  color: var(--button-text-color);
+  padding: 0.5em;
+  padding-left: 3em;
+  padding-right: 3em;
+}
+.delete-btn {
+  background: none;   
+  border: none;       
+  color: red;         
+  padding: 0;        
+  font: inherit;      
+  cursor: pointer;   
+  text-decoration: none; 
+  font-weight: bold;
+  font-family:'Poppins-regular', sans-serif;
+  margin-top: 10em;
+}
 .data {
+  flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  gap: 2em;
 }
+.data div p {
+  font-size: 1em;
+}
+
 .profiel div p:nth-of-type(1), 
 .profiel div p:nth-of-type(3) {
   font-weight: bold;
 }
+.edit-btn {
+    position: absolute;
+    bottom: 3em;
+    right: 4em;
+    background-color: var(--yellow-button-color);
+    padding: 0.8em 3.5em;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    box-shadow: 0 0.3em 0.8em rgba(0, 0, 0, 0.5);
+}
 
+/******************************/
+/*          EDITPROFIEL           */
+/******************************/
+.edit-form {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2em;
+}
+
+.edit-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: #333;
+  font-family:'Poppins-regular', sans-serif;
+  margin-bottom: 2em;
+}
+
+.edit-form input {
+  padding: 0.8em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 0.5em;
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;       
+  gap: 2em;                  
+  margin-top: 3em;          
+  grid-column: 1/-1;
+  justify-content: space-between;
+}
+.edit-buttons button {
+  background-color: var(--button-color);
+  color: white;
+  padding: 0.8em 2em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.edit-buttons a{
+  color: var(--warning-color);
+
+}
 /******************************/
 /*          FOOTER           */
 /******************************/
 
 .footer {
-  margin-top: 3em;
   padding: 6.25em;
   background-color: #c2dffa;
   display: flex;

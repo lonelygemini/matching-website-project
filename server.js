@@ -383,30 +383,83 @@ app.get('/profiel', async (req, res) => {
       res.status(500).send("Fout bij laden profiel");
   }
 });
-// app.get('/profiel', async (req, res) => {
-//   // 1. Maak verbinding met de specifieke Users database
-//   const db = client.db(process.env.DB_NAME_USERS); 
-//   // 2. Selecteer de juiste collectie
-//   const collection = db.collection(process.env.DB_COLLECTION_USERS);
 
-//   try {
-//       // 3. Haal de gebruikers op en zet ze in een array
 
-     
-//       const gebruikers = await collection.findOne({
-//         _id: new ObjectId(userID)
-//       })
+app.post('/delete-account', async (req, res) => {
+  const db = client.db(process.env.DB_NAME_USERS);
+  const collection = db.collection(process.env.DB_COLLECTION_USERS);
 
-//       // 4. Stuur de data naar de EJS pagina
-//       // LET OP: de naam links (data) moet gelijk zijn aan wat je in EJS gebruikt
-//       res.render('pages/profiel', { 
-//           data: gebruikers 
-//       });
-//   } catch (error) {
-//       console.error("Fout bij ophalen profiel:", error);
-//       res.status(500).send("Database fout");
-//   }
-// });
+  console.log("Sessie data bij delete:", req.session);
+
+    if (!req.session.user) {
+        console.log("FOUT: req.session.user is leeg!");
+        return res.status(401).send("Niet ingelogd.");
+    }
+  try {
+      // We halen de gebruiker op uit de sessie. 
+      // Controleer of jouw sessie-object inderdaad 'user' heet.
+      const users = req.session.user; 
+
+      if (!users) {
+          return res.status(401).send("Niet ingelogd.");
+      }
+
+      // Verwijderen uit de collectie 'users' in de database 'JobConnect'
+      // We gebruiken het _id dat MongoDB zelf heeft aangemaakt
+      await db.collection('Users').deleteOne({ 
+          _id: new ObjectId(users._id) 
+      });
+
+      // Belangrijk: Vernietig de sessie na het verwijderen zodat de gebruiker is uitgelogd
+      req.session.destroy();
+
+      console.log("Account succesvol verwijderd uit JobConnect.");
+      res.redirect('/'); // Stuur terug naar de home of inlogpagina
+
+  } catch (error) {
+      console.error("Fout bij verwijderen:", error);
+      res.status(500).send("Kon account niet verwijderen.");
+  }
+  
+});
+// ===============================
+// EDIT PROFIEL
+// ===============================
+app.get('/editprofiel', async (req, res) => {
+  if (!req.session.user) return res.redirect('/inlog');
+
+  const db = client.db(process.env.DB_NAME_USERS);
+  const gebruiker = await db.collection(process.env.DB_COLLECTION_USERS).findOne({ 
+      _id: new ObjectId(req.session.user._id) 
+  });
+
+  res.render('pages/editprofiel', { data: gebruiker });
+});
+app.post('/update-profiel', async (req, res) => {
+  try {
+      const db = client.db(process.env.DB_NAME_USERS);
+      const collection = db.collection(process.env.DB_COLLECTION_USERS);
+
+      await collection.updateOne(
+          { _id: new ObjectId(req.session.user._id) },
+          { $set: {
+              name: req.body.name,
+              woonplaats: req.body.woonplaats,
+              email: req.body.email
+          }}
+      );
+
+      // Update ook de sessie als de naam of email is veranderd
+      req.session.user.email = req.body.email;
+      
+      req.session.save(() => {
+          res.redirect('/profiel');
+      });
+  } catch (error) {
+      res.send("Fout bij het bijwerken van je profiel.");
+  }
+});
+
 // ===============================
 // Route functions
 // ===============================
