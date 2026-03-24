@@ -27,6 +27,11 @@ app.use(session({
   }
 }))
 
+app.use((req, res, next) => {
+  res.locals.user = req.session.user;
+  next();
+});
+
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
 
@@ -114,6 +119,7 @@ app.get("/filter", async (req, res) => {
   const location = req.query.location;
   const company = req.query.company;
   const work_schedule = req.query.work_schedule;
+  const sort = req.query.sort;
 
   let query = {};
 
@@ -133,10 +139,32 @@ app.get("/filter", async (req, res) => {
     query.work_schedule = work_schedule;
   }
 
-  const jobs = await db.collection("jobs").find(query).toArray();
+  // 👇 HIER komt je pipeline
+  const pipeline = [
+    { $match: query },
+    {
+      $addFields: {
+        dateObj: { $toDate: "$date" }
+      }
+    }
+  ];
 
-  res.render("pages/filter", { jobs,
-  filters: req.query });
+  if (sort === "newest") {
+    pipeline.push({ $sort: { dateObj: -1 } });
+  } else if (sort === "oldest") {
+    pipeline.push({ $sort: { dateObj: 1 } });
+  }
+
+  const jobs = await db.collection("jobs")
+    .aggregate(pipeline)
+    .toArray();
+
+    
+
+  res.render("pages/filter", { 
+    jobs,
+    filters: req.query 
+  });
 
 });
 
@@ -183,7 +211,7 @@ app.get('/', function(req, res) {
 });
 
 //================================
-// inlog 
+// inlog
 //================================
 app.get('/inlog', (req, res) => {
   res.render('pages/inlog', {error:""})
@@ -227,6 +255,15 @@ async function verwerkForm(req, res) {
   }
 }
 
+app.get('/uitlog', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.send('Fout bij uitloggen');
+    }
+    res.redirect('/');
+  });
+});
+
 // ===============================
 // Registratie
 // ===============================
@@ -254,7 +291,7 @@ app.post('/nieuweregistratie', async (req, res) => {
   try {
     await collection.insertOne(nieuwUser);
     // We sturen de naam mee naar de bevestigingspagina
-    res.redirect('/overzicht'); 
+    res.redirect('/overzicht');
   } catch (err) {
     res.send("Er ging iets mis met opslaan.");
   }
