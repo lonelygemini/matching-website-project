@@ -114,6 +114,7 @@ app.get("/filter", async (req, res) => {
   const location = req.query.location;
   const company = req.query.company;
   const work_schedule = req.query.work_schedule;
+  const sort = req.query.sort;
 
   let query = {};
 
@@ -133,10 +134,32 @@ app.get("/filter", async (req, res) => {
     query.work_schedule = work_schedule;
   }
 
-  const jobs = await db.collection("jobs").find(query).toArray();
+  // 👇 HIER komt je pipeline
+  const pipeline = [
+    { $match: query },
+    {
+      $addFields: {
+        dateObj: { $toDate: "$date" }
+      }
+    }
+  ];
 
-  res.render("pages/filter", { jobs,
-  filters: req.query });
+  if (sort === "newest") {
+    pipeline.push({ $sort: { dateObj: -1 } });
+  } else if (sort === "oldest") {
+    pipeline.push({ $sort: { dateObj: 1 } });
+  }
+
+  const jobs = await db.collection("jobs")
+    .aggregate(pipeline)
+    .toArray();
+
+    
+
+  res.render("pages/filter", { 
+    jobs,
+    filters: req.query 
+  });
 
 });
 
