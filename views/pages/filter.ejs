@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="style.css">
 
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@
 </header>
 <body class="filterpagina">
     <main>
+ 
         <div class="layout">
         <aside>
             <form action="/filter" method="GET">
@@ -73,6 +75,7 @@
                     </ul>
 
                     <div class="werkschema">
+                        <p>Werkschema</p>
                         <input type="radio" name="work_schedule" value="fulltime" id="filter-fulltime" <%= filters.work_schedule === "fulltime" ? "checked" : "" %>>
                         <label for="filter-fulltime">Fulltime</label>
 
@@ -91,7 +94,7 @@
                         </li>
 
                         <li>
-                            <input type="checkbox" name="company" value="BOLD Company" <%= filters.company === "BOLD Company" ? "checked" : "" %>>>
+                            <input type="checkbox" name="company" value="BOLD Company" <%= filters.company === "BOLD Company" ? "checked" : "" %>>
                             <label>BOLD Company</label>
                         </li>
 
@@ -114,10 +117,22 @@
                             <input type="checkbox" name="company" value="Devoteam">
                             <label>Iets anders...</label>
                         </li>
-
-
-
                     </ul>
+
+                    <div class="sorteren">
+                        <p>Sorteren op</p>
+                      
+                        <input type="radio" name="sort" value="newest" id="sort-newest">
+                        <label for="sort-newest">Nieuwste</label>
+                      
+                        <input type="radio" name="sort" value="oldest" id="sort-oldest">
+                        <label for="sort-oldest">Oudste</label>
+                      </div>
+
+                      <div class="slider-box">
+                        <label for="priceRange">Price Range</label>
+                        <input type="text" id="priceRange" readonly>
+                        <div id="price-range" class="slider"></div>
 
                     <div class="buttonsubmit">
                     <button type="submit">Filters toepassen</button>
@@ -126,17 +141,18 @@
 
             </form>
         </aside>
+
         <section class="job-list">
 
             <% if (jobs && jobs.length> 0) { %>
                 <% jobs.forEach(job=> { %>
                     <article class="job-cardd">
-                        <%- include('../partials/kaartje', { data:jobs }) %>
+                        <%- include('../partials/kaartje', { job:job }) %>
                     </article>
 
                     <% }) %>
                         <% } else { %>
-                            <p>Geen vacatures gevonden</p>
+                            <p>Geen vacatures gevonden...</p>
                             <% } %>
         </section>
     </div>

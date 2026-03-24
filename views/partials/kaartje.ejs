@@ -1,36 +1,35 @@
 <link rel="stylesheet" href="style.css">
 
-<% data.forEach(job => { %>
 
-<section class="jobCard">
+  <section class="jobCard">
 
-  <div class="card-header">
-    <div>
-      <h1><%= job.title %></h1>
-      <h2><%= job.company %></h2>
+    <div class="card-header">
+      <div>
+        <h1>
+          <%= job.title %>
+        </h1>
+        <h2>
+          <%= job.company %>
+        </h2>
+      </div>
+
+      <div class="extra">
+        <p>
+          <%= job.locations %>
+        </p>
+        <p><%- job.salary %></p>
+      </div>
     </div>
 
-    <div class="extra">
-      <p><%= job.locations %></p>
-      <p><%- job.salary %></p>
+    <div class="tekst">
+      <p>
+        <%= job.description %>
+      </p>
     </div>
-  </div>
 
-  <div class="tekst">
-    <p><%= job.description %></p>
-  </div>
+    <a href="/detail/<%= job._id %>">Bekijk details</a>
+    <a href="/favorites/add/<%= job._id %>">Toevoegen aan favorieten</a>
+  </section>
 
-<div class="jobCard-actions">
-  <a href="/detail/<%= job._id %>" class="button-primary">
-    Bekijk details
-  </a>
-
-  <form action="/favorites/add/<%= job._id %>" method="POST" class="favorite-form">
-    <button type="submit" class="button-primary">Toevoegen aan favorieten</button>
-  </form>
-</div>
-
-</section>
-
-<% }) %>
+  
 
