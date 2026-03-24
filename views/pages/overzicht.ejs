@@ -52,7 +52,9 @@
     <section class="vacatures">
         <h2>Uitgelichte vacatures</h2>
         <div class="carousel">
-            <%- include('../partials/kaartje', { data: randomJobs }) %>
+            <% randomJobs.forEach(job => { %>
+                <%- include('../partials/kaartje', { job: job }) %>
+            <% }) %>
         </div>
     </section>
 </body>

@@ -19,3 +19,25 @@ window.addEventListener("keydown", function(event) {
     deNav.classList.remove("toonMenu");
   }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("inbeeld");
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll("h1, h2, p").forEach((el) => {
+    observer.observe(el);
+  });
+});
+
+
+const toggle = document.getElementById("darkToggle");
+
+toggle.addEventListener("change", () => {
+  document.body.classList.toggle("dark-mode");
+});
+ 
