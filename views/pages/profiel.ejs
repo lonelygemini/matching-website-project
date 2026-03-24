@@ -14,32 +14,47 @@
     <header>  
         <%- include('../partials/header') %>
     </header> 
-    <main class="profiel">
-        <a href="/profiel">Profiel</a>
-        <a href="/favorites">Favorieten</a>
-       <h1>Mijn profiel</h1>
+    <main class="mainprofiel">
+        <h1>Mijn profiel</h1>
+        <section class="profiel">
+            <aside>
+                <nav>
+                    <a href="/profiel" class="active">Profiel</a>
+                    <a href="/favorites">Favorieten</a>
+                </nav>
+                
+                <form action="/delete-account" method="POST" class="delete-container">
+                    <button type="submit" class="delete-btn">Delete account</button>
+                </form>
+            </aside>
         <!-- hier moet nog de profielfoto -->
-       <section class="data">
-        <div>
-            <p>Naam:</p>
-            <p><%= data.name %></p>
-            <p>Geboortedatum:</p>
-            <p><%= data.datum %></p>
-        </div>
-        <div>
-            <p>Email: </p>
-            <p><%= data.email %></p>
-            <p>Leeftijd </p>
-            <p><%= data.leeftijd %></p>
-        </div>
-        <div>
-            <p>Woonplaats: </p>
-            <p><%= data.woonplaats %></p>
-            <p>Wachtwoord: </p>
-            <p><%= data.wachtwoord %></p>
-        </div>
+            <div class="data">
+                <div>
+                    <p>Naam:</p>
+                    <p><%= data.name %></p>
+                    <p>Geboortedatum:</p>
+                    <p><%= data.datum %></p>
+                </div>
+                <div>
+                    <p>Email: </p>
+                    <p><%= data.email %></p>
+                    <p>Leeftijd </p>
+                    <p><%= data.leeftijd %></p>
+                </div>
+                <div>
+                    <p>Woonplaats: </p>
+                    <p><%= data.woonplaats %></p>
+                    <p>Wachtwoord: </p>
+                    <p><%= data.wachtwoord %></p>
+                </div>
+            </div>     
+             <a href="/editprofiel" class="edit-btn">Edit</a>        
         </section>
+        
     </main>
         
 </body>
+<footer>
+    <%- include('../partials/footer') %>
+</footer>
 </html>
