@@ -28,7 +28,9 @@
     </div>
 
     <a href="/detail/<%= job._id %>">Bekijk details</a>
-    <a href="/favorites/add/<%= job._id %>">Toevoegen aan favorieten</a>
+    <form action="/favorites/add/<%= job._id %>" method="POST" class="favorite-form">
+  <button type="submit">Toevoegen aan favorieten</button>
+</form>
   </section>
 
   
