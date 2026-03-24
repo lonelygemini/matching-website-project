@@ -211,8 +211,7 @@ app.get('/', function(req, res) {
 });
 
 //================================
-// inlog & uitlog
-// inlog & uitlog
+// inlog
 //================================
 app.get('/inlog', (req, res) => {
   res.render('pages/inlog', {error:""})
@@ -255,15 +254,6 @@ async function verwerkForm(req, res) {
     return res.render('pages/inlog', { error: 'Database fout' });
   }
 }
-
-app.get('/uitlog', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.send('Fout bij uitloggen');
-    }
-    res.redirect('/');
-  });
-});
 
 app.get('/uitlog', (req, res) => {
   req.session.destroy((err) => {
