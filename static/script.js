@@ -40,4 +40,18 @@ const toggle = document.getElementById("darkToggle");
 toggle.addEventListener("change", () => {
   document.body.classList.toggle("dark-mode");
 });
+
+const logo = document.getElementById("logo");
+const icon = document.getElementById("profileIcon");
+
+toggle.addEventListener("change", () => {
+  if (document.body.classList.contains("dark-mode")) {
+    logo.src = "/logo-variants/text-only-logo-dark.png";
+    icon.src = "/images/profiel-dark.png";
+  } else {
+    logo.src = "/logo-variants/text-only-logo.png";
+    icon.src = "/images/profiel.png";
+  }
+});
+
  

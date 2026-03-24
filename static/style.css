@@ -183,7 +183,7 @@ header {
 }
 
 .index header {
-  background-color: transparent;
+  background-color: transparent !important;
 }
 
 .index header a {
@@ -191,14 +191,13 @@ header {
 }
 
 
-@media (max-width: 800px) {
+@media (max-width: 768px) {
   header {
     padding: 1em;
   }
 
   .nav-menu {
     padding-top: 3em;
-    background-color: var(--blue-background-color);
   }
 
   .index header a {
@@ -220,6 +219,7 @@ header a{
     transition: color 0.3s ease;
     
 }
+
 header a:hover {
   text-decoration: underline;
   color: var(--blue-text-color);
@@ -262,7 +262,7 @@ header button {
 .nav-menu.toonMenu {
   right: 0;
   background-color: var(--blue-background-color);
-  z-index: 9999; 
+  z-index: 9999;
 }
 
 @media (min-width: 800px) {
@@ -286,7 +286,7 @@ header button {
 /*         INDEX PAGE         */
 /******************************/
 .index {      
-  padding: 2rem;          
+  padding-bottom: 5em;          
 
   position: relative;      
   overflow: hidden;    
@@ -393,6 +393,7 @@ video {
   .indexpage {
   margin-top: 3em;
   margin-bottom: 0em;
+  margin: 2em;
 }
 }
 
@@ -511,14 +512,14 @@ body.dark-mode.overzicht {
 
 
 
-.overzicht section a {
+.overzicht section a, .jobCard a {
   font-family:'Poppins-regular', sans-serif;
   background-color: var(--button-color);
   color: var(--common-background-color);
-  border: 0; 
   border-radius: 1em;
   text-decoration: none;
   font-size: 0.8em;
+  padding: 1em;
 }
 
 .overzicht section > div > a {
@@ -667,15 +668,6 @@ aside form p {
   max-width: 100%;
   scroll-snap-align:start;
   flex: 0 0 350px;
-}
-
-.jobCard a {
-  background-color: var(--button-color);
-  padding: 0.4em;
-  border-radius: 0.6em;
-  color: var(--common-background-color);
-  font-family:'Poppins-regular', sans-serif;
-  font-size: 0.9em;
 }
 
 .card-header {
@@ -1178,7 +1170,7 @@ form input {
 .footer form input {
   padding: 0.4em;
   font-family:'Poppins', sans-serif;
-
+  border: none;
 }
 
 .link3 p {
@@ -1213,4 +1205,9 @@ form input {
   .link2 h3 {
     text-align: left;
   }
+
+  .footer form input {
+  width: 100%;
+
+}
 }

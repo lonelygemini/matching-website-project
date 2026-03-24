@@ -1,6 +1,6 @@
 <header>
     <a href="/overzicht">
-        <img id="logo" src="/logo-variants/text-only-logo.png">      
+        <img id="logo" src="/logo-variants/text-only-logo.png">   
     </a>
 
     <button class="open-menu">☰</button>
@@ -10,17 +10,13 @@
 
         <a href="/filter">Vind uw baan</a>
         <a href="/favorites">Favorieten</a>
-        
-                    <% if (user) { %>
-    <a href="/uitlog">Uitloggen</a>
-
-    <a href="/profiel">
-        <img id="profileIcon" src="/images/profiel.png">
-    </a>
-<% } else { %>
-    <a href="/inlog">Inloggen</a>
-<% } %>
+        <a href="/profiel">
+            <img id="profileIcon" src="/images/profiel.png">
         </a>
-        
+        <label class="switch">
+            <input type="checkbox" id="darkToggle">
+            <span class="slider"></span>
+        </label>
+    </nav>
     <script src="/script.js"></script>
 </header>
