@@ -289,7 +289,7 @@ app.post('/favorites/add/:jobID', async (req, res) => {
     return res.redirect('/inlog');
   }
 
-  const userId = req.session.users._id;
+  const userId = req.session.user._id;
   const jobID = req.params.jobID;
 
   try {
@@ -313,7 +313,7 @@ app.post('/favorites/remove/:jobID', async (req, res) => {
     return res.redirect('/inlog');
   }
 
-  const userId = req.session.Users._id;
+  const userId = req.session.user._id;
   const jobID = req.params.jobID;
 
   try {
@@ -394,23 +394,23 @@ app.post('/delete-account', async (req, res) => {
 
   console.log("Sessie data bij delete:", req.session);
 
-    if (!req.session.Users) {
+    if (!req.session.user) {
         console.log("FOUT: req.session.user is leeg!");
         return res.status(401).send("Niet ingelogd.");
     }
   try {
       // We halen de gebruiker op uit de sessie. 
       // Controleer of jouw sessie-object inderdaad 'user' heet.
-      const Users = req.session.Users; 
+      const users = req.session.user; 
 
-      if (!Users) {
+      if (!users) {
           return res.status(401).send("Niet ingelogd.");
       }
 
       // Verwijderen uit de collectie 'users' in de database 'JobConnect'
       // We gebruiken het _id dat MongoDB zelf heeft aangemaakt
       await db.collection('Users').deleteOne({ 
-          _id: new ObjectId(Users._id) 
+          _id: new ObjectId(users._id) 
       });
 
       // Belangrijk: Vernietig de sessie na het verwijderen zodat de gebruiker is uitgelogd
@@ -425,6 +425,44 @@ app.post('/delete-account', async (req, res) => {
   }
   
 });
+// ===============================
+// EDIT PROFIEL
+// ===============================
+app.get('/editprofiel', async (req, res) => {
+  if (!req.session.user) return res.redirect('/inlog');
+
+  const db = client.db(process.env.DB_NAME_USERS);
+  const gebruiker = await db.collection(process.env.DB_COLLECTION_USERS).findOne({ 
+      _id: new ObjectId(req.session.user._id) 
+  });
+
+  res.render('pages/editprofiel', { data: gebruiker });
+});
+app.post('/update-profiel', async (req, res) => {
+  try {
+      const db = client.db(process.env.DB_NAME_USERS);
+      const collection = db.collection(process.env.DB_COLLECTION_USERS);
+
+      await collection.updateOne(
+          { _id: new ObjectId(req.session.user._id) },
+          { $set: {
+              name: req.body.name,
+              woonplaats: req.body.woonplaats,
+              email: req.body.email
+          }}
+      );
+
+      // Update ook de sessie als de naam of email is veranderd
+      req.session.user.email = req.body.email;
+      
+      req.session.save(() => {
+          res.redirect('/profiel');
+      });
+  } catch (error) {
+      res.send("Fout bij het bijwerken van je profiel.");
+  }
+});
+
 // ===============================
 // Route functions
 // ===============================

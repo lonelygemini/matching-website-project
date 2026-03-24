@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bewerk profiel</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <main class="mainprofiel">
+        <h1>Profiel bewerken</h1>
+        <section class="profiel">
+            <form action="/update-profiel" method="POST" class="edit-form">
+                <div>
+                    <label>Naam: <input type="text" name="name" value="<%= data.name %>"></label>
+                    <label>Geboortedatum: <input type="date" name="date" value="<%= data.datum %>"></label>
+                </div>
+                <div>
+                    <label>Email: <input type="email" name="email" value="<%= data.email %>"></label>
+                    <label>Leeftijd: <input type="number" name="number" value="<%= data.leeftijd %>"></label>
+                </div>
+                <div>
+                    <label>Woonplaats: <input type="text" name="woonplaats" value="<%= data.woonplaats %>"></label>
+                    <label>Wachtwoord: <input type="text" name="name" value="<%= data.wachtwoord %>"></label>
+                </div>
+                
+                <div class="edit-buttons">
+                    <a href="/profiel">Annuleren</a>
+                    <button type="submit">Opslaan</button>
+                </div>
+            </form>
+        </section>
+    </main> 
+</body>
+</html>
