@@ -901,19 +901,6 @@ span {
     box-shadow: 0 0.3em 0.8em rgba(0, 0, 0, 0.5);
 }
 
-.logout-btn {
-  display: block;
-  text-decoration: none;
-  text-align: center;
-  color: var(--button-color);
-
-  padding: 0.9em 1.2em;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-
-  transition: all 0.2s ease;
-}
-
 /******************************/
 /*          EDITPROFIEL           */
 /******************************/
