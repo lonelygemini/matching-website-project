@@ -848,6 +848,7 @@ span {
   margin-bottom: 2em;
 }
 .profiel {
+  position: relative; 
   background-color: var(--blue-background-color);
   border-top-left-radius: 3em;
   padding: 5em;  
@@ -899,8 +900,67 @@ span {
 .profiel div p:nth-of-type(3) {
   font-weight: bold;
 }
+.edit-btn {
+    position: absolute;
+    bottom: 3em;
+    right: 4em;
+    background-color: var(--yellow-button-color);
+    padding: 0.8em 3.5em;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    box-shadow: 0 0.3em 0.8em rgba(0, 0, 0, 0.5);
+}
 
+/******************************/
+/*          EDITPROFIEL           */
+/******************************/
+.edit-form {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2em;
+}
 
+.edit-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: #333;
+  font-family:'Poppins-regular', sans-serif;
+  margin-bottom: 2em;
+}
+
+.edit-form input {
+  padding: 0.8em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 0.5em;
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;       
+  gap: 2em;                  
+  margin-top: 3em;          
+  grid-column: 1/-1;
+  justify-content: space-between;
+}
+.edit-buttons button {
+  background-color: var(--button-color);
+  color: white;
+  padding: 0.8em 2em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.edit-buttons a{
+  color: var(--warning-color);
+
+}
 /******************************/
 /*          FOOTER           */
 /******************************/
