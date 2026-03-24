@@ -188,7 +188,8 @@ app.get('/', function(req, res) {
 });
 
 //================================
-// inlog 
+// inlog & uitlog
+// inlog & uitlog
 //================================
 app.get('/inlog', (req, res) => {
   res.render('pages/inlog', {error:""})
@@ -277,7 +278,7 @@ app.post('/nieuweregistratie', async (req, res) => {
   try {
     await collection.insertOne(nieuwUser);
     // We sturen de naam mee naar de bevestigingspagina
-    res.redirect('/overzicht'); 
+    res.redirect('/overzicht');
   } catch (err) {
     res.send("Er ging iets mis met opslaan.");
   }

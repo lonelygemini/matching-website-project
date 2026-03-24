@@ -547,7 +547,7 @@ aside form p {
 
 
 
-/******************************/
+/***********************                                   *******/
 /*        FAVORIETEN       */
 /******************************/
 
@@ -582,9 +582,10 @@ aside form p {
   text-decoration: none;
   background-color: var(--button-color);
   color: var(--common-background-color);
+  font-family:'Poppins', sans-serif;
+  font-size: 1em;
   padding: 16px 28px;
   border-radius: 12px;
-  font-size: 16px;
   min-width: 220px;
   text-align: center;
 } 
@@ -660,6 +661,7 @@ span {
 
 .favorite-job-card__actions > * {
   flex: 1;
+  font-family:'Poppins', sans-serif;
 }
 
 .favorite-job-card__form {
