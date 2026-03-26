@@ -19,3 +19,8 @@ window.addEventListener("keydown", function(event) {
     deNav.classList.remove("toonMenu");
   }
 });
+
+function toggleSidebar() {
+  const layout = document.getElementById('mainLayout');
+  layout.classList.toggle('sidebar-collapsed');
+}
