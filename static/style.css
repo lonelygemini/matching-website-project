@@ -603,17 +603,11 @@ body.dark-mode.overzicht {
 }
 
 
-
-.filterpagina input  {
-  margin: 0;
-  font-size: 0.2em;
-  gap: 3em;
-}
-
 aside form {
   display: flex;
   flex-direction: column; /* zorgt dat alles onder elkaar komt */
   gap: 20px; /* ruimte tussen blokken */
+  padding-right: 1em;
 }
 
 .layout form a {
@@ -631,6 +625,7 @@ aside form {
 .job-list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  
 }
 
 .filterpagina {
@@ -639,7 +634,7 @@ aside form {
 }
 
 
-.filterpagina form {
+.filterpagina aside form {
   background-color: var(--blue-background-color);
   margin-top: 0.8em;
   margin-left: 1em;
@@ -647,8 +642,6 @@ aside form {
   padding-bottom: 5em;
   width: 100%;
   padding-top: 1em;
-
-  
 }
 
 
@@ -667,6 +660,96 @@ aside form p {
 /******************************/
 /*        FILTER BALK       */
 /******************************/ 
+
+#toggleBtn {
+  font-family:'Poppins-regular', sans-serif;
+  background-color: var(--button-color);
+  color: var(--common-background-color);
+  border: 0; 
+  padding: 0.5em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  border-radius: 0.5em;
+  margin-left: 1.2em;
+  margin-top: 1em;
+  font-size: 1em;
+}
+
+
+/* javascript */
+
+
+.layout.sidebar-collapsed {
+  grid-template-columns: 0px 1fr; 
+  gap: 0; 
+}
+
+.layout.sidebar-collapsed .job-list {
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-left: 0;
+  width: 80%;
+  margin-left: 8em;
+  
+}
+
+.layout.sidebar-collapsed aside form {
+  display: none; 
+}
+
+.layout.sidebar-collapsed aside {
+  position: relative;
+}
+
+/* zoeken */
+
+.filterpagina article input {
+  background-color: var(--blue-background-color);
+  border: none;
+  padding: 1em;
+  width: 30em;
+  border-radius: 1em;
+  max-height: 4em;
+  font-family:'Poppins', sans-serif;
+}
+
+.filterpagina article form {
+  display: flex;
+  justify-content: right;
+  align-items: flex-end;
+  gap: 0.5em;
+  padding:2em;
+}
+
+.filterpagina article li {
+  list-style: none;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 1em;
+}
+
+.filterpagina article ul {
+  background-color: var(--common-background-color);
+  padding: 2em;
+  border-radius: 0.5em;
+  transition: 1s ease;
+  max-width: 400px;
+  width: 100%;
+  margin-left: auto;
+  position: absolute; /* of absolute / fixed, afhankelijk van je doel */
+  z-index: 9999;
+  right:2em;
+}
+
+.filterpagina article li h2 {
+  font-size: 1.2rem; 
+  color: var(--button-color);
+  padding-top: 2em;
+}
+
+.filterpagina article li p {
+  font-size: 1rem; 
+}
+
+
 
 /******************************/
 /*        RANGE SLIDER PAGINA       */
@@ -1297,7 +1380,7 @@ span {
   padding-right: 4em;
 }
 
-form input {
+.footer form input {
   width: 25em;
   height: 2.8em;
   border-radius: 0.5em;

@@ -100,46 +100,26 @@ app.get('/kaartje', async (req, res) => {
     res.render('partials/kaartje', { data: data }); 
 });
 
-app.get('/overzicht', async (req, res) => {
-
+app.get(['/overzicht', '/filter'], async (req, res) => {
   const db = client.db(process.env.DB_NAME);
   const collection = db.collection(process.env.DB_COLLECTION);
 
   const search = req.query.search || "";
-
-  const jobs = await collection.find({
-    $or: [
-      { title: { $regex: search, $options: "i" } },
-      { locations: { $regex: search, $options: "i" } },
-      { company: { $regex: search, $options: "i" } }
-    ]
-  }).toArray();
-
-  // 🔹 5 willekeurige jobs
-  const randomJobs = await collection.aggregate([
-    { $sample: { size: 5 } }
-  ]).toArray();
-
-  res.render('pages/overzicht', {
-    jobs: jobs,
-    search: search,
-    randomJobs: randomJobs
-  });
-
-});
-
-
-
-app.get("/filter", async (req, res) => {
-
-  const db = client.db(process.env.DB_NAME);
-
   const location = req.query.location;
   const company = req.query.company;
   const work_schedule = req.query.work_schedule;
   const sort = req.query.sort;
 
+  // Bouw query
   let query = {};
+
+  if (search) {
+    query.$or = [
+      { title: { $regex: search, $options: "i" } },
+      { locations: { $regex: search, $options: "i" } },
+      { company: { $regex: search, $options: "i" } }
+    ];
+  }
 
   if (location && location !== "alles") {
     query.locations = { $regex: location, $options: "i" };
@@ -157,35 +137,30 @@ app.get("/filter", async (req, res) => {
     query.work_schedule = work_schedule;
   }
 
-  // 👇 HIER komt je pipeline
+  // Pipeline voor sort
   const pipeline = [
     { $match: query },
-    {
-      $addFields: {
-        dateObj: { $toDate: "$date" }
-      }
-    }
+    { $addFields: { dateObj: { $toDate: "$date" } } }
   ];
 
-  if (sort === "newest") {
-    pipeline.push({ $sort: { dateObj: -1 } });
-  } else if (sort === "oldest") {
-    pipeline.push({ $sort: { dateObj: 1 } });
-  }
+  if (sort === "newest") pipeline.push({ $sort: { dateObj: -1 } });
+  if (sort === "oldest") pipeline.push({ $sort: { dateObj: 1 } });
 
-  const jobs = await db.collection("jobs")
-    .aggregate(pipeline)
-    .toArray();
+  const jobs = await collection.aggregate(pipeline).toArray();
 
-    
+  // 5 willekeurige jobs (optioneel)
+  const randomJobs = await collection.aggregate([{ $sample: { size: 5 } }]).toArray();
 
-  res.render("pages/filter", { 
+  // Kies view
+  const viewName = req.path === '/filter' ? 'pages/filter' : 'pages/overzicht';
+
+  res.render(viewName, {
     jobs,
-    filters: req.query 
+    search: req.query.search || "",
+    randomJobs,
+    filters: req.query, // hier kan je alles van search/sort doorgeven
   });
-
 });
-
 
 app.get('/detail/:jobID', async (req, res) => {
 
