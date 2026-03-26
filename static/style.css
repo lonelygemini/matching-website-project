@@ -1219,7 +1219,20 @@ span {
   padding-right: 3em;
   font-family:'Poppins', sans-serif;
 }
-
+.edit-btn{
+  background-color: var(--yellow-button-color);
+  position: absolute;
+  right: 3em;
+  bottom: 3em;
+  padding: 1em;
+  border-radius: 1em;
+  padding-left: 3em;
+  padding-right: 3em;
+  font-family:'Poppins', sans-serif;
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 700;
+}
 .delete-btn {
   background: none;   
   border: none;       
@@ -1240,6 +1253,8 @@ span {
 .data div p {
   font-size: 1em;
 }
+
+
 @media (max-width: 800px) {
   #registratie-form fieldset {
     display: block;
