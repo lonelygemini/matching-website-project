@@ -577,15 +577,10 @@ body.dark-mode.overzicht {
 }
 
 
-
 /******************************/
 /*        FILTER PAGINA       */
 /******************************/
 
-.job-list .jobCard {
-  width: 100%;
-  height: auto;
-}
 
 .filterpagina a {
   text-decoration: none;
@@ -635,22 +630,11 @@ aside form {
 
 .job-list {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.5em;
-  align-items: start;
-}
-
-.job-cardd {
-  min-width: 0;
-}
-
-.job-list .jobCard {
-  margin: 0;
-  min-width: 0;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .filterpagina {
-  background-color: rgb(179, 221, 255);
+  background-color: var(--common-background-color);
 
 }
 
@@ -679,10 +663,14 @@ aside form p {
   margin-left: 2.5em;
 
 }
+
+/******************************/
+/*        FILTER BALK       */
+/******************************/ 
+
 /******************************/
 /*        RANGE SLIDER PAGINA       */
 /******************************/
-
 
 
 
