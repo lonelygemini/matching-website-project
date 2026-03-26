@@ -20,7 +20,6 @@ ul {
   padding: 0;
 }
 
-
 /******************************/
 /*     CUSTOM PROPERTIES      */
 /******************************/
@@ -28,6 +27,7 @@ ul {
     --text-color:#323232;
     --common-background-color:#fafafa;
     --blue-background-color:#E6F0F9;
+    --lightblue-background-color: #c2dffa;
     --button-color:#3F66F3;
     --blue-text-color:#3F66F3;
     --button-text-color:white;
@@ -36,6 +36,22 @@ ul {
     --warning-color:#D90000;
     --cards: #e5f0f9;
     --button-blue:#D0E9FF;
+    --middle-blue:#8ea7ff;
+}
+
+body.dark-mode {
+  --text-color: #f1f1f1;
+  --common-background-color: #121212;
+  --blue-background-color: #1e2a3a;
+  --button-color:#3F66F3;
+  --blue-text-color:#3F66F3;
+  --button-text-color: white;
+  --searchbar-color: #2a2a2a;
+  --yellow-button-color: #444422;
+  --warning-color: #ff4d4d;
+  --cards: #1c2a38;
+  --button-blue: #2a3f5f;
+  --middle-blue: #6b85ff;
 }
 
 @font-face {
@@ -51,6 +67,7 @@ ul {
   font-weight: 700;
   font-style: normal;
 }
+
 
 
 /******************************/
@@ -85,16 +102,7 @@ p {
     font-size: 0.8em;
     color:var(--text-color);
 }
-a {
-  font-family:'Poppins-regular', sans-serif;
-}
 
-
-/* a {
-  font-family:'Poppins-bold', sans-serif;
-    font-size: 1.5em;
-    color:var(--text-color);
-} */
 
 span {
     font-family:'Poppins-regular', sans-serif;
@@ -102,8 +110,64 @@ span {
     color:var(--text-color);
 }
 
+h1, h2, p {
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
 
+.inbeeld {
+  opacity: 1;
+  transform: translateY(0);
+}
 
+a:hover, button:hover {
+  background-color: var(--middle-blue) !important;
+}
+
+header .switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+header .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+header .slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: #ccc;
+  border-radius: 34px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.3s;
+}
+
+header .slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+header input:checked + .slider {
+  background-color: var(--button-color);
+}
+
+header input:checked + .slider:before {
+  transform: translateX(24px);
+}
 
 
 /******************************/
@@ -119,6 +183,29 @@ header {
   background-color: var(--common-background-color);
 }
 
+.index header {
+  background-color: transparent !important;
+}
+
+.index header a {
+  color: var(--common-background-color);
+}
+
+
+@media (max-width: 768px) {
+  header {
+    padding: 1em;
+  }
+
+  .nav-menu {
+    padding-top: 3em;
+  }
+
+  .index header a {
+    color: var(--text-color);
+}
+}
+
 header nav {
   align-items: center;
   display: flex;
@@ -126,21 +213,31 @@ header nav {
 }
 
 header a{
+    font-family:'Poppins', sans-serif;
     font-size: 0.9em;
     color:var(--text-color);
     text-decoration: none;
     transition: color 0.3s ease;
     
 }
+
 header a:hover {
   text-decoration: underline;
   color: var(--blue-text-color);
+  background-color: transparent !important;
 }
 
-header img {
+.logo-styling img {
   height: 4em;    
   width: auto;    
   display: block;  
+}
+.nav-menu img {
+  height: 4em;    
+  width: 4em; 
+  border-radius: 2em;   
+  display: block;  
+  object-fit: cover;
 }
 
 header button {
@@ -163,7 +260,7 @@ header button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: top;
   gap: 2rem;
 
   transition: right 0.3s ease;
@@ -172,9 +269,11 @@ header button {
 /* als menu open is */
 .nav-menu.toonMenu {
   right: 0;
+  background-color: var(--blue-background-color);
+  z-index: 9999;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 800px) {
   .open-menu,
   .sluit-menu {
     display: none;
@@ -187,19 +286,123 @@ header button {
     width: auto;
     background: none;
   }
+
+
 }
 
 /******************************/
 /*         INDEX PAGE         */
 /******************************/
-.indexpage {
+.index {      
+  padding-bottom: 5em;          
+
+  position: relative;      
+  overflow: hidden;    
+  
   display: flex;
-  flex-direction: column;   /* Zet de elementen (h1, p, div) onder elkaar */
-  justify-content: center;  /* Centreert verticaal (omdat de hoogte 100vh is) */
-  align-items: center;      /* Centreert horizontaal */
-  min-height: 80vh;        /* Gebruikt 100% van de hoogte van het scherm */
-  text-align: center;       /* Zorgt dat de tekst binnen de elementen ook gecentreerd is */
-  padding: 2rem;            /* Voorkomt dat de tekst de randen raakt op mobiel */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.index header {
+  background-color: transparent;
+}
+
+.index header a {
+  color: white;
+}
+
+.index header img {
+  filter: brightness(0) invert(1); /* logo wit maken */
+}
+
+video {
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3); 
+  z-index: -1;
+}
+
+/* Beperk de breedte van de paragraaf voor betere leesbaarheid */
+.indexpage p {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--common-background-color);
+}
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.actions a{
+  text-decoration: none; 
+  padding: 1rem 4rem;   
+  border-radius: 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  transition: 0.3s;
+}
+.actions a:first-of-type{
+  background-color: var(--button-color);
+  color: var(--button-text-color);
+}
+.actions a:last-of-type{
+  background-color: var(--blue-background-color);
+  color: var(--blue-text-color);
+}
+
+.indexpage {
+  margin-top: 6em;
+  margin-bottom: 10em;
+}
+
+.indexpage h1 {
+  text-align: center;
+  margin-bottom: 0;
+  color:var(--common-background-color);
+}
+.indexpage p{
+  text-align: center;
+  margin-top: 1em;
+}
+
+@media (max-width: 800px) {
+  .actions {
+    display: grid;
+    margin-top: 3em;
+  }
+
+  .indexpage h1 {
+    font-size: 2.5em;
+    text-align: left;
+  }
+
+  .indexpage p {
+    text-align: left;
+  }
+
+  .indexpage {
+  margin-top: 3em;
+  margin-bottom: 0em;
+  margin: 2em;
+}
 }
 
 
@@ -209,7 +412,6 @@ header button {
 
 .overzicht {
   background-color: var(--blue-background-color);
-  padding-bottom: 3em;
   background-image: url("images/head_achtergrond.png");
   background-size: cover;
   background-position: center;
@@ -217,17 +419,29 @@ header button {
   background-attachment: fixed; 
 }
 
+body.dark-mode.overzicht {
+  background-image: url("images/head_achtergrond_dark.png") !important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+}
+
+.overzicht header{ 
+  background-color: transparent;
+}
+
 .overzicht h1 {
   color: var(--blue-text-color);
   margin-bottom: 0em;
-  font-size: 3rem; /* expliciet gemaakt */
+  font-size: 3rem; 
   text-align: center;
 }
 
 .overzicht section h1 + p {
   margin-top: 0;
   text-align: center;
-  font-size: 1rem; /* was 1em */
+  font-size: 1rem;
 }
 
 .overzicht section:nth-of-type(1),
@@ -238,7 +452,7 @@ header button {
 .overzicht input {
   background-color: var(--common-background-color);
   border: none;
-  padding: 1em;
+  padding: 1.5em;
   width: 30em;
   border-radius: 1em;
   max-height: 4em;
@@ -299,15 +513,43 @@ header button {
   .overzicht section:nth-of-type(2) {
     justify-content: right;
   }
+    .popular-searches div {      
+    justify-content: left;            
+  }
 }
 
-.overzicht section a,
-.detail button {
+
+
+.overzicht section a, .jobCard a {
+  font-family:'Poppins-regular', sans-serif;
+  background-color: var(--button-color);
+  color: var(--common-background-color);
+  border-radius: 1em;
+  text-decoration: none;
+  font-size: 0.8em;
+  padding: 1em;
+}
+
+.overzicht section > div > a {
+  font-family:'Poppins-regular', sans-serif;
   background-color: var(--button-color);
   color: var(--common-background-color);
   border: 0; 
   padding: 1em;
   border-radius: 1em;
+  text-decoration: none;
+  font-size: 0.8em;
+}
+
+.detail button {
+  font-family:'Poppins-regular', sans-serif;
+  background-color: var(--button-color);
+  color: var(--common-background-color);
+  border: 0; 
+  padding: 1em;
+  border-radius: 1em;
+  text-decoration: none;
+  font-size: 0.8em;
 }
 
 
@@ -347,17 +589,21 @@ header button {
 
 .filterpagina a {
   text-decoration: none;
-  color: black;
   font-size: 0.9em;
 
 }
 
 .filterpagina li {
   list-style-type: none;
+  font-family:'Poppins-regular', sans-serif;
+}
+
+.filterpagina label {
+  list-style-type: none;
+  font-family:'Poppins-regular', sans-serif;
 }
 
 .dropdown {
-
   list-style: none;
 }
 
@@ -375,7 +621,6 @@ aside form {
   gap: 20px; /* ruimte tussen blokken */
 }
 
-
 .layout form a {
   font-size: 1em;
   font-weight: 600;
@@ -383,7 +628,7 @@ aside form {
 
 .layout {
   display: grid;
-  grid-template-columns: 15em 1fr; 
+  grid-template-columns: 1fr 1fr; 
   gap: 0.6em;
   
 }
@@ -404,18 +649,8 @@ aside form {
   min-width: 0;
 }
 
-.job-list > p {
-  font-family:'Poppins', sans-serif;
-  font-size: 1.7em;
-  margin-top: 9em;
-  margin-left: 14.5em;
-  width: 100%;
-  font-weight: bold;
-}
-
-
 .filterpagina {
-  background-color: var(--common-background-color);
+  background-color: rgb(179, 221, 255);
 
 }
 
@@ -426,7 +661,7 @@ aside form {
   margin-left: 1em;
   border-radius: 1em;
   padding-bottom: 5em;
-  width: 85%;
+  width: 100%;
   padding-top: 1em;
 
   
@@ -444,12 +679,6 @@ aside form p {
   margin-left: 2.5em;
 
 }
-
-.filterpagina form label {
-  font-family:'Poppins', sans-serif;
-  font-size: 0.9em;
-}
-
 /******************************/
 /*        RANGE SLIDER PAGINA       */
 /******************************/
@@ -473,17 +702,9 @@ aside form p {
   flex-direction: column;
 }
 
-.jobCard a {
-  background-color: var(--button-color);
-  padding: 0.4em;
-  border-radius: 0.6em;
-  color: var(--common-background-color);
-  font-size: 0.9em;
-}
-
 .card-header {
   display: grid;
-   grid-template-columns: 7fr 3fr; /* Links pakt alle ruimte, Rechts pakt wat nodig is */
+  grid-template-columns: 7fr 3fr; /* Links pakt alle ruimte, Rechts pakt wat nodig is */
   align-items: start;
   gap: 0.5em;
   width: 100%;
@@ -538,6 +759,28 @@ aside form p {
   font: inherit;
 }
 
+.jobCard-actions .favorite-form {
+  margin: 0;
+  display: flex;
+}
+
+.jobCard-actions a.button-primary,
+.jobCard-actions button.button-primary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1em;
+  margin: 0;
+  background-color: var(--button-color);
+  color: var(--common-background-color);
+  border: 0;
+  border-radius: 1em;
+  font-size: 0.9em;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 /******************************/
 /*          DETAIL            */
@@ -578,19 +821,59 @@ aside form p {
   margin-bottom: 1em;
 }
 
-.detail button {
-  margin-top: 3em;
+
+@media (max-width: 800px) {
+  .job-info {
+    display: block;
+  }
 }
 
 
-
-/***********************                                   *******/
+/******************************/
 /*        FAVORIETEN       */
 /******************************/
 
 .favorites-page {
-  margin-left: 4em;
-  margin-bottom: 2em;
+  padding: 24px 34px 32px 34px;
+}
+
+.favorites-header h1 {
+  margin: 0 0 28px 0;
+  font-size: 38px;
+  font-weight: 700;
+}
+
+.fav-box {
+  background-color: var(--blue-background-color);
+  border-radius: 20px;
+  min-height: 760px;
+  padding: 68px 58px 48px 58px;
+
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  column-gap: 72px;
+  align-items: start;
+}
+
+.favorites-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.favorites-sidebar a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 18px;
+  font-weight: 700;
+  width: fit-content;
+}
+
+.favorites-sidebar a.active {
+  background-color: var(--button-color);
+  color: var(--common-background-color);
+  padding: 14px 28px;
+  border-radius: 12px;
 }
 
 .favorites-right {
@@ -619,13 +902,12 @@ aside form p {
   text-decoration: none;
   background-color: var(--button-color);
   color: var(--common-background-color);
-  font-family:'Poppins', sans-serif;
-  font-size: 1em;
   padding: 16px 28px;
   border-radius: 12px;
+  font-size: 16px;
   min-width: 220px;
   text-align: center;
-} 
+}
 
 .favorite-jobs-list {
   display: flex;
@@ -634,8 +916,7 @@ aside form p {
 }
 
 .favorite-job-card {
-  width: 100%;
-  max-width: 26rem;
+  width: 420px;
   background-color: var(--common-background-color);
   border-radius: 20px;
   padding: 24px;
@@ -698,7 +979,6 @@ span {
 
 .favorite-job-card__actions > * {
   flex: 1;
-  font-family:'Poppins', sans-serif;
 }
 
 .favorite-job-card__form {
@@ -729,42 +1009,6 @@ span {
   border: 1px solid var(--button-color);
 }
 
-/* Beperk de breedte van de paragraaf voor betere leesbaarheid */
-.indexpage p {
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.actions {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-.actions a{
-  text-decoration: none; /* Verwijdert de onderstreping van de link */
-  padding: 1rem 4rem;    /* Padding aan de binnenkant */
-  border-radius: 1rem;
-  font-weight: 500;
-  transition: 0.3s;
-}
-.actions a:first-of-type{
-  background-color: var(--button-color);
-  color: var(--button-text-color);
-}
-.actions a:last-of-type{
-  background-color: var(--blue-background-color);
-  color: var(--blue-text-color);
-}
-
-.indexpage h1 {
-  text-align: center;
-  margin-bottom: 0;
-}
-.indexpage p{
-  text-align: center;
-  margin-top: 1em;
-}
 
 
 /******************************/
@@ -786,6 +1030,7 @@ span {
 .formulier section:first-of-type {
   flex: 1;
 }
+
 .formulier{
   display: flex;
   justify-content: space-between;
@@ -797,7 +1042,8 @@ span {
   gap: 4rem;
   display: flex;
   min-height: 100vh; /* Zorg dat de main de hele pagina vult */
-  ;}
+}
+
 .formulier label {
   font-family:'Poppins', sans-serif;
   font-weight: 300;
@@ -834,6 +1080,37 @@ span {
 }
 .formulier section {
   margin-top: -25em;
+}
+
+@media (max-width: 800px) {
+  .formulier {
+    display: grid;
+    padding: 0;
+    margin: 0;
+    min-height: 0;
+    align-items: left;
+  }
+
+  .formulier section {
+    margin-top: 0;
+    margin-left: 2em;
+  }
+
+  .formulier form {
+    display: grid;
+    padding: 2em;
+    margin: 1.5em;
+    margin-bottom: 2em;
+  }
+
+  .formulier input {
+    padding: 3em;
+    width: 60%;
+  }
+
+  .formulier form input[type="submit"], form button {
+    width: 100%;
+  }
 }
 
 /******************************/
@@ -888,12 +1165,35 @@ span {
   margin-bottom: 2em;
 }
 .profiel {
-  position: relative; 
+  display: flex; 
+  gap: 4em;
+  padding: 3em;
   background-color: var(--blue-background-color);
   border-top-left-radius: 3em;
-  padding: 3em;  
-  display: flex; 
-  gap: 3em; 
+  position: relative;
+}
+.profiel-content {
+  display: flex;
+  flex-direction: column; 
+  gap: 2em;
+  flex: 1; 
+  margin-left: 4em;
+}
+.profiel-naam{
+  display: flex;
+ 
+}
+.profiel-naam p {
+  margin-left: 2em;
+  margin-top: 1.5em;
+  font-size: x-large;
+  
+}
+.main-profile-img {
+  width: 7em;
+  height: 7em;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .profiel aside nav a {
@@ -924,10 +1224,9 @@ span {
   text-decoration: none; 
   font-weight: bold;
   font-family:'Poppins-regular', sans-serif;
-  margin-top: 2rem;
+  margin-top: 18em;
 }
 .data {
-  flex: 1;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: 2em;
@@ -935,95 +1234,55 @@ span {
 .data div p {
   font-size: 1em;
 }
+@media (max-width: 800px) {
+  #registratie-form fieldset {
+    display: block;
+  }
 
+  #registratie-form input[type="submit"], form button {
+    width: 100%;
+  }
+}
+
+/******************************/
+/*          PROFIEL           */
+/******************************/
+.data {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
 .profiel div p:nth-of-type(1), 
 .profiel div p:nth-of-type(3) {
   font-weight: bold;
 }
-.edit-btn {
-    position: absolute;
-    bottom: 3em;
-    right: 4em;
-    background-color: var(--yellow-button-color);
-    padding: 0.8em 3.5em;
-    border-radius: 10px;
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    box-shadow: 0 0.3em 0.8em rgba(0, 0, 0, 0.5);
-}
 
-/******************************/
-/*          EDITPROFIEL           */
-/******************************/
-.edit-form {
-  flex: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 2em;
-}
-
-.edit-form label {
-  display: flex;
-  flex-direction: column;
-  font-weight: bold;
-  color: #333;
-  font-family:'Poppins-regular', sans-serif;
-  margin-bottom: 2em;
-}
-
-.edit-form input {
-  padding: 0.8em;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-top: 0.5em;
-}
-
-.edit-buttons {
-  display: flex;
-  justify-content: flex-end; 
-  align-items: center;       
-  gap: 2em;                  
-  margin-top: 3em;          
-  grid-column: 1/-1;
-  justify-content: space-between;
-}
-.edit-buttons button {
-  background-color: var(--button-color);
-  color: white;
-  padding: 0.8em 2em;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.edit-buttons a{
-  color: var(--warning-color);
-
-}
 /******************************/
 /*          FOOTER           */
 /******************************/
 
 .footer {
-  padding: 6.25em;
-  background-color: #c2dffa;
+  padding: 5em 5em 5em 10em;
+  background-color: var(--blue-background-color);
   display: flex;
-  gap: 9em;
-  padding-left: 10em;
+  gap: 6em;
   justify-content: center;
 }
 
 .footer a {
   font-size: 1em;
   font-family:'Poppins', sans-serif;
+  text-decoration: none;
+  color:var(--text-color);
+}
+
+.footer a :hover {
+  color:var(--blue-text-color);
 }
 
 .link1 {
   display: flex;
   flex-direction: column;
   gap: 0.9em;
-  text-align: center;
 }
 
 .link2 h3{
@@ -1041,7 +1300,7 @@ form input {
 .footer form input {
   padding: 0.4em;
   font-family:'Poppins', sans-serif;
-
+  border: none;
 }
 
 .link3 p {
@@ -1056,6 +1315,7 @@ form input {
 .footer button {
   background-color: var(--button-color);
   font-family:'Poppins', sans-serif;
+  width: 13em;
 }
 
 .footer h3 {
@@ -1064,4 +1324,20 @@ form input {
 
 .footer p {
   font-family:'Poppins', sans-serif;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    display: block;
+    padding: 2em;
+  }
+
+  .link2 h3 {
+    text-align: left;
+  }
+
+  .footer form input {
+  width: 100%;
+
+}
 }
