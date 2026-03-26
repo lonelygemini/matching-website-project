@@ -27,6 +27,7 @@ ul {
     --text-color:#323232;
     --common-background-color:#fafafa;
     --blue-background-color:#E6F0F9;
+    --lightblue-background-color: #c2dffa;
     --button-color:#3F66F3;
     --blue-text-color:#3F66F3;
     --button-text-color:white;
@@ -226,10 +227,17 @@ header a:hover {
   background-color: transparent !important;
 }
 
-header img {
+.logo-styling img {
   height: 4em;    
   width: auto;    
   display: block;  
+}
+.nav-menu img {
+  height: 4em;    
+  width: 4em; 
+  border-radius: 2em;   
+  display: block;  
+  object-fit: cover;
 }
 
 header button {
@@ -622,7 +630,7 @@ aside form {
 }
 
 .filterpagina {
-  background-color: var(--common-background-color);
+  background-color: rgb(179, 221, 255);
 
 }
 
@@ -651,11 +659,6 @@ aside form p {
   margin-left: 2.5em;
 
 }
-
-/******************************/
-/*        FILTER BALK       */
-/******************************/ 
-
 /******************************/
 /*        RANGE SLIDER PAGINA       */
 /******************************/
@@ -1112,6 +1115,83 @@ span {
 }
 
 
+/******************************/
+/* PROFIEL           */
+/******************************/
+.mainprofiel {
+  margin-left: 4em;
+  margin-bottom: 2em;
+}
+.profiel {
+  display: flex; 
+  gap: 4em;
+  padding: 3em;
+  background-color: var(--blue-background-color);
+  border-top-left-radius: 3em;
+  position: relative;
+}
+.profiel-content {
+  display: flex;
+  flex-direction: column; 
+  gap: 2em;
+  flex: 1; 
+  margin-left: 4em;
+}
+.profiel-naam{
+  display: flex;
+ 
+}
+.profiel-naam p {
+  margin-left: 2em;
+  margin-top: 1.5em;
+  font-size: x-large;
+  
+}
+.main-profile-img {
+  width: 7em;
+  height: 7em;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profiel aside nav a {
+  display: block;
+  margin-bottom: 1em;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  font-size: 1.3em;
+  padding-left: 2.3em;
+  transition: 0.3s;
+}
+.profiel aside nav a.active {
+  background-color: var(--button-color);
+  border-radius: 0.5em;
+  color: var(--button-text-color);
+  padding: 0.5em;
+  padding-left: 3em;
+  padding-right: 3em;
+}
+.delete-btn {
+  background: none;   
+  border: none;       
+  color: red;         
+  padding: 0;        
+  font: inherit;      
+  cursor: pointer;   
+  text-decoration: none; 
+  font-weight: bold;
+  font-family:'Poppins-regular', sans-serif;
+  margin-top: 18em;
+}
+.data {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 2em;
+}
+.data div p {
+  font-size: 1em;
+}
 @media (max-width: 800px) {
   #registratie-form fieldset {
     display: block;
