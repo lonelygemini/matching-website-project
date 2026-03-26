@@ -520,7 +520,7 @@ body.dark-mode.overzicht {
 
 
 
-.overzicht section a, .jobCard a {
+.overzicht section a, .jobCard a, .favorites-top-button {
   font-family:'Poppins-regular', sans-serif;
   background-color: var(--button-color);
   color: var(--common-background-color);
@@ -577,15 +577,10 @@ body.dark-mode.overzicht {
 }
 
 
-
 /******************************/
 /*        FILTER PAGINA       */
 /******************************/
 
-.job-list .jobCard {
-  width: 100%;
-  height: auto;
-}
 
 .filterpagina a {
   text-decoration: none;
@@ -635,22 +630,11 @@ aside form {
 
 .job-list {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.5em;
-  align-items: start;
-}
-
-.job-cardd {
-  min-width: 0;
-}
-
-.job-list .jobCard {
-  margin: 0;
-  min-width: 0;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .filterpagina {
-  background-color: rgb(179, 221, 255);
+  background-color: var(--common-background-color);
 
 }
 
@@ -679,10 +663,14 @@ aside form p {
   margin-left: 2.5em;
 
 }
+
+/******************************/
+/*        FILTER BALK       */
+/******************************/ 
+
 /******************************/
 /*        RANGE SLIDER PAGINA       */
 /******************************/
-
 
 
 
@@ -757,6 +745,7 @@ aside form p {
   min-height: 3.25em;
   white-space: nowrap;
   font: inherit;
+  font-family:'Poppins-regular', sans-serif;
 }
 
 .jobCard-actions .favorite-form {
@@ -780,6 +769,7 @@ aside form p {
   font-size: 0.9em;
   text-decoration: none;
   cursor: pointer;
+  font-family:'Poppins-regular', sans-serif;
 }
 
 /******************************/
@@ -834,7 +824,12 @@ aside form p {
 /******************************/
 
 .favorites-page {
-  padding: 24px 34px 32px 34px;
+  background-color: var(--common-background-color);
+}
+
+.favorites-page main {
+  margin-left: 4em;
+  margin-bottom: 2em;
 }
 
 .favorites-header h1 {
@@ -897,17 +892,6 @@ aside form p {
   color: var(--text-color);
 }
 
-.favorites-top-button {
-  display: inline-block;
-  text-decoration: none;
-  background-color: var(--button-color);
-  color: var(--common-background-color);
-  padding: 16px 28px;
-  border-radius: 12px;
-  font-size: 16px;
-  min-width: 220px;
-  text-align: center;
-}
 
 .favorite-jobs-list {
   display: flex;
@@ -1001,12 +985,18 @@ span {
   background-color: var(--button-color);
   color: var(--common-background-color);
   border: none;
+  text-decoration: none;
+  font-size: 0.8em;
+  font-family:'Poppins-regular', sans-serif;
 }
 
 .favorite-job-card__button--secondary {
   background-color: transparent;
   color: var(--button-color);
   border: 1px solid var(--button-color);
+  text-decoration: none;
+  font-size: 0.8em;
+  font-family:'Poppins-regular', sans-serif;
 }
 
 
@@ -1014,6 +1004,10 @@ span {
 /******************************/
 /*          INLOG           */
 /******************************/
+.inlog, .registratie{
+  background-color: var(--common-background-color);
+}
+
 .formulier form{
   display: flex;
   flex-direction: column;
@@ -1049,6 +1043,7 @@ span {
   font-weight: 300;
   display: flex;
   flex-direction: column;
+  color: var(--text-color);
   
 }
 .formulier fieldset {
@@ -1072,9 +1067,10 @@ span {
     padding: 1em;
     border-radius: 1em;
     cursor: pointer;
-    font-weight: 100;
     margin-top: 3em;
+    font-family:'Poppins', sans-serif;
 }
+
 .formulier h1{
   margin-bottom: 0.3em;
 }
@@ -1142,7 +1138,8 @@ span {
 }
 
 #registratie-form input[type="submit"] {
-  width: 14.3em;       
+  width: 100%; 
+  font-family:'Poppins', sans-serif;  
 }
 
 .formulier form input[type="name"],
@@ -1161,9 +1158,14 @@ span {
 /* PROFIEL           */
 /******************************/
 .mainprofiel {
+  background-color: var(--common-background-color);
+}
+
+.mainprofiel main{
   margin-left: 4em;
   margin-bottom: 2em;
 }
+
 .profiel {
   display: flex; 
   gap: 4em;
@@ -1202,10 +1204,12 @@ span {
   text-decoration: none;
   color: black;
   font-weight: bold;
-  font-size: 1.3em;
+  font-size: 1em;
   padding-left: 2.3em;
   transition: 0.3s;
+  font-family:'Poppins', sans-serif;
 }
+
 .profiel aside nav a.active {
   background-color: var(--button-color);
   border-radius: 0.5em;
@@ -1213,7 +1217,9 @@ span {
   padding: 0.5em;
   padding-left: 3em;
   padding-right: 3em;
+  font-family:'Poppins', sans-serif;
 }
+
 .delete-btn {
   background: none;   
   border: none;       
@@ -1251,8 +1257,9 @@ span {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
-.profiel div p:nth-of-type(1), 
-.profiel div p:nth-of-type(3) {
+
+.mainprofiel div p:nth-of-type(1), 
+.mainprofiel div p:nth-of-type(3) {
   font-weight: bold;
 }
 
