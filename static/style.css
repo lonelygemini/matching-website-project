@@ -1279,6 +1279,10 @@ aside form p {
   color: var(--text-color);
   font-weight: 700;
 }
+.edit-buttons button[type="submit"] {
+  width: auto;               
+  padding: 1em;
+}
 .delete-btn {
   background: none;   
   border: none;       
