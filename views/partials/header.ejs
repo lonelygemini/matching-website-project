@@ -4,9 +4,6 @@
             <img src="/logo-variants/text-only-logo.png" alt="logo">       
         </a>
     </div>
-    <a href="/overzicht">
-        <img id="logo" src="/logo-variants/text-only-logo.png">   
-    </a>
 
     <button class="open-menu">☰</button>
 
@@ -19,7 +16,7 @@
             <% if (locals.user && locals.user.profielfoto) { %>
                 <img src="<%= user.profielfoto %>" alt="profiel icoon" class="header-avatar">
             <% } else { %>
-                <img src="/images/profiel.png" alt="profiel icoon">
+                <img id="profileIcon" src="/images/profiel.png" alt="profiel icoon">
             <% } %>
         </a>
             <img id="profileIcon" src="/images/profiel.png">
