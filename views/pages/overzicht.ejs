@@ -51,11 +51,11 @@
 
     <section class="vacatures">
         <h2>Uitgelichte vacatures</h2>
-        </div><div class="carousel">
-  <% randomJobs.forEach(job => { %>
-    <%- include('../partials/kaartje', { job: job }) %>
-  <% }) %>
-</div>
+        <div class="carousel">
+            <% randomJobs.forEach(job => { %>
+                <%- include('../partials/kaartje', { job: job }) %>
+            <% }) %>
+        </div>
     </section>
 </body>
 <footer>
