@@ -946,7 +946,7 @@ aside form p {
   margin-bottom: 24px;
 }
 
-span {
+.location {
   display: inline-block;
   background-color: var(--yellow-button-color);
   border-radius: 12px;
@@ -1016,7 +1016,7 @@ span {
   background: var(--blue-background-color);
   border-radius: 2em;
   padding: 4em;
-  padding-top: 6em;
+  padding-top: 3em;
   padding-bottom: 6em;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
@@ -1064,11 +1064,10 @@ span {
     background-color: var(--button-color);
     color: var(--common-background-color);
     border: none;
-    padding: 1em;
     border-radius: 1em;
     cursor: pointer;
-    margin-top: 3em;
     font-family:'Poppins', sans-serif;
+    width: 100%; 
 }
 
 .formulier h1{
@@ -1137,11 +1136,6 @@ span {
   margin-top: 2rem;
 }
 
-#registratie-form input[type="submit"] {
-  width: 100%; 
-  font-family:'Poppins', sans-serif;  
-}
-
 .formulier form input[type="name"],
 .formulier form input[type="age"],
 .formulier form input[type="date"],
@@ -1154,7 +1148,58 @@ span {
 }
 
 
+/* 1. Reset de negatieve margin die alles omhoog trekt */
+.formulier section {
+  margin-top: 0; 
+}
 
+/* 2. Alleen de LINKER tekst mag omhoog getrokken worden */
+.formulier > section:first-of-type {
+  margin-top: -25em; /* Pas dit getal aan tot de tekst links goed staat */
+}
+
+/* 3. De profielfoto container (binnen het formulier) */
+.profile-upload {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 2rem;
+  margin-top: 0; /* Zorg dat deze NIET omhoog vliegt */
+}
+
+.profile-upload label {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+}
+
+
+.profielfoto-registratie img {
+  width: 10em; /* Forceer een vaste maat voor het icoontje */
+  height: auto;
+}
+
+/* 5. Het plusje */
+.plus-icon {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  width: 2em;
+  height: 2em;
+  background-color: var(--button-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/* 6. Verberg de standaard input tekst */
+.profile-upload input[type="file"] {
+  display: none;
+}
 /******************************/
 /* PROFIEL           */
 /******************************/
