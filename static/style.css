@@ -482,6 +482,10 @@ body.dark-mode.overzicht {
   max-width: 400px;
   width: 100%;
   margin: 0.5em auto;
+  position: absolute;
+  z-index: 9999;
+  right: 66%;
+  left: 34%;
 }
 
 .overzicht li h2 {
@@ -520,7 +524,7 @@ body.dark-mode.overzicht {
 
 
 
-.overzicht section a, .jobCard a, .favorites-top-button {
+.overzicht section:nth-of-type(2) a, .jobCard a, .favorites-top-button {
   font-family:'Poppins-regular', sans-serif;
   background-color: var(--button-color);
   color: var(--common-background-color);
@@ -539,6 +543,10 @@ body.dark-mode.overzicht {
   border-radius: 1em;
   text-decoration: none;
   font-size: 0.8em;
+}
+
+.overzicht section:nth-of-type(1) a {
+  text-decoration: none;
 }
 
 .detail button {
