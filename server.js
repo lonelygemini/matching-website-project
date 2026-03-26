@@ -224,9 +224,13 @@ app.set('view engine', 'ejs');
 // use res.render to load up an ejs view file
 
 // index page
-app.get('/', function(req, res) {
+app.get('/', function(req, res) { 
+  if (req.session.user) { // als ingelogd
+    req.session.destroy() // log uit
+  }
   res.render('pages/index');
 });
+
 
 //================================
 // inlog
