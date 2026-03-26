@@ -12,6 +12,24 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const fetchFn = global.fetch
   ? global.fetch
   : (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args))
+const multer = require('multer');
+const path = require('path'); 
+
+// ===============================
+// Multer setup
+// ===============================
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    // Vertel multer dat bestanden in de 'uploads' map moeten landen
+    cb(null, 'static/images/uploads'); 
+  },
+  filename: (req, file, cb) => {
+    // Geef elk bestand een unieke naam (huidige tijd + extensie)
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + path.extname(file.originalname)); 
+  }
+});
+const upload = multer({ storage: storage });
 // ===============================
 // Express setup
 // ===============================
@@ -217,7 +235,8 @@ async function verwerkForm(req, res) {
     }
     req.session.user = { 
       _id: gebruikerGevonden._id, 
-      email: gebruikerGevonden.email 
+      email: gebruikerGevonden.email,
+      profielfoto: gebruikerGevonden.profielfoto
     };
 
     // Als hij hier komt, is de login gelukt
@@ -247,28 +266,43 @@ app.get('/registratie', (req, res) => {
   res.render('pages/registratie', {error:""})
 })
 
-app.get('/registratie', (req, res) => {
-  res.render('pages/registratie');
-});// Route om de ingevulde data te verwerken
+// app.get('/registratie', (req, res) => {
+//   res.render('pages/registratie');
+// });
 
-app.post('/nieuweregistratie', async (req, res) => {
+app.post('/nieuweregistratie', upload.single('profielfoto'), async (req, res) => {
   const db = client.db(process.env.DB_NAME_USERS);
   const collection = db.collection(process.env.DB_COLLECTION_USERS);
+  
+  const fotoPad = req.file 
+    ? '/images/uploads/' + req.file.filename 
+    : '/images/profiel.png';
+
   const nieuwUser = {
     name: req.body.name,
     datum: req.body.datum,
     email: req.body.email,
     leeftijd: req.body.leeftijd,
     woonplaats: req.body.woonplaats,
-    wachtwoord: req.body.wachtwoord, // Tip: In de toekomst hier bcrypt gebruiken!
+    wachtwoord: req.body.wachtwoord, 
+    profielfoto: fotoPad,
     favorites: []
   };
   try {
-    await collection.insertOne(nieuwUser);
-    // We sturen de naam mee naar de bevestigingspagina
+    const result = await collection.insertOne(nieuwUser);
+    
+    // Automatisch inloggen na registratie zodat de header direct werkt
+    req.session.user = { 
+      _id: result.insertedId, 
+      email: nieuwUser.email,
+      name: nieuwUser.name,
+      profielfoto: nieuwUser.profielfoto
+    };
+
     res.redirect('/overzicht');
   } catch (err) {
-    res.send("Er ging iets mis met opslaan.");
+    console.error(err);
+    res.send("Er ging iets mis met het opslaan van je registratie.");
   }
 });
 
@@ -281,7 +315,6 @@ app.get('/detail/:jobID', (req, res) => {
   const db = client.db(process.env.DB_NAME);
   collection = db.collection(process.env.DB_COLLECTION);
   
-  //in de db  zoeken
   console.log(req.params.jobID)
   res.send("job id = " +req.params.jobID); 
 });

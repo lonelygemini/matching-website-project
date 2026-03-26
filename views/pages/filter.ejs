@@ -15,32 +15,10 @@
 </header>
 <body class="filterpagina">
     <main>
-        <article>
-            <form action="/filter" method="GET">
-            <input 
-                type="search"
-                name="search"
-                placeholder="Zoek op titel, locatie of bedrijf"
-                value="<%= search || '' %>">
-            <button type="submit">Zoek</button>
-            </form>
-    
-            <% if (search) { %>
-            <ul>
-                <% jobs.forEach(job => { %>
-                <li>
-                    <a href="/detail/<%= job._id %>"><h2><%= job.title %></h2></a>
-                    <a href="/detail/<%= job._id %>"><p><%= job.company %></p></a>
-                    <a href="/detail/<%= job._id %>"><p><%= job.locations %></p></a>
-                </li>
-                <% }) %>
-            </ul>
-            <% } %>
-        </article>
-        <div class="layout <%= typeof sidebarOpen !== 'undefined' && !sidebarOpen ? 'sidebar-collapsed' : '' %>" id="mainLayout">
-            <aside id="filterSidebar"> 
-                <button type="button" id="toggleBtn" onclick="toggleSidebar()">☰</button>
-                <form action="/filter" method="GET">
+ 
+        <div class="layout">
+        <aside>
+            <form action="/filter" method="GET" class="dropdown collapsed">
 
            
 
