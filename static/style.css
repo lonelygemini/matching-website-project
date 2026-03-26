@@ -1154,6 +1154,7 @@ span {
 }
 
 
+
 /******************************/
 /* PROFIEL           */
 /******************************/
@@ -1268,7 +1269,51 @@ span {
 /******************************/
 /*          Edit profiel           */
 /******************************/
+.edit-form {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2em;
+}
 
+.edit-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: #333;
+  font-family:'Poppins-regular', sans-serif;
+  margin-bottom: 2em;
+}
+
+.edit-form input {
+  padding: 0.8em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 0.5em;
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;       
+  gap: 2em;                  
+  margin-top: 3em;          
+  grid-column: 1/-1;
+  justify-content: space-between;
+}
+.edit-buttons button {
+  background-color: var(--button-color);
+  color: white;
+  padding: 0.8em 2em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.edit-buttons a{
+  color: var(--warning-color);
+
+}
 /******************************/
 /*          FOOTER           */
 /******************************/
