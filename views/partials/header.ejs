@@ -1,8 +1,9 @@
 <header>
-    <a href="/overzicht">
-        <img src="/logo-variants/text-only-logo.png" alt="logo">       
-    </a>
-
+    <div class="logo-styling">
+        <a href="/overzicht">
+            <img src="/logo-variants/text-only-logo.png" alt="logo">       
+        </a>
+    </div>
     <button class="open-menu">☰</button>
 
     <nav class="nav-menu">
@@ -11,8 +12,13 @@
         <a href="/filter">Vind uw baan</a>
         <a href="/favorites">Favorieten</a>
         <a href="/profiel">
-        <img src="/images/profiel.png" alt="profiel icoon">
-    </a>
+            <% if (locals.user && locals.user.profielfoto) { %>
+                <img src="<%= user.profielfoto %>" alt="profiel icoon" class="header-avatar">
+            <% } else { %>
+                <img src="/images/profiel.png" alt="profiel icoon">
+            <% } %>
+        </a>
         
     <script src="/script.js"></script>
 </header>
+ 

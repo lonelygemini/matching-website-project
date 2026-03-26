@@ -28,6 +28,7 @@ ul {
     --text-color:#323232;
     --common-background-color:#fafafa;
     --blue-background-color:#E6F0F9;
+    --lightblue-background-color: #c2dffa;
     --button-color:#3F66F3;
     --blue-text-color:#3F66F3;
     --button-text-color:white;
@@ -137,10 +138,17 @@ header a:hover {
   color: var(--blue-text-color);
 }
 
-header img {
+.logo-styling img {
   height: 4em;    
   width: auto;    
   display: block;  
+}
+.nav-menu img {
+  height: 4em;    
+  width: 4em; 
+  border-radius: 2em;   
+  display: block;  
+  object-fit: cover;
 }
 
 header button {
@@ -366,7 +374,6 @@ aside form {
   gap: 20px; /* ruimte tussen blokken */
 }
 
-
 .layout form a {
   font-size: 1em;
   font-weight: 600;
@@ -374,7 +381,7 @@ aside form {
 
 .layout {
   display: grid;
-  grid-template-columns: 15em 1fr; 
+  grid-template-columns: 1fr 1fr; 
   gap: 0.6em;
   
 }
@@ -384,18 +391,8 @@ aside form {
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-.job-list > p {
-  font-family:'Poppins', sans-serif;
-  font-size: 1.7em;
-  margin-top: 9em;
-  margin-left: 14.5em;
-  width: 100%;
-  font-weight: bold;
-}
-
-
 .filterpagina {
-  background-color: var(--common-background-color);
+  background-color: rgb(179, 221, 255);
 
 }
 
@@ -406,7 +403,7 @@ aside form {
   margin-left: 1em;
   border-radius: 1em;
   padding-bottom: 5em;
-  width: 85%;
+  width: 100%;
   padding-top: 1em;
 
   
@@ -424,12 +421,6 @@ aside form p {
   margin-left: 2.5em;
 
 }
-
-.filterpagina form label {
-  font-family:'Poppins', sans-serif;
-  font-size: 0.9em;
-}
-
 /******************************/
 /*        RANGE SLIDER PAGINA       */
 /******************************/
@@ -448,7 +439,7 @@ aside form p {
   margin: 0.8em;
   padding: 2em;
   border-radius: 1em;
-  max-width: 120%;
+  max-width: 100%;
   scroll-snap-align:start;
   flex: 0 0 350px;
 }
@@ -485,7 +476,39 @@ aside form p {
   margin-bottom: 3em;
 }
 
+.jobCard-actions {
+  display: flex;
+  gap: 1em;
+  align-items: stretch;
+  flex-wrap: wrap; /* zorgt dat ze op klein scherm netjes onder elkaar mogen */
+}
 
+.jobCard-actions > * {
+  flex: 1;
+}
+
+.jobCard-actions .favorite-form {
+  margin: 0;
+  display: flex;
+}
+
+.jobCard-actions a.button-primary,
+.jobCard-actions button.button-primary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1em;
+  margin: 0;
+  background-color: var(--button-color);
+  color: var(--common-background-color);
+  border: 0;
+  border-radius: 1em;
+  font-size: 0.9em;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 /******************************/
 /*          DETAIL            */
@@ -532,7 +555,7 @@ aside form p {
 
 
 
-/***********************                                   *******/
+/******************************/
 /*        FAVORIETEN       */
 /******************************/
 
@@ -567,10 +590,9 @@ aside form p {
   text-decoration: none;
   background-color: var(--button-color);
   color: var(--common-background-color);
-  font-family:'Poppins', sans-serif;
-  font-size: 1em;
   padding: 16px 28px;
   border-radius: 12px;
+  font-size: 16px;
   min-width: 220px;
   text-align: center;
 } 
@@ -582,8 +604,7 @@ aside form p {
 }
 
 .favorite-job-card {
-  width: 100%;
-  max-width: 26rem;
+  width: 420px;
   background-color: var(--common-background-color);
   border-radius: 20px;
   padding: 24px;
@@ -646,7 +667,6 @@ span {
 
 .favorite-job-card__actions > * {
   flex: 1;
-  font-family:'Poppins', sans-serif;
 }
 
 .favorite-job-card__form {
@@ -836,12 +856,35 @@ span {
   margin-bottom: 2em;
 }
 .profiel {
-  position: relative; 
+  display: flex; 
+  gap: 4em;
+  padding: 3em;
   background-color: var(--blue-background-color);
   border-top-left-radius: 3em;
-  padding: 3em;  
-  display: flex; 
-  gap: 3em; 
+  position: relative;
+}
+.profiel-content {
+  display: flex;
+  flex-direction: column; 
+  gap: 2em;
+  flex: 1; 
+  margin-left: 4em;
+}
+.profiel-naam{
+  display: flex;
+ 
+}
+.profiel-naam p {
+  margin-left: 2em;
+  margin-top: 1.5em;
+  font-size: x-large;
+  
+}
+.main-profile-img {
+  width: 7em;
+  height: 7em;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .profiel aside nav a {
@@ -872,10 +915,9 @@ span {
   text-decoration: none; 
   font-weight: bold;
   font-family:'Poppins-regular', sans-serif;
-  margin-top: 2rem;
+  margin-top: 18em;
 }
 .data {
-  flex: 1;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: 2em;
