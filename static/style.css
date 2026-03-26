@@ -123,20 +123,20 @@ a:hover, button:hover {
   background-color: var(--middle-blue) !important;
 }
 
-.switch {
+header .switch {
   position: relative;
   display: inline-block;
   width: 50px;
   height: 26px;
 }
 
-.switch input {
+header .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.slider {
+header .slider {
   position: absolute;
   cursor: pointer;
   background-color: #ccc;
@@ -148,7 +148,7 @@ a:hover, button:hover {
   transition: 0.3s;
 }
 
-.slider:before {
+header .slider:before {
   position: absolute;
   content: "";
   height: 20px;
@@ -160,11 +160,11 @@ a:hover, button:hover {
   transition: 0.3s;
 }
 
-input:checked + .slider {
+header input:checked + .slider {
   background-color: var(--button-color);
 }
 
-input:checked + .slider:before {
+header input:checked + .slider:before {
   transform: translateX(24px);
 }
 
@@ -572,17 +572,21 @@ body.dark-mode.overzicht {
 
 .filterpagina a {
   text-decoration: none;
-  color: black;
   font-size: 0.9em;
 
 }
 
 .filterpagina li {
   list-style-type: none;
+  font-family:'Poppins-regular', sans-serif;
+}
+
+.filterpagina label {
+  list-style-type: none;
+  font-family:'Poppins-regular', sans-serif;
 }
 
 .dropdown {
-
   list-style: none;
 }
 
@@ -618,7 +622,7 @@ aside form {
 }
 
 .filterpagina {
-  background-color: rgb(179, 221, 255);
+  background-color: var(--common-background-color);
 
 }
 
@@ -647,6 +651,11 @@ aside form p {
   margin-left: 2.5em;
 
 }
+
+/******************************/
+/*        FILTER BALK       */
+/******************************/ 
+
 /******************************/
 /*        RANGE SLIDER PAGINA       */
 /******************************/
@@ -672,7 +681,7 @@ aside form p {
 
 .card-header {
   display: grid;
-   grid-template-columns: 7fr 3fr; /* Links pakt alle ruimte, Rechts pakt wat nodig is */
+  grid-template-columns: 7fr 3fr; /* Links pakt alle ruimte, Rechts pakt wat nodig is */
   align-items: start;
   gap: 0.5em;
   width: 100%;
