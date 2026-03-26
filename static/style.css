@@ -572,11 +572,20 @@ body.dark-mode.overzicht {
   gap: 1em;
 }
 
+.carousel .jobCard {
+  flex: 0 0 35em;
+}
+
+
 
 /******************************/
 /*        FILTER PAGINA       */
 /******************************/
 
+.job-list .jobCard {
+  width: 100%;
+  height: auto;
+}
 
 .filterpagina a {
   text-decoration: none;
@@ -626,7 +635,18 @@ aside form {
 
 .job-list {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5em;
+  align-items: start;
+}
+
+.job-cardd {
+  min-width: 0;
+}
+
+.job-list .jobCard {
+  margin: 0;
+  min-width: 0;
 }
 
 .filterpagina {
@@ -670,16 +690,16 @@ aside form p {
 /*        JOB CARDS       */
 /******************************/
 
-
-
 .jobCard {
   background-color: var(--cards);
   margin: 0.8em;
   padding: 2em;
   border-radius: 1em;
+  width: 100%;
   max-width: 100%;
-  scroll-snap-align:start;
-  flex: 0 0 350px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .card-header {
@@ -709,12 +729,34 @@ aside form p {
 .jobCard-actions {
   display: flex;
   gap: 1em;
-  align-items: stretch;
-  flex-wrap: wrap; /* zorgt dat ze op klein scherm netjes onder elkaar mogen */
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2em;
 }
 
-.jobCard-actions > * {
-  flex: 1;
+.jobCard-actions .favorite-form {
+  margin: 0;
+}
+
+.jobCard-actions a.button-primary,
+.jobCard-actions button.button-primary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1em 1.25em;
+  margin: 0;
+  background-color: var(--button-color);
+  color: var(--common-background-color);
+  border: 0;
+  border-radius: 1em;
+  font-size: 0.9em;
+  text-decoration: none;
+  cursor: pointer;
+  min-height: 3.25em;
+  white-space: nowrap;
+  font: inherit;
 }
 
 .jobCard-actions .favorite-form {
