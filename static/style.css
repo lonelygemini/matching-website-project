@@ -635,14 +635,13 @@ aside form {
 
 .layout {
   display: grid;
-  grid-template-columns: 250px 1fr; 
+  grid-template-columns: 1fr 1fr; 
   gap: 3em;
-
 }
 
 .job-list {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 2em;
 }
 
@@ -661,10 +660,9 @@ aside form {
   margin-left: 1em;
   border-radius: 1em;
   padding-bottom: 5em;
-  width: 100%;
+  width: 18em;
   padding-top: 1em;
 }
-
 
 aside form p {
   font-size: 1em;
@@ -706,16 +704,12 @@ color: white;
 
 
 .layout.sidebar-collapsed {
-  grid-template-columns: 0px 1fr; 
-  gap: 4em; 
+  grid-template-columns: 1fr;
+  gap: 0;
 }
 
 .layout.sidebar-collapsed .job-list {
   grid-template-columns: 1fr 1fr 1fr;
-  margin-left: 0;
-
- 
-  
 }
 
 .layout.sidebar-collapsed aside form {
@@ -725,6 +719,8 @@ color: white;
 .layout.sidebar-collapsed aside {
   position: relative;
 }
+
+
 
 /* zoeken */
 
@@ -1169,7 +1165,7 @@ color: white;
 
 .favorite-btn.active {
   background-color: var(--yellow-button-color) !important;
-  color: var(--text-color);
+  color: var(--text-color) !important;
 }
 
 
