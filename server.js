@@ -450,8 +450,8 @@ app.post('/delete-account', async (req, res) => {
   console.log("Sessie data bij delete:", req.session);
 
     if (!req.session.user) {
-        console.log("FOUT: req.session.user is leeg!");
-        return res.status(401).send("Niet ingelogd.");
+        console.log('FOUT: req.session.user is leeg!');
+        return res.status(401).send('Niet ingelogd.');
     }
   try {
       // We halen de gebruiker op uit de sessie. 
@@ -459,7 +459,7 @@ app.post('/delete-account', async (req, res) => {
       const users = req.session.user; 
 
       if (!users) {
-          return res.status(401).send("Niet ingelogd.");
+          return res.status(401).send('Niet ingelogd.');
       }
 
       // Verwijderen uit de collectie 'users' in de database 'JobConnect'
@@ -475,8 +475,8 @@ app.post('/delete-account', async (req, res) => {
       res.redirect('/'); // Stuur terug naar de home of inlogpagina
 
   } catch (error) {
-      console.error("Fout bij verwijderen:", error);
-      res.status(500).send("Kon account niet verwijderen.");
+      console.error('Fout bij verwijderen:', error);
+      res.status(500).send('Kon account niet verwijderen.');
   }
   
 });
@@ -514,7 +514,7 @@ app.post('/update-profiel', async (req, res) => {
           res.redirect('/profiel');
       });
   } catch (error) {
-      res.send("Fout bij het bijwerken van je profiel.");
+      res.send('Fout bij het bijwerken van je profiel.');
   }
 });
 
