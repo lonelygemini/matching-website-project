@@ -1166,15 +1166,18 @@ aside form p {
 .formulier form{
   display: flex;
   flex-direction: column;
-  margin-top: auto;
   margin-bottom: auto;
   background: var(--blue-background-color);
   border-radius: 2em;
-  padding: 4em;
-  padding-top: 3em;
-  padding-bottom: 6em;
+  padding: 6em 4em 6em 4em;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
+
+.registratie form{
+  padding: 2em 4em 2em 4em;
+}
+
+
 /* 2. Zorg dat de tekst aan de linkerkant niet te breed wordt */
 .formulier section:first-of-type {
   flex: 1;
@@ -1220,8 +1223,12 @@ aside form p {
     color: var(--common-background-color);
     border: none;
     border-radius: 1em;
+    padding: 1em;
     cursor: pointer;
     font-family:'Poppins', sans-serif;
+}
+
+.formulier form input {
     width: 100%; 
 }
 
@@ -1468,6 +1475,22 @@ aside form p {
   #registratie-form input[type="submit"], form button {
     width: 100%;
   }
+
+  .profiel {
+  display: block; 
+}
+.profiel-content {
+  display: block;
+}
+.profiel-naam{
+  display: block;
+ 
+}
+
+.delete-btn {
+  margin-top: 0;
+}
+
 }
 
 /******************************/
