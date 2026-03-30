@@ -599,6 +599,7 @@ body.dark-mode.overzicht {
 .filterpagina li {
   list-style-type: none;
   font-family:'Poppins-regular', sans-serif;
+  margin-left: 1.8em;
 }
 
 .filterpagina label {
@@ -613,8 +614,8 @@ body.dark-mode.overzicht {
 
 aside form {
   display: flex;
-  flex-direction: column; /* zorgt dat alles onder elkaar komt */
-  gap: 20px; /* ruimte tussen blokken */
+  flex-direction: column; 
+  gap: 1em; 
   padding-right: 1em;
 }
 
@@ -623,23 +624,35 @@ aside form {
   font-weight: 600;
 }
 
+.werkschema input {
+  margin-left: 2.8em;
+
+}
+
+.sorteren input {
+  margin-left: 2.6em;
+}
+
 .layout {
   display: grid;
-  grid-template-columns: 1fr 1fr; 
-  gap: 0.6em;
-  
+  grid-template-columns: 250px 1fr; 
+  gap: 3em;
+
 }
 
 .job-list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  
+  gap: 2em;
 }
+
+
 
 .filterpagina {
   background-color: var(--common-background-color);
 
 }
+
 
 
 .filterpagina aside form {
@@ -661,7 +674,10 @@ aside form p {
 }
 
 .buttonsubmit button {
-  margin-left: 2.5em;
+  width: 70%;
+  padding: 0.6em;
+  margin-left: 1.4em;
+  margin-top: 4em;
 
 }
 
@@ -670,17 +686,15 @@ aside form p {
 /******************************/ 
 
 #toggleBtn {
-  font-family:'Poppins-regular', sans-serif;
-  background-color: var(--button-color);
-  color: var(--common-background-color);
-  border: 0; 
-  padding: 0.5em;
-  padding-left: 1.5em;
-  padding-right: 1.5em;
-  border-radius: 0.5em;
-  margin-left: 1.2em;
-  margin-top: 1em;
-  font-size: 1em;
+border: 0;
+border-radius: 0.5em;
+padding: 0.6em;
+padding-left: 1em;
+padding-right: 1em;
+margin-left: 1.3em;
+background-color: var(--button-color);
+color: white;
+
 }
 
 #toggleBtn2 {
@@ -693,7 +707,7 @@ aside form p {
 
 .layout.sidebar-collapsed {
   grid-template-columns: 0px 1fr; 
-  gap: 0; 
+  gap: 4em; 
 }
 
 .layout.sidebar-collapsed .job-list {
@@ -839,7 +853,6 @@ aside form p {
   padding: 2em;
   border-radius: 1em;
   width: 100%;
-  max-width: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
