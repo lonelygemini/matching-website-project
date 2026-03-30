@@ -1090,6 +1090,10 @@ span {
   font-family:'Poppins-regular', sans-serif;
 }
 
+.favorite-btn.active {
+  background-color: #aaa;
+}
+
 
 
 /******************************/

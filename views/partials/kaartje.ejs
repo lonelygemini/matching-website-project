@@ -30,9 +30,11 @@
 <div class="jobCard-actions">
   <a href="/detail/<%= job._id %>" class="button-primary">Bekijk details</a>
 
-  <form action="/favorites/add/<%= job._id %>" method="POST" class="favorite-form">
-    <button type="submit" class="button-primary">Toevoegen aan favorieten</button>
-  </form>
+  <button 
+    class="button-primary favorite-btn" 
+    data-id="<%= job._id %>">
+    Toevoegen aan favorieten
+  </button>
 </div>
   </section>
 
