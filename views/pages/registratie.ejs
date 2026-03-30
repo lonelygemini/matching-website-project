@@ -23,16 +23,19 @@
             <% if (error){ %>
             <p class="error"><%= error %></p> 
             <% }%> 
-            <section class="profile-upload">
-                <label> 
-                  <span class="profielfoto-registratie">
-                    <img src="/images/profiel.png" alt="profiel icoon">
-                  <span class="plus-icon" aria-hidden="true">+</span>
-                  </span>
-                  
-                  <input type="file" name="profielfoto" accept="image/*">
-                </label>
-              </section>
+        <section class="profile-upload">
+    <label> 
+      <span class="profielfoto-registratie">
+        <img src="/images/profiel.png" alt="profiel icoon">
+        <span class="plus-icon" aria-hidden="true">+</span>
+      </span>
+      <input type="file" name="profielfoto" id="profielfoto-input" accept="image/*">
+    </label>
+
+    <p id="upload-melding" class="upload-success-msg" aria-live="polite">
+        ✅ Profielfoto is toegevoegd
+    </p>
+</section>
             <fieldset>
                 <div>
                     <label for="name">Voor en achternaam:</label>
@@ -60,6 +63,8 @@
                 <p>Heb je al een account? <a href="inlog">Log in</a></p>
             </div>
         </form>
+        <script src="/script.js"></script>
+
 </body>
 
 </html>

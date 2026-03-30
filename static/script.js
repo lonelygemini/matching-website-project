@@ -61,6 +61,50 @@ function toggleSidebar() {
 }
 
 //================================
+// Melding profielfoto
+//================================
+
+{
+  const initFotoMelding = () => {
+    const fotoInput = document.getElementById('profielfoto-input');
+    const melding = document.getElementById('upload-melding');
+
+    if (fotoInput && melding) {
+      fotoInput.addEventListener('change', () => {
+        if (fotoInput.files.length > 0) {
+          melding.classList.add('show');
+        } else {
+          melding.classList.remove('show');
+        }
+      });
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFotoMelding);
+  } else {
+    initFotoMelding();
+  }
+}
+
+//================================
+// Melding weet je zeker dat je wilt verwijderen
+//================================
+
+{
+  const initDeleteDialog = () => {
+      const dialog = document.getElementById('delete-dialog');
+      const openBtn = document.getElementById('open-delete-dialog');
+      const closeBtn = document.getElementById('close-delete-dialog');
+
+      if (dialog && openBtn && closeBtn) {
+          openBtn.addEventListener('click', () => {
+              dialog.showModal(); 
+          });
+
+          closeBtn.addEventListener('click', () => {
+              dialog.close(); 
+          });
 // favorites
 //================================
 document.addEventListener("DOMContentLoaded", () => {
@@ -95,4 +139,17 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
- 
+          dialog.addEventListener('click', (e) => {
+              if (e.target === dialog) {
+                  dialog.close();
+              }
+          });
+      }
+  };
+
+  if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initDeleteDialog);
+  } else {
+      initDeleteDialog();
+  }
+}
