@@ -683,6 +683,10 @@ aside form p {
   font-size: 1em;
 }
 
+#toggleBtn2 {
+  display: none;
+}
+
 
 /* javascript */
 
@@ -695,8 +699,8 @@ aside form p {
 .layout.sidebar-collapsed .job-list {
   grid-template-columns: 1fr 1fr 1fr;
   margin-left: 0;
-  width: 80%;
-  margin-left: 8em;
+
+ 
   
 }
 
@@ -756,6 +760,66 @@ aside form p {
 .filterpagina article li p {
   font-size: 1rem; 
 }
+
+
+@media (max-width: 800px) {
+  .job-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2em;
+    justify-content: center;
+    margin-left: 0;
+
+  }
+
+  .layout.sidebar-collapsed .job-cardd {
+   width: 80%;
+  
+  }
+
+  .dropdown li {
+    flex-direction: row;
+  }
+
+
+
+  .layout {
+    display: flex;
+    flex-direction: column;
+   
+  }
+
+
+  .jobCard {
+    margin-left: 0;
+  }
+
+  .dropdown {
+    align-items: center;
+  }
+
+  #toggleBtn2 {
+    display: block;
+    font-family:'Poppins-regular', sans-serif;
+    background-color: var(--button-color);
+    color: var(--common-background-color);
+    border: 0; 
+    padding: 0.5em;
+    padding-left: 5em;
+    padding-right: 5em;
+    border-radius: 0.5em;
+    margin-left: 10em;
+    margin-top: 1em;
+    font-size: 0.9em;
+  }
+
+  #toggleBtn {
+    display: none;
+  }
+  
+
+}
+
 
 
 
