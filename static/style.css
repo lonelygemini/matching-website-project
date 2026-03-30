@@ -1167,6 +1167,11 @@ color: white;
   font-family:'Poppins-regular', sans-serif;
 }
 
+.favorite-btn.active {
+  background-color: var(--yellow-button-color) !important;
+  color: var(--text-color);
+}
+
 
 
 /******************************/

@@ -343,7 +343,7 @@ app.post('/favorites/add/:jobID', async (req, res) => {
       { $addToSet: { favorites: jobID } }
     );
 
-    res.redirect('/favorites');
+    res.json({ success: true, action: 'added' });
   } catch (error) {
     console.error(error);
     res.send('Fout bij toevoegen aan favorieten');
@@ -367,7 +367,7 @@ app.post('/favorites/remove/:jobID', async (req, res) => {
       { $pull: { favorites: jobID } }
     );
 
-    res.redirect('/favorites');
+    res.json({ success: true, action: 'removed' });
   } catch (error) {
     console.error(error);
     res.send('Fout bij verwijderen uit favorieten');
