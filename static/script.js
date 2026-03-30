@@ -49,6 +49,12 @@ if (toggle) {
     }
   });
 }
+function toggleSidebar() {
+  const layout = document.getElementById("mainLayout");
+  layout.classList.toggle("sidebar-collapsed");
+}
+ 
+ 
 
 //================================
 // Melding profielfoto
