@@ -15,6 +15,9 @@ const fetchFn = global.fetch
 const multer = require('multer');
 const path = require('path'); 
 
+const bcrypt = require('bcryptjs'); 
+const saltRounds = 10;
+
 // ===============================
 // Multer setup
 // ===============================
@@ -222,29 +225,34 @@ function showForm(req, res) {
 async function verwerkForm(req, res) {
   const db = client.db(process.env.DB_NAME_USERS);
   const collection = db.collection(process.env.DB_COLLECTION_USERS);
-  // We halen nu 'email' uit het formulier (zorg dat name="email" in je EJS staat)
+  
   const emailInput = req.body.email;
   const wachtwoordInput = req.body.wachtwoord;
 
   try {
-    const gebruikerGevonden = await collection.findOne({
-      // Verander 'username' naar 'email' zodat het matcht met je database!
-      email: emailInput, 
-      wachtwoord: wachtwoordInput
-    });
+    // 1. Zoek de gebruiker alleen op email
+    const gebruikerGevonden = await collection.findOne({ email: emailInput });
 
+    // 2. Als de email niet bestaat
     if (!gebruikerGevonden) {
       return res.render('pages/inlog', { error: 'E-mail of wachtwoord onjuist' });
     }
-    req.session.user = { 
-      _id: gebruikerGevonden._id, 
-      email: gebruikerGevonden.email,
-      profielfoto: gebruikerGevonden.profielfoto
-    };
 
-    // Als hij hier komt, is de login gelukt
-    console.log('Login succesvol voor:', gebruikerGevonden.email);
-    return res.redirect('/overzicht')
+    // 3. Vergelijk het ingevoerde wachtwoord met de hash uit de database
+    const match = await bcrypt.compare(wachtwoordInput, gebruikerGevonden.wachtwoord);
+
+    if (match) {
+      // Wachtwoord klopt!
+      req.session.user = { 
+        _id: gebruikerGevonden._id, 
+        email: gebruikerGevonden.email,
+        profielfoto: gebruikerGevonden.profielfoto
+      };
+      return res.redirect('/overzicht');
+    } else {
+      // Wachtwoord klopt niet
+      return res.render('pages/inlog', { error: 'E-mail of wachtwoord onjuist' });
+    }
 
   } catch (error) {
     console.error('Database fout:', error);
@@ -272,7 +280,6 @@ app.get('/registratie', (req, res) => {
 // app.get('/registratie', (req, res) => {
 //   res.render('pages/registratie');
 // });
-
 app.post('/nieuweregistratie', upload.single('profielfoto'), async (req, res) => {
   const db = client.db(process.env.DB_NAME_USERS);
   const collection = db.collection(process.env.DB_COLLECTION_USERS);
@@ -281,20 +288,23 @@ app.post('/nieuweregistratie', upload.single('profielfoto'), async (req, res) =>
     ? '/images/uploads/' + req.file.filename 
     : '/images/profiel.png';
 
-  const nieuwUser = {
-    name: req.body.name,
-    datum: req.body.datum,
-    email: req.body.email,
-    leeftijd: req.body.leeftijd,
-    woonplaats: req.body.woonplaats,
-    wachtwoord: req.body.wachtwoord, 
-    profielfoto: fotoPad,
-    favorites: []
-  };
   try {
+    // HASHTAG TIJD: Hash het wachtwoord voordat we de user maken
+    const hashedPassword = await bcrypt.hash(req.body.wachtwoord, saltRounds);
+
+    const nieuwUser = {
+      name: req.body.name,
+      datum: req.body.datum,
+      email: req.body.email,
+      leeftijd: req.body.leeftijd,
+      woonplaats: req.body.woonplaats,
+      wachtwoord: hashedPassword, // Sla de hash op, niet het tekstwachtwoord!
+      profielfoto: fotoPad,
+      favorites: []
+    };
+
     const result = await collection.insertOne(nieuwUser);
     
-    // Automatisch inloggen na registratie zodat de header direct werkt
     req.session.user = { 
       _id: result.insertedId, 
       email: nieuwUser.email,
@@ -305,7 +315,7 @@ app.post('/nieuweregistratie', upload.single('profielfoto'), async (req, res) =>
     res.redirect('/overzicht');
   } catch (err) {
     console.error(err);
-    res.send("Er ging iets mis met het opslaan van je registratie.");
+    res.send("Er ging iets mis met de registratie.");
   }
 });
 
