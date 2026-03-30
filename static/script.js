@@ -55,9 +55,9 @@ toggle.addEventListener("change", () => {
 });
 
 
-function toggleDropdown() {
-  const dropdown = document.querySelector('.dropdown');
-  dropdown.classList.toggle('collapsed');
+function toggleSidebar() {
+  const layout = document.getElementById("mainLayout");
+  layout.classList.toggle("sidebar-collapsed");
 }
 
 //================================
