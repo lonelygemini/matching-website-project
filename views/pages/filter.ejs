@@ -13,166 +13,185 @@
 <header>
     <%- include('../partials/header') %>
 </header>
+
 <body class="filterpagina">
     <main>
         <article>
             <form action="/filter" method="GET">
-            <input 
-                type="search"
-                name="search"
-                placeholder="Zoek op titel, locatie of bedrijf"
-                value="<%= search || '' %>">
-            <button type="submit">Zoek</button>
+                <input type="search" name="search" placeholder="Zoek op titel, locatie of bedrijf"
+                    value="<%= search || '' %>">
+                <button type="submit">Zoek</button>
             </form>
-    
+
             <% if (search) { %>
-            <ul>
-                <% jobs.forEach(job => { %>
-                <li>
-                    <a href="/detail/<%= job._id %>"><h2><%= job.title %></h2></a>
-                    <a href="/detail/<%= job._id %>"><p><%= job.company %></p></a>
-                    <a href="/detail/<%= job._id %>"><p><%= job.locations %></p></a>
-                </li>
-                <% }) %>
-            </ul>
-            <% } %>
+                <ul>
+                    <% jobs.forEach(job=> { %>
+                        <li>
+                            <a href="/detail/<%= job._id %>">
+                                <h2>
+                                    <%= job.title %>
+                                </h2>
+                            </a>
+                            <a href="/detail/<%= job._id %>">
+                                <p>
+                                    <%= job.company %>
+                                </p>
+                            </a>
+                            <a href="/detail/<%= job._id %>">
+                                <p>
+                                    <%= job.locations %>
+                                </p>
+                            </a>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
         </article>
-        <div class="layout <%= typeof sidebarOpen !== 'undefined' && !sidebarOpen ? 'sidebar-collapsed' : '' %>" id="mainLayout">
-            <aside id="filterSidebar"> 
+        <div class="layout <%= typeof sidebarOpen !== 'undefined' && !sidebarOpen ? 'sidebar-collapsed' : '' %>"
+            id="mainLayout">
+            <aside id="filterSidebar">
                 <button type="button" id="toggleBtn" onclick="toggleSidebar()">☰</button>
-                <form action="/filter" method="GET">
+        <div class="layout <%= typeof sidebarOpen !== 'undefined' && !sidebarOpen ? 'sidebar-collapsed' : '' %>"
+                    id="mainLayout">
+                    <aside id="filterSidebar">
+                        <button type="button" id="toggleBtn2" onclick="toggleSidebar()">Menu</button>
+                        <form action="/filter" method="GET">
 
-           
 
-                    <ul class="dropdown">
-                        <p>Locatie</p>
-                        <li>
-                            <input type="radio" name="location" value="Utrecht" id="check-utrecht">
-                            <label for="check-utrecht">Utrecht</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="location" value="Noord-Holland" id="check-noordHolland" <%= filters.location === "Noord-Holland" ? "checked" : "" %>>
-                            <label for="check-noordHolland">Noord-Holland</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="location" value="Gelderland" id="check-gelderland">
-                            <label for="check-gelderland">Gelderland</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="location" value="Zuid-Holland" id="check-zuidHolland" <%= filters.location === "Zuid-Holland" ? "checked" : "" %>>
-                            <label for="check-zuidHolland">Zuid-Holland</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="location" value="Flevoland" id="check-Flevoland">
-                            <label for="check-Flevoland">Flevoland</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="location" value="Groningen" id="check-Groningen">
-                            <label for="check-Groningen">Groningen</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="location" value="Brabant" id="check-Brabant">
-                            <label for="check-Brabant">Brabant</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="location" value="Zeeland" id="check-Zeeland">
-                            <label for="check-Zeeland">Zeeland</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="location" value="Limburg" id="check-Limburg">
-                            <label for="check-Limburg">Limburg</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="location" value="Friesland" id="check-Friesland">
-                            <label for="check-Friesland">Friesland</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="location" value="Drenthe" id="check-Drenthe">
-                            <label for="check-Drenthe">Drenthe</label>
-                        </li>
-                        <li>
-                            <input type="radio" name="location" value="Overijssel" id="check-Overijssel">
-                            <label for="check-Overijssel">Overijssel</label>
-                        </li>
-                    </ul>
 
-                    <div class="werkschema">
-                        <p>Werkschema</p>
-                        <input type="radio" name="work_schedule" value="fulltime" id="filter-fulltime" <%= filters.work_schedule === "fulltime" ? "checked" : "" %>>
-                        <label for="filter-fulltime">Fulltime</label>
+                            <ul class="dropdown">
+                                <p>Locatie</p>
+                                <li>
+                                    <input type="radio" name="location" value="Utrecht" id="check-utrecht">
+                                    <label for="check-utrecht">Utrecht</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="location" value="Noord-Holland" id="check-noordHolland"
+                                        <%=filters.location==="Noord-Holland" ? "checked" : "" %>>
+                                    <label for="check-noordHolland">Noord-Holland</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="location" value="Gelderland" id="check-gelderland">
+                                    <label for="check-gelderland">Gelderland</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="location" value="Zuid-Holland" id="check-zuidHolland"
+                                        <%=filters.location==="Zuid-Holland" ? "checked" : "" %>>
+                                    <label for="check-zuidHolland">Zuid-Holland</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="location" value="Flevoland" id="check-Flevoland">
+                                    <label for="check-Flevoland">Flevoland</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="location" value="Groningen" id="check-Groningen">
+                                    <label for="check-Groningen">Groningen</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="location" value="Brabant" id="check-Brabant">
+                                    <label for="check-Brabant">Brabant</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="location" value="Zeeland" id="check-Zeeland">
+                                    <label for="check-Zeeland">Zeeland</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="location" value="Limburg" id="check-Limburg">
+                                    <label for="check-Limburg">Limburg</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="location" value="Friesland" id="check-Friesland">
+                                    <label for="check-Friesland">Friesland</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="location" value="Drenthe" id="check-Drenthe">
+                                    <label for="check-Drenthe">Drenthe</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="location" value="Overijssel" id="check-Overijssel">
+                                    <label for="check-Overijssel">Overijssel</label>
+                                </li>
+                            </ul>
 
-                        <input type="radio" name="work_schedule" value="parttime" id="filter-parttime">
-                        <label for="filter-parttime">Parttime</label>
+                            <div class="werkschema">
+                                <p>Werkschema</p>
+                                <input type="radio" name="work_schedule" value="fulltime" id="filter-fulltime"
+                                    <%=filters.work_schedule==="fulltime" ? "checked" : "" %>>
+                                <label for="filter-fulltime">Fulltime</label>
 
-                        <input type="radio" name="work_schedule" value="ZZP" id="filter-ZZP">
-                        <label for="filter-ZZP">ZZP</label>
-                    </div>
+                                <input type="radio" name="work_schedule" value="parttime" id="filter-parttime">
+                                <label for="filter-parttime">Parttime</label>
 
-                    <ul class="dropdown">
-                        <p>Bedrijf</p>
-                        <li>
-                            <input type="radio" name="company" value="CareerValue">
-                            <label>CareerValue</label>
-                        </li>
+                                <input type="radio" name="work_schedule" value="ZZP" id="filter-ZZP">
+                                <label for="filter-ZZP">ZZP</label>
+                            </div>
 
-                        <li>
-                            <input type="radio" name="company" value="BOLD Company" <%= filters.company === "BOLD Company" ? "checked" : "" %>>
-                            <label>BOLD Company</label>
-                        </li>
+                            <ul class="dropdown">
+                                <p>Bedrijf</p>
+                                <li>
+                                    <input type="radio" name="company" value="CareerValue">
+                                    <label>CareerValue</label>
+                                </li>
 
-                        <li>
-                            <input type="radio" name="company" value="YoungCapital">
-                            <label>YoungCapital</label>
-                        </li>
+                                <li>
+                                    <input type="radio" name="company" value="BOLD Company"
+                                        <%=filters.company==="BOLD Company" ? "checked" : "" %>>
+                                    <label>BOLD Company</label>
+                                </li>
 
-                        <li>
-                            <input type="radio" name="company" value="Devoteam">
-                            <label>Devoteam</label>
-                        </li>
+                                <li>
+                                    <input type="radio" name="company" value="YoungCapital">
+                                    <label>YoungCapital</label>
+                                </li>
 
-                        <li>
-                            <input type="radio" name="company" value="Avanade">
-                            <label>Avanade</label>
-                        </li>
+                                <li>
+                                    <input type="radio" name="company" value="Devoteam">
+                                    <label>Devoteam</label>
+                                </li>
 
-                        <li>
-                            <input type="radio" name="company" value="Devoteam">
-                            <label>Iets anders...</label>
-                        </li>
-                    </ul>
+                                <li>
+                                    <input type="radio" name="company" value="Avanade">
+                                    <label>Avanade</label>
+                                </li>
 
-                    <div class="sorteren">
-                        <p>Sorteren op</p>
-                      
-                        <input type="radio" name="sort" value="newest" id="sort-newest">
-                        <label for="sort-newest">Nieuwste</label>
-                      
-                        <input type="radio" name="sort" value="oldest" id="sort-oldest">
-                        <label for="sort-oldest">Oudste</label>
-                      </div>
+                                <li>
+                                    <input type="radio" name="company" value="Devoteam">
+                                    <label>Iets anders...</label>
+                                </li>
+                            </ul>
 
-                    <div class="buttonsubmit">
-                    <button type="submit">Filters toepassen</button>
+                            <div class="sorteren">
+                                <p>Sorteren op</p>
+
+                                <input type="radio" name="sort" value="newest" id="sort-newest">
+                                <label for="sort-newest">Nieuwste</label>
+
+                                <input type="radio" name="sort" value="oldest" id="sort-oldest">
+                                <label for="sort-oldest">Oudste</label>
+                            </div>
+
+                            <div class="buttonsubmit">
+                                <button type="submit">Filters toepassen</button>
+                            </div>
+
+
+                        </form>
+                    </aside>
+
+                    <section class="job-list">
+
+                        <% if (jobs && jobs.length> 0) { %>
+                            <% jobs.forEach(job=> { %>
+                                <article class="job-cardd">
+                                    <%- include('../partials/kaartje', { job:job }) %>
+                                </article>
+
+                                <% }) %>
+                                    <% } else { %>
+                                        <p>Geen vacatures gevonden...</p>
+                                        <% } %>
+                    </section>
                 </div>
-
-
-            </form>
-        </aside>
-
-        <section class="job-list">
-
-            <% if (jobs && jobs.length> 0) { %>
-                <% jobs.forEach(job=> { %>
-                    <article class="job-cardd">
-                        <%- include('../partials/kaartje', { job:job }) %>
-                    </article>
-
-                    <% }) %>
-                        <% } else { %>
-                            <p>Geen vacatures gevonden...</p>
-                            <% } %>
-        </section>
-    </div>
     </main>
 </body>
 <script src="filter.js"></script>
