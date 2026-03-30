@@ -2,98 +2,97 @@
 // Header
 //================================
 
-const openButton = document.querySelector(".open-menu");
-const sluitButton = document.querySelector(".sluit-menu");
-const deNav = document.querySelector(".nav-menu");
+const openButton = document.querySelector('.open-menu')
+const sluitButton = document.querySelector('.sluit-menu')
+const deNav = document.querySelector('.nav-menu')
 
-openButton.addEventListener("click", function() {
-  deNav.classList.add("toonMenu");
-});
+openButton.addEventListener('click', function() {
+  deNav.classList.add('toonMenu')
+})
 
-sluitButton.addEventListener("click", function() {
-  deNav.classList.remove("toonMenu");
-});
+sluitButton.addEventListener('click', function() {
+  deNav.classList.remove('toonMenu')
+})
 
-window.addEventListener("keydown", function(event) {
-  if (event.key === "Escape") {
-    deNav.classList.remove("toonMenu");
+window.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    deNav.classList.remove('toonMenu')
   }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
+})
+'', () => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add("inbeeld");
+        entry.target.classList.add('inbeeld')
       }
-    });
-  }, { threshold: 0.1 });
+    })
+  }, { threshold: 0.1 })
 
-  document.querySelectorAll("h1, h2, p").forEach((el) => {
-    observer.observe(el);
-  });
-});
+  document.querySelectorAll('h1, h2, p').forEach((el) => {
+    observer.observe(el)
+  })
+}
 
 
-const toggle = document.getElementById("darkToggle");
+const toggle = document.getElementById('darkToggle')
 
-toggle.addEventListener("change", () => {
-  document.body.classList.toggle("dark-mode");
-});
+toggle.addEventListener('change', () => {
+  document.body.classList.toggle('dark-mode')
+})
 
-const logo = document.getElementById("logo");
-const icon = document.getElementById("profileIcon");
+const logo = document.getElementById('logo')
+const icon = document.getElementById('profileIcon')
 
-toggle.addEventListener("change", () => {
-  if (document.body.classList.contains("dark-mode")) {
-    logo.src = "/logo-variants/text-only-logo-dark.png";
-    icon.src = "/images/profiel-dark.png";
+toggle.addEventListener('change', () => {
+  if (document.body.classList.contains('dark-mode')) {
+    logo.src = '/logo-variants/text-only-logo-dark.png'
+    icon.src = '/images/profiel-dark.png'
   } else {
-    logo.src = "/logo-variants/text-only-logo.png";
-    icon.src = "/images/profiel.png";
+    logo.src = '/logo-variants/text-only-logo.png'
+    icon.src = '/images/profiel.png'
   }
-});
+})
 
 
 function toggleSidebar() {
-  const layout = document.getElementById("mainLayout");
-  layout.classList.toggle("sidebar-collapsed");
+  const layout = document.getElementById('mainLayout')
+  layout.classList.toggle('sidebar-collapsed')
 }
 
 //================================
 // favorites
 //================================
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".favorite-btn").forEach(btn => {
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.favorite-btn').forEach(btn => {
 
-    btn.addEventListener("click", async () => {
-      const jobId = btn.dataset.id;
+    btn.addEventListener('click', async () => {
+      const jobId = btn.dataset.id
 
-      const isActive = btn.classList.contains("active");
+      const isActive = btn.classList.contains('active')
 
       const url = isActive 
         ? `/favorites/remove/${jobId}` 
-        : `/favorites/add/${jobId}`;
+        : `/favorites/add/${jobId}`
 
       const response = await fetch(url, {
-        method: "POST"
-      });
+        method: 'POST'
+      })
 
-      const data = await response.json();
+      const data = await response.json()
 
       if (data.success) {
-        btn.classList.toggle("active");
+        btn.classList.toggle('active')
 
-        if (btn.classList.contains("active")) {
-          btn.textContent = "Opgeslagen aan favorieten";
+        if (btn.classList.contains('active')) {
+          btn.textContent = 'Opgeslagen aan favorieten'
         } else {
-          btn.textContent = "Toevoegen aan favorieten";
+          btn.textContent = 'Toevoegen aan favorieten'
         }
       }
-    });
+    })
 
-  });
-});
+  })
+})
 
 
 

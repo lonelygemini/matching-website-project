@@ -20,19 +20,31 @@ export default [
     rules: {
       'camelcase': ['error', { properties: 'always' }],
       'indent': ['error', 2],
-      'semi': ['error', 'always'],
+      'semi': ['error', 'never'],
       'quotes': ['error', 'single'],
       'no-unused-vars': 'off',
       'no-console': 'off',
-      'max-lines': ['warn', 300],
       'max-depth': ['warn', 3],
       'no-undef': 'off',
     }
   },
 
-  // EJS/HTML ondersteuning (voorkomt de < error)
   {
-    files: ['**/*.ejs', '**/*.html'],
+    files: ['**/*.html'],
+    rules: {
+      "tag-pair": true,
+      "attr-value-not-empty": true,
+      "id-unique": true,
+      "src-not-empty": true,
+      "alt-require": true,
+      "doctype-first": false,
+      "style-disabled": true
+    }
+  },
+
+  //  EJS/HTML ondersteuning (voorkomt de < error)
+   {
+    files: ['**/*.ejs', '**/*.html', '**/*.js'],
     plugins: { html },
     rules: { 'no-console': 'off' }
   }

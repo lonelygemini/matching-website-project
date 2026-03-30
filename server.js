@@ -12,8 +12,8 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const fetchFn = global.fetch
   ? global.fetch
   : (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args))
-const multer = require('multer');
-const path = require('path'); 
+const multer = require('multer')
+const path = require('path')
 
 // ===============================
 // Multer setup
@@ -21,15 +21,15 @@ const path = require('path');
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     // Vertel multer dat bestanden in de 'uploads' map moeten landen
-    cb(null, 'static/images/uploads'); 
+    cb(null, 'static/images/uploads') 
   },
   filename: (req, file, cb) => {
     // Geef elk bestand een unieke naam (huidige tijd + extensie)
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname)); 
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, uniqueSuffix + path.extname(file.originalname)) 
   }
-});
-const upload = multer({ storage: storage });
+})
+const upload = multer({ storage: storage })
 // ===============================
 // Express setup
 // ===============================
@@ -46,9 +46,9 @@ app.use(session({
 }))
 
 app.use((req, res, next) => {
-  res.locals.user = req.session.user;
-  next();
-});
+  res.locals.user = req.session.user
+  next()
+})
 
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
@@ -62,7 +62,7 @@ app.set('views', 'views')
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
 console.log(uri)
 // Voeg deze variabele bovenin toe (bij de andere variabelen)
-let collection;
+let collection
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -75,115 +75,114 @@ const client = new MongoClient(uri, {
 // Pas de connectie aan zodat de 'collection' variabele gevuld wordt
 client.connect()
   .then(async () => {
-    console.log('Database connection established');
+    console.log('Database connection established')
     // Hier selecteer je de juiste database en collectie uit je .env
 
   })
   .catch((err) => {
-    console.log(`Database connection error - ${err}`);
-  });
+    console.log(`Database connection error - ${err}`)
+  })
 
 
 // ===============================
 // Data
 // ===============================
-    //const db = client.db(process.env.DB_NAME);
-    //collection = db.collection(process.env.DB_COLLECTION);
+//const db = client.db(process.env.DB_NAME);
+//collection = db.collection(process.env.DB_COLLECTION);
 
 app.get('/kaartje', async (req, res) => {
 
-    const db = client.db(process.env.DB_NAME);
-    const collection = db.collection(process.env.DB_COLLECTION);
+  const db = client.db(process.env.DB_NAME)
+  const collection = db.collection(process.env.DB_COLLECTION)
 
-    const data = await collection.find().toArray();
+  const data = await collection.find().toArray()
       
-    res.render('partials/kaartje', { data: data }); 
-});
+  res.render('partials/kaartje', { data: data })
+})
 
 app.get(['/overzicht', '/filter'], async (req, res) => {
-  const db = client.db(process.env.DB_NAME);
-  const collection = db.collection(process.env.DB_COLLECTION);
+  const db = client.db(process.env.DB_NAME)
+  const collection = db.collection(process.env.DB_COLLECTION)
 
-  const search = req.query.search || "";
-  const location = req.query.location;
-  const company = req.query.company;
-  const work_schedule = req.query.work_schedule;
-  const sort = req.query.sort;
-
+  const search = req.query.search || ''
+  const location = req.query.location
+  const company = req.query.company
+  const workSchedule = req.query.work_schedule
+  const sort = req.query.sort
   // Bouw query
-  let query = {};
+  let query = {}
 
   if (search) {
     query.$or = [
-      { title: { $regex: search, $options: "i" } },
-      { locations: { $regex: search, $options: "i" } },
-      { company: { $regex: search, $options: "i" } }
-    ];
+      { title: { $regex: search, $options: 'i' } },
+      { locations: { $regex: search, $options: 'i' } },
+      { company: { $regex: search, $options: 'i' } }
+    ]
   }
 
-  if (location && location !== "alles") {
-    query.locations = { $regex: location, $options: "i" };
+  if (location && location !== 'alles') {
+    query.locations = { $regex: location, $options: 'i' }
   }
 
   if (company) {
     if (Array.isArray(company)) {
-      query.company = { $in: company };
+      query.company = { $in: company }
     } else {
-      query.company = company;
+      query.company = company
     }
   }
 
-  if (work_schedule) {
-    query.work_schedule = work_schedule;
+  if (workSchedule) {
+    query.workSchedule = workSchedule
   }
 
   // Pipeline voor sort
   const pipeline = [
     { $match: query },
-    { $addFields: { dateObj: { $toDate: "$date" } } }
-  ];
+    { $addFields: { dateObj: { $toDate: '$date' } } }
+  ]
 
-  if (sort === "newest") pipeline.push({ $sort: { dateObj: -1 } });
-  if (sort === "oldest") pipeline.push({ $sort: { dateObj: 1 } });
+  if (sort === 'newest') pipeline.push({ $sort: { dateObj: -1 } })
+  if (sort === 'oldest') pipeline.push({ $sort: { dateObj: 1 } })
 
-  const jobs = await collection.aggregate(pipeline).toArray();
+  const jobs = await collection.aggregate(pipeline).toArray()
 
   // 5 willekeurige jobs (optioneel)
-  const randomJobs = await collection.aggregate([{ $sample: { size: 5 } }]).toArray();
+  const randomJobs = await collection.aggregate([{ $sample: { size: 5 } }]).toArray()
 
   // Kies view
-  const viewName = req.path === '/filter' ? 'pages/filter' : 'pages/overzicht';
+  const viewName = req.path === '/filter' ? 'pages/filter' : 'pages/overzicht'
 
   res.render(viewName, {
     jobs,
-    search: req.query.search || "",
+    search: req.query.search || '',
     randomJobs,
     filters: req.query, // hier kan je alles van search/sort doorgeven
-  });
-});
+  })
+})
 
 app.get('/detail/:jobID', async (req, res) => {
 
-  const db = client.db(process.env.DB_NAME);
-  const collection = db.collection(process.env.DB_COLLECTION);
+  const db = client.db(process.env.DB_NAME)
+  const collection = db.collection(process.env.DB_COLLECTION)
 
-  const jobID = req.params.jobID;
+  const jobID = req.params.jobID
 
   const job = await collection.findOne({
     _id: new ObjectId(jobID)
-  });
+  })
 
   // 5 willekeurige vacatures
   const randomJobs = await collection.aggregate([
     { $sample: { size: 5 } }
-  ]).toArray();
+  ]).toArray()
 
   res.render('pages/detail', {
     job: job,
     randomJobs: randomJobs
-  });
+  })
 
-});
+})
 
 // ===============================
 // Route
@@ -194,7 +193,7 @@ app.get('/detail/:jobID', async (req, res) => {
 //================================
 
 // set the view engine to ejs
-app.set('view engine', 'ejs');
+app.set('view engine', 'ejs')
 
 // use res.render to load up an ejs view file
 
@@ -203,14 +202,14 @@ app.get('/', function(req, res) {
   if (req.session.user) { // als ingelogd
     req.session.destroy() // log uit
   }
-  res.render('pages/index');
-});
+  res.render('pages/index')
+})
 
 //================================
 // inlog
 //================================
 app.get('/inlog', (req, res) => {
-  res.render('pages/inlog', {error:""})
+  res.render('pages/inlog', {error:''})
 })
 
 app.get('/inlog', showForm)
@@ -220,53 +219,53 @@ function showForm(req, res) {
   res.render('pages/inlog')
 }
 async function verwerkForm(req, res) {
-  const db = client.db(process.env.DB_NAME_USERS);
-  const collection = db.collection(process.env.DB_COLLECTION_USERS);
+  const db = client.db(process.env.DB_NAME_USERS)
+  const collection = db.collection(process.env.DB_COLLECTION_USERS)
   // We halen nu 'email' uit het formulier (zorg dat name="email" in je EJS staat)
-  const emailInput = req.body.email;
-  const wachtwoordInput = req.body.wachtwoord;
+  const emailInput = req.body.email
+  const wachtwoordInput = req.body.wachtwoord
 
   try {
     const gebruikerGevonden = await collection.findOne({
       // Verander 'username' naar 'email' zodat het matcht met je database!
       email: emailInput, 
       wachtwoord: wachtwoordInput
-    });
+    })
 
     if (!gebruikerGevonden) {
-      return res.render('pages/inlog', { error: 'E-mail of wachtwoord onjuist' });
+      return res.render('pages/inlog', { error: 'E-mail of wachtwoord onjuist' })
     }
     req.session.user = { 
       _id: gebruikerGevonden._id, 
       email: gebruikerGevonden.email,
       profielfoto: gebruikerGevonden.profielfoto
-    };
+    }
 
     // Als hij hier komt, is de login gelukt
-    console.log('Login succesvol voor:', gebruikerGevonden.email);
+    console.log('Login succesvol voor:', gebruikerGevonden.email)
     return res.redirect('/overzicht')
 
   } catch (error) {
-    console.error('Database fout:', error);
-    return res.render('pages/inlog', { error: 'Database fout' });
+    console.error('Database fout:', error)
+    return res.render('pages/inlog', { error: 'Database fout' })
   }
 }
 
 app.get('/uitlog', (req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      return res.send('Fout bij uitloggen');
+      return res.send('Fout bij uitloggen')
     }
-    res.redirect('/');
-  });
-});
+    res.redirect('/')
+  })
+})
 
 // ===============================
 // Registratie
 // ===============================
 
 app.get('/registratie', (req, res) => {
-  res.render('pages/registratie', {error:""})
+  res.render('pages/registratie', {error:''})
 })
 
 // app.get('/registratie', (req, res) => {
@@ -274,12 +273,12 @@ app.get('/registratie', (req, res) => {
 // });
 
 app.post('/nieuweregistratie', upload.single('profielfoto'), async (req, res) => {
-  const db = client.db(process.env.DB_NAME_USERS);
-  const collection = db.collection(process.env.DB_COLLECTION_USERS);
+  const db = client.db(process.env.DB_NAME_USERS)
+  const collection = db.collection(process.env.DB_COLLECTION_USERS)
   
   const fotoPad = req.file 
     ? '/images/uploads/' + req.file.filename 
-    : '/images/profiel.png';
+    : '/images/profiel.png'
 
   const nieuwUser = {
     name: req.body.name,
@@ -290,9 +289,9 @@ app.post('/nieuweregistratie', upload.single('profielfoto'), async (req, res) =>
     wachtwoord: req.body.wachtwoord, 
     profielfoto: fotoPad,
     favorites: []
-  };
+  }
   try {
-    const result = await collection.insertOne(nieuwUser);
+    const result = await collection.insertOne(nieuwUser)
     
     // Automatisch inloggen na registratie zodat de header direct werkt
     req.session.user = { 
@@ -300,108 +299,107 @@ app.post('/nieuweregistratie', upload.single('profielfoto'), async (req, res) =>
       email: nieuwUser.email,
       name: nieuwUser.name,
       profielfoto: nieuwUser.profielfoto
-    };
+    }
 
-    res.redirect('/overzicht');
-  } catch (err) {
-    console.error(err);
-    res.send("Er ging iets mis met het opslaan van je registratie.");
+    res.redirect('/overzicht') } catch (err) {
+    console.error(err)
+    res.send('Er ging iets mis met het opslaan van je registratie.')
   }
-});
+})
 
 app.get('/filter', (req, res) => {
-  res.render('pages/filter'); 
-});
+  res.render('pages/filter')
+})
 
 app.get('/detail/:jobID', (req, res) => {
   
-  const db = client.db(process.env.DB_NAME);
-  collection = db.collection(process.env.DB_COLLECTION);
+  const db = client.db(process.env.DB_NAME)
+  collection = db.collection(process.env.DB_COLLECTION)
   
   console.log(req.params.jobID)
-  res.send("job id = " +req.params.jobID); 
-});
+  res.send('job id = '+req.params.jobID)
+})
 
 // ===============================
 // Favourites
 // ===============================
 
 app.post('/favorites/add/:jobID', async (req, res) => {
-  const db = client.db(process.env.DB_NAME_USERS);
-  const collection = db.collection(process.env.DB_COLLECTION_USERS);
+  const db = client.db(process.env.DB_NAME_USERS)
+  const collection = db.collection(process.env.DB_COLLECTION_USERS)
 
   if (!req.session.user) {
-    return res.redirect('/inlog');
+    return res.redirect('/inlog')
   }
 
-  const userId = req.session.user._id;
-  const jobID = req.params.jobID;
+  const userId = req.session.user._id
+  const jobID = req.params.jobID
 
   try {
     await collection.updateOne(
       { _id: new ObjectId(userId) },
       { $addToSet: { favorites: jobID } }
-    );
+    )
 
-    res.json({ success: true, action: 'added' });
+    res.json({ success: true, action: 'added' })
   } catch (error) {
-    console.error(error);
-    res.send('Fout bij toevoegen aan favorieten');
+    console.error(error)
+    res.send('Fout bij toevoegen aan favorieten')
   }
-});
+})
 
 app.post('/favorites/remove/:jobID', async (req, res) => {
-  const db = client.db(process.env.DB_NAME_USERS);
-  const collection = db.collection(process.env.DB_COLLECTION_USERS);
+  const db = client.db(process.env.DB_NAME_USERS)
+  const collection = db.collection(process.env.DB_COLLECTION_USERS)
 
   if (!req.session.user) {
-    return res.redirect('/inlog');
+    return res.redirect('/inlog')
   }
 
-  const userId = req.session.user._id;
-  const jobID = req.params.jobID;
+  const userId = req.session.user._id
+  const jobID = req.params.jobID
 
   try {
     await collection.updateOne(
       { _id: new ObjectId(userId) },
       { $pull: { favorites: jobID } }
-    );
+    )
 
-    res.json({ success: true, action: 'removed' });
+    res.json({ success: true, action: 'removed' })
   } catch (error) {
-    console.error(error);
-    res.send('Fout bij verwijderen uit favorieten');
+    console.error(error)
+    res.send('Fout bij verwijderen uit favorieten')
   }
-});
+})
 
 app.get('/favorites', async (req, res) => {
   if (!req.session.user) {
-    return res.redirect('/inlog');
+    return res.redirect('/inlog')
   }
 
-  const usersDb = client.db(process.env.DB_NAME_USERS);
-  const usersCollection = usersDb.collection(process.env.DB_COLLECTION_USERS);
+  const usersDb = client.db(process.env.DB_NAME_USERS)
+  const usersCollection = usersDb.collection(process.env.DB_COLLECTION_USERS)
 
-  const jobsDb = client.db(process.env.DB_NAME);
-  const jobsCollection = jobsDb.collection(process.env.DB_COLLECTION);
+  const jobsDb = client.db(process.env.DB_NAME)
+  const jobsCollection = jobsDb.collection(process.env.DB_COLLECTION)
 
   try {
     const user = await usersCollection.findOne({
       _id: new ObjectId(req.session.user._id)
-    });
+    })
 
-    const favoriteIds = (user.favorites || []).map(id => new ObjectId(id));
+    const favoriteIds = (user.favorites || []).map(id => new ObjectId(id))
 
     const jobs = await jobsCollection.find({
       _id: { $in: favoriteIds }
-    }).toArray();
-
-  res.render('pages/favorites', { jobs });
-} catch (error) {
-  console.error(error);
-  res.send('Fout bij ophalen van favorieten');
-}
-});
+    }).toArray()
+   
+    res.render('pages/favorites', { jobs })
+  } catch (error) {
+    console.error(error)
+    res.send('Fout bij ophalen van favorieten')
+  }
+})
 
 // ===============================
 // profiel
@@ -409,118 +407,119 @@ app.get('/favorites', async (req, res) => {
 app.get('/profiel', async (req, res) => {
   // 1. Check of de gebruiker in de sessie staat
   if (!req.session.user) {
-      return res.redirect('/inlog'); // Niet ingelogd? Terug naar inloggen.
+    return res.redirect('/inlog') // Niet ingelogd? Terug naar inloggen.
   }
 
   try {
-      const db = client.db(process.env.DB_NAME_USERS);
-      const collection = db.collection(process.env.DB_COLLECTION_USERS);
+    const db = client.db(process.env.DB_NAME_USERS)
+    const collection = db.collection(process.env.DB_COLLECTION_USERS)
 
-      // 2. Zoek de gebruiker op basis van de ID in de sessie
-      // We gebruiken req.session.user._id die je in verwerkForm hebt opgeslagen
-      const gebruiker = await collection.findOne({ 
-          _id: new ObjectId(req.session.user._id) 
-      });
+    // 2. Zoek de gebruiker op basis van de ID in de sessie
+    // We gebruiken req.session.user._id die je in verwerkForm hebt opgeslagen
+    const gebruiker = await collection.findOne({ 
+      _id: new ObjectId(req.session.user._id) 
+    })
 
-      // 3. Stuur de gevonden gegevens naar de pagina
-      res.render('pages/profiel', { 
-          data: gebruiker 
-      });
+    // 3. Stuur de gevonden gegevens naar de pagina
+    res.render('pages/profiel', { 
+      data: gebruiker 
+    })
   } catch (error) {
-      console.error("Fout bij laden profiel:", error);
-      res.status(500).send("Fout bij laden profiel");
+    console.error('Fout bij laden profiel:', error)
+    res.status(500).send('Fout bij laden profiel')
   }
-});
+})
 
 
 app.post('/delete-account', async (req, res) => {
-  const db = client.db(process.env.DB_NAME_USERS);
-  const collection = db.collection(process.env.DB_COLLECTION_USERS);
+  const db = client.db(process.env.DB_NAME_USERS)
+  const collection = db.collection(process.env.DB_COLLECTION_USERS)
 
-  console.log("Sessie data bij delete:", req.session);
+  console.log('Sessie data bij delete:', req.session)
 
-    if (!req.session.user) {
-        console.log('FOUT: req.session.user is leeg!');
-        return res.status(401).send('Niet ingelogd.');
-    }
+  if (!req.session.user) {
+    console.log('FOUT: req.session.user is leeg!')
+    return res.status(401).send('Niet ingelogd.')
+  }
   try {
-      // We halen de gebruiker op uit de sessie. 
-      // Controleer of jouw sessie-object inderdaad 'user' heet.
-      const users = req.session.user; 
+    // We halen de gebruiker op uit de sessie. 
+    // Controleer of jouw sessie-object inderdaad 'user' heet.
+    const users = req.session.user
 
-      if (!users) {
-          return res.status(401).send('Niet ingelogd.');
-      }
+    if (!users) {
+      return res.status(401).send('Niet ingelogd.')
+    }
 
-      // Verwijderen uit de collectie 'users' in de database 'JobConnect'
-      // We gebruiken het _id dat MongoDB zelf heeft aangemaakt
-      await db.collection('Users').deleteOne({ 
-          _id: new ObjectId(users._id) 
-      });
+    // Verwijderen uit de collectie 'users' in de database 'JobConnect'
+    // We gebruiken het _id dat MongoDB zelf heeft aangemaakt
+    await db.collection('Users').deleteOne({ 
+      _id: new ObjectId(users._id) 
+    })
 
-      // Belangrijk: Vernietig de sessie na het verwijderen zodat de gebruiker is uitgelogd
-      req.session.destroy();
+    // Belangrijk: Vernietig de sessie na het verwijderen zodat de gebruiker is uitgelogd
+    req.session.destroy()
 
-      console.log("Account succesvol verwijderd uit JobConnect.");
-      res.redirect('/'); // Stuur terug naar de home of inlogpagina
+    console.log('Account succesvol verwijderd uit JobConnect.')
+    res.redirect('/') // Stuur terug naar de home of inlogpagina
 
   } catch (error) {
-      console.error('Fout bij verwijderen:', error);
-      res.status(500).send('Kon account niet verwijderen.');
+    console.error('Fout bij verwijderen:', error)
+    res.status(500).send('Kon account niet verwijderen.')
   }
   
-});
+})
 // ===============================
 // EDIT PROFIEL
 // ===============================
 app.get('/editprofiel', async (req, res) => {
-  if (!req.session.user) return res.redirect('/inlog');
+  if (!req.session.user) return res.redirect('/inlog')
 
-  const db = client.db(process.env.DB_NAME_USERS);
+  const db = client.db(process.env.DB_NAME_USERS)
   const gebruiker = await db.collection(process.env.DB_COLLECTION_USERS).findOne({ 
-      _id: new ObjectId(req.session.user._id) 
-  });
+    _id: new ObjectId(req.session.user._id) 
+  })
 
-  res.render('pages/editprofiel', { data: gebruiker });
-});
+  res.render('pages/editprofiel', { data: gebruiker })
+})
+
 app.post('/update-profiel', async (req, res) => {
   try {
-      const db = client.db(process.env.DB_NAME_USERS);
-      const collection = db.collection(process.env.DB_COLLECTION_USERS);
+    const db = client.db(process.env.DB_NAME_USERS)
+    const collection = db.collection(process.env.DB_COLLECTION_USERS)
 
-      await collection.updateOne(
-          { _id: new ObjectId(req.session.user._id) },
-          { $set: {
-              name: req.body.name,
-              woonplaats: req.body.woonplaats,
-              email: req.body.email
-          }}
-      );
+    await collection.updateOne(
+      { _id: new ObjectId(req.session.user._id) },
+      { $set: {
+        name: req.body.name,
+        woonplaats: req.body.woonplaats,
+        email: req.body.email
+      }}
+    )
 
-      // Update ook de sessie als de naam of email is veranderd
-      req.session.user.email = req.body.email;
+    // Update ook de sessie als de naam of email is veranderd
+    req.session.user.email = req.body.email
       
-      req.session.save(() => {
-          res.redirect('/profiel');
-      });
+    req.session.save(() => {
+      res.redirect('/profiel')
+    })
   } catch (error) {
-      res.send('Fout bij het bijwerken van je profiel.');
+    res.send('Fout bij het bijwerken van je profiel.')
   }
-});
+})
 
 // ===============================
 // Route functions
 // ===============================
 app.get('/footer', (req, res) => {
-  res.render('partials/footer'); 
-});
+  res.render('partials/footer')
+})
 
 // ===============================
 // 404 handler
 // ===============================
 app.use((req, res) => {
   res.status(404).send(`
-    Sorry, 404 not found">
+    Sorry, 404 not found>
   `)
 })
 // ===============================
