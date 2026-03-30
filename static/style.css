@@ -1037,7 +1037,7 @@ aside form p {
   margin-bottom: 24px;
 }
 
-span {
+.location {
   display: inline-block;
   background-color: var(--yellow-button-color);
   border-radius: 12px;
@@ -1107,7 +1107,7 @@ span {
   background: var(--blue-background-color);
   border-radius: 2em;
   padding: 4em;
-  padding-top: 6em;
+  padding-top: 3em;
   padding-bottom: 6em;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
@@ -1155,11 +1155,10 @@ span {
     background-color: var(--button-color);
     color: var(--common-background-color);
     border: none;
-    padding: 1em;
     border-radius: 1em;
     cursor: pointer;
-    margin-top: 3em;
     font-family:'Poppins', sans-serif;
+    width: 100%; 
 }
 
 .formulier h1{
@@ -1228,11 +1227,6 @@ span {
   margin-top: 2rem;
 }
 
-#registratie-form input[type="submit"] {
-  width: 100%; 
-  font-family:'Poppins', sans-serif;  
-}
-
 .formulier form input[type="name"],
 .formulier form input[type="age"],
 .formulier form input[type="date"],
@@ -1245,6 +1239,58 @@ span {
 }
 
 
+/* 1. Reset de negatieve margin die alles omhoog trekt */
+.formulier section {
+  margin-top: 0; 
+}
+
+/* 2. Alleen de LINKER tekst mag omhoog getrokken worden */
+.formulier > section:first-of-type {
+  margin-top: -25em; /* Pas dit getal aan tot de tekst links goed staat */
+}
+
+/* 3. De profielfoto container (binnen het formulier) */
+.profile-upload {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 2rem;
+  margin-top: 0; /* Zorg dat deze NIET omhoog vliegt */
+}
+
+.profile-upload label {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+}
+
+
+.profielfoto-registratie img {
+  width: 10em; /* Forceer een vaste maat voor het icoontje */
+  height: auto;
+}
+
+/* 5. Het plusje */
+.plus-icon {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  width: 2em;
+  height: 2em;
+  background-color: var(--button-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/* 6. Verberg de standaard input tekst */
+.profile-upload input[type="file"] {
+  display: none;
+}
 /******************************/
 /* PROFIEL           */
 /******************************/
@@ -1310,7 +1356,24 @@ span {
   padding-right: 3em;
   font-family:'Poppins', sans-serif;
 }
-
+.edit-btn{
+  background-color: var(--yellow-button-color);
+  position: absolute;
+  right: 3em;
+  bottom: 3em;
+  padding: 1em;
+  border-radius: 1em;
+  padding-left: 3em;
+  padding-right: 3em;
+  font-family:'Poppins', sans-serif;
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 700;
+}
+.edit-buttons button[type="submit"] {
+  width: auto;               
+  padding: 1em;
+}
 .delete-btn {
   background: none;   
   border: none;       
@@ -1331,6 +1394,8 @@ span {
 .data div p {
   font-size: 1em;
 }
+
+
 @media (max-width: 800px) {
   #registratie-form fieldset {
     display: block;
@@ -1342,18 +1407,53 @@ span {
 }
 
 /******************************/
-/*          PROFIEL           */
+/*          Edit profiel           */
 /******************************/
-.data {
+.edit-form {
+  flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  gap: 2em;
 }
 
-.mainprofiel div p:nth-of-type(1), 
-.mainprofiel div p:nth-of-type(3) {
+.edit-form label {
+  display: flex;
+  flex-direction: column;
   font-weight: bold;
+  color: #333;
+  font-family:'Poppins-regular', sans-serif;
+  margin-bottom: 2em;
 }
 
+.edit-form input {
+  padding: 0.8em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 0.5em;
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;       
+  gap: 2em;                  
+  margin-top: 3em;          
+  grid-column: 1/-1;
+  justify-content: space-between;
+}
+.edit-buttons button {
+  background-color: var(--button-color);
+  color: white;
+  padding: 0.8em 2em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.edit-buttons a{
+  color: var(--warning-color);
+
+}
 /******************************/
 /*          FOOTER           */
 /******************************/

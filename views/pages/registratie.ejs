@@ -23,8 +23,16 @@
             <% if (error){ %>
             <p class="error"><%= error %></p> 
             <% }%> 
-            <input name="profielfoto" type="file" accept="image*">
-
+            <section class="profile-upload">
+                <label> 
+                  <span class="profielfoto-registratie">
+                    <img src="/images/profiel.png" alt="profiel icoon">
+                  <span class="plus-icon" aria-hidden="true">+</span>
+                  </span>
+                  
+                  <input type="file" name="profielfoto" accept="image/*">
+                </label>
+              </section>
             <fieldset>
                 <div>
                     <label for="name">Voor en achternaam:</label>

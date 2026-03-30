@@ -29,7 +29,11 @@
             </aside> 
             <div class="profiel-content">
                 <div class="profiel-naam">
-                    <img src="<%= data.profielfoto %>" alt="Foto van <%= data.name %>" class="main-profile-img">                
+                    <% if (locals.user && locals.user.profielfoto) { %>
+                        <img src="<%= user.profielfoto %>" alt="profiel icoon" class="main-profile-img">
+                    <% } else { %>
+                        <img src="/images/profiel.png" alt="profiel icoon" class="main-profile-img">
+                    <% } %>                       
                     <p><%= data.name %></p>
                 </div>
                 <div class="data">
