@@ -36,6 +36,7 @@ ul {
     --warning-color:#D90000;
     --cards: #e5f0f9;
     --button-blue:#D0E9FF;
+    --button-white: white; 
     --middle-blue:#8ea7ff;
 }
 
@@ -1171,7 +1172,7 @@ aside form p {
   background: var(--blue-background-color);
   border-radius: 2em;
   padding: 4em;
-  padding-top: 3em;
+  padding-top: 6em;
   padding-bottom: 6em;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
@@ -1450,13 +1451,72 @@ aside form p {
   font-family:'Poppins-regular', sans-serif;
   margin-top: 18em;
 }
+/* Het dialoogvenster zelf */
+dialog {
+  border: none;
+  border-radius: 2em;
+  padding: 2em;
+  box-shadow: 0 1em 1em rgba(0,0,0,0.1);
+  max-width: 28em;
+  background-color: var(--blue-background-color);
+}
+
+
+.dialog-buttons {
+  display: flex;
+  gap: 1em;
+  margin-top: 1.5em;
+}
+
+.confirm-delete {
+  background-color:var(--button-white);
+  color: var(--text-color);
+  border: none;
+  padding: 0.5em 1em;
+  cursor: pointer;
+}
+.confirm-delete:hover{
+  background-color: var(--button-color);
+}
+
+.cancel-delete {
+  background-color: var(--button-color);
+  border: 1px solid #ccc;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  border-radius: 1em;
+} 
 .data {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
   gap: 2em;
 }
 .data div p {
   font-size: 1em;
+}
+.data div p:first-of-type, p:nth-of-type(3) {
+  font-weight: bold;
+}
+/* De standaard styling voor de melding */
+.upload-success-msg {
+    display: none; /* Standaard onzichtbaar */
+    color: var(--button-color); /* Gebruik je variabele uit :root */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.9em;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Deze class voegen we toe met JS */
+.upload-success-msg.show {
+    display: block;
+    animation: fadeIn 0.3s ease-in; /* Optioneel: een klein CMD-priegeltje */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 

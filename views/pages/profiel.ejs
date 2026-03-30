@@ -23,10 +23,23 @@
                     <a href="/favorites">Favorieten</a>
                 </nav>
                 
-                <form action="/delete-account" method="POST" class="delete-container">
-                    <button type="submit" class="delete-btn">Delete account</button>
-                </form>
-            </aside> 
+                <button type="button" class="delete-btn" id="open-delete-dialog">Delete account</button>
+            
+                <dialog id="delete-dialog">
+                    <div class="dialog-content">
+                        <h2>Weet je het zeker?</h2>
+                        <p>Je staat op het punt je account definitief te verwijderen. Dit kan niet ongedaan worden gemaakt.</p>
+                        
+                        <div class="dialog-buttons">
+                            <form action="/delete-account" method="POST">
+                                <button type="submit" class="confirm-delete">Ja, verwijder mijn account</button>
+                            </form>
+                            
+                            <button type="button" id="close-delete-dialog" class="cancel-delete">Nee, ga terug</button>
+                        </div>
+                    </div>
+                </dialog>
+            </aside>
             <div class="profiel-content">
                 <div class="profiel-naam">
                     <% if (locals.user && locals.user.profielfoto) { %>
