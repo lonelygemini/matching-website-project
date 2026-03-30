@@ -1091,7 +1091,8 @@ span {
 }
 
 .favorite-btn.active {
-  background-color: #aaa;
+  background-color: var(--yellow-button-color) !important;
+  color: var(--text-color);
 }
 
 

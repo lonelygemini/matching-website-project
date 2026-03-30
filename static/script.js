@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.classList.toggle("active");
 
         if (btn.classList.contains("active")) {
-          btn.textContent = "Verwijderd uit favorieten";
+          btn.textContent = "Opgeslagen aan favorieten";
         } else {
           btn.textContent = "Toevoegen aan favorieten";
         }

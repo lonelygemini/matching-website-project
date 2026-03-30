@@ -25,8 +25,11 @@
                 <h2>Upload datum</h2><p><%= job.date %></p>
             </div>
         </div>
-        <form action="/favorites/add/<%= job._id %>" method="POST" class="favorite-form">
-    <button type="submit" class="button-primary">Aan favorieten toevoegen</button>
+    <button 
+    class="button-primary favorite-btn" 
+    data-id="<%= job._id %>">
+    Toevoegen aan favorieten
+  </button>
   </form>
     </section>
 
