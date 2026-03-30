@@ -55,9 +55,9 @@ toggle.addEventListener("change", () => {
 });
 
 
-function toggleDropdown() {
-  const dropdown = document.querySelector('.dropdown');
-  dropdown.classList.toggle('collapsed');
+function toggleSidebar() {
+  const layout = document.getElementById("mainLayout");
+  layout.classList.toggle("sidebar-collapsed");
 }
 
 //================================
@@ -105,6 +105,39 @@ function toggleDropdown() {
           closeBtn.addEventListener('click', () => {
               dialog.close(); 
           });
+// favorites
+//================================
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".favorite-btn").forEach(btn => {
+
+    btn.addEventListener("click", async () => {
+      const jobId = btn.dataset.id;
+
+      const isActive = btn.classList.contains("active");
+
+      const url = isActive 
+        ? `/favorites/remove/${jobId}` 
+        : `/favorites/add/${jobId}`;
+
+      const response = await fetch(url, {
+        method: "POST"
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        btn.classList.toggle("active");
+
+        if (btn.classList.contains("active")) {
+          btn.textContent = "Opgeslagen aan favorieten";
+        } else {
+          btn.textContent = "Toevoegen aan favorieten";
+        }
+      }
+    });
+
+  });
+});
 
           dialog.addEventListener('click', (e) => {
               if (e.target === dialog) {

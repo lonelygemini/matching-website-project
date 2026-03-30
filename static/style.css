@@ -600,6 +600,7 @@ body.dark-mode.overzicht {
 .filterpagina li {
   list-style-type: none;
   font-family:'Poppins-regular', sans-serif;
+  margin-left: 1.8em;
 }
 
 .filterpagina label {
@@ -614,8 +615,8 @@ body.dark-mode.overzicht {
 
 aside form {
   display: flex;
-  flex-direction: column; /* zorgt dat alles onder elkaar komt */
-  gap: 20px; /* ruimte tussen blokken */
+  flex-direction: column; 
+  gap: 1em; 
   padding-right: 1em;
 }
 
@@ -624,23 +625,35 @@ aside form {
   font-weight: 600;
 }
 
+.werkschema input {
+  margin-left: 2.8em;
+
+}
+
+.sorteren input {
+  margin-left: 2.6em;
+}
+
 .layout {
   display: grid;
-  grid-template-columns: 1fr 1fr; 
-  gap: 0.6em;
-  
+  grid-template-columns: 250px 1fr; 
+  gap: 3em;
+
 }
 
 .job-list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  
+  gap: 2em;
 }
+
+
 
 .filterpagina {
   background-color: var(--common-background-color);
 
 }
+
 
 
 .filterpagina aside form {
@@ -662,7 +675,10 @@ aside form p {
 }
 
 .buttonsubmit button {
-  margin-left: 2.5em;
+  width: 70%;
+  padding: 0.6em;
+  margin-left: 1.4em;
+  margin-top: 4em;
 
 }
 
@@ -671,17 +687,15 @@ aside form p {
 /******************************/ 
 
 #toggleBtn {
-  font-family:'Poppins-regular', sans-serif;
-  background-color: var(--button-color);
-  color: var(--common-background-color);
-  border: 0; 
-  padding: 0.5em;
-  padding-left: 1.5em;
-  padding-right: 1.5em;
-  border-radius: 0.5em;
-  margin-left: 1.2em;
-  margin-top: 1em;
-  font-size: 1em;
+border: 0;
+border-radius: 0.5em;
+padding: 0.6em;
+padding-left: 1em;
+padding-right: 1em;
+margin-left: 1.3em;
+background-color: var(--button-color);
+color: white;
+
 }
 
 #toggleBtn2 {
@@ -694,7 +708,7 @@ aside form p {
 
 .layout.sidebar-collapsed {
   grid-template-columns: 0px 1fr; 
-  gap: 0; 
+  gap: 4em; 
 }
 
 .layout.sidebar-collapsed .job-list {
@@ -840,7 +854,6 @@ aside form p {
   padding: 2em;
   border-radius: 1em;
   width: 100%;
-  max-width: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -1155,6 +1168,11 @@ aside form p {
   font-family:'Poppins-regular', sans-serif;
 }
 
+.favorite-btn.active {
+  background-color: var(--yellow-button-color) !important;
+  color: var(--text-color);
+}
+
 
 
 /******************************/
@@ -1167,7 +1185,6 @@ aside form p {
 .formulier form{
   display: flex;
   flex-direction: column;
-  margin-top: auto;
   margin-bottom: auto;
   background: var(--blue-background-color);
   border-radius: 2em;
@@ -1176,6 +1193,12 @@ aside form p {
   padding-bottom: 6em;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
+
+.registratie form{
+  padding: 2em 4em 2em 4em;
+}
+
+
 /* 2. Zorg dat de tekst aan de linkerkant niet te breed wordt */
 .formulier section:first-of-type {
   flex: 1;
@@ -1221,8 +1244,12 @@ aside form p {
     color: var(--common-background-color);
     border: none;
     border-radius: 1em;
+    padding: 1em;
     cursor: pointer;
     font-family:'Poppins', sans-serif;
+}
+
+.formulier form input {
     width: 100%; 
 }
 
@@ -1528,6 +1555,64 @@ dialog {
   #registratie-form input[type="submit"], form button {
     width: 100%;
   }
+
+  .profiel {
+  display: block; 
+  }
+
+  .profiel-content {
+    display: block;
+    margin: 0;
+  }
+  .profiel-naam{
+    display: block;
+  
+  }
+
+  .profiel-naam p{
+    display: block;
+    margin: 0;
+    margin-top: 2em;
+  }
+
+  .delete-btn {
+    margin-top: 2em;
+    margin-bottom: 3em;
+  }
+
+  .main-profile-img {
+    display: block;
+    align-items: center;
+  }
+
+  .data {
+    margin-bottom: 3em;
+  }
+
+  .edit-btn {
+    position:static;
+    margin-top: 3em;
+  }
+
+  .favorites-top {
+    display: block;
+  }
+
+  .favorites-top p {
+    margin-bottom: 3em;
+  }
+
+  .favorite-job-card__meta, .favorite-job-card__actions {
+    display: block;
+  }
+
+  .location, .favorite-job-card__button--secondary {
+    margin-top: 1em;
+  }
+
+  .formulier > section:first-of-type {
+  margin-top: 0em; /* Pas dit getal aan tot de tekst links goed staat */
+}
 }
 
 /******************************/
