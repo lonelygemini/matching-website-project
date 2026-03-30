@@ -20,7 +20,45 @@ window.addEventListener("keydown", function(event) {
   }
 });
 
-function toggleSidebar() {
-  const layout = document.getElementById('mainLayout');
-  layout.classList.toggle('sidebar-collapsed');
+document.addEventListener("DOMContentLoaded", () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("inbeeld");
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll("h1, h2, p").forEach((el) => {
+    observer.observe(el);
+  });
+});
+
+
+const toggle = document.getElementById("darkToggle");
+
+toggle.addEventListener("change", () => {
+  document.body.classList.toggle("dark-mode");
+});
+
+const logo = document.getElementById("logo");
+const icon = document.getElementById("profileIcon");
+
+toggle.addEventListener("change", () => {
+  if (document.body.classList.contains("dark-mode")) {
+    logo.src = "/logo-variants/text-only-logo-dark.png";
+    icon.src = "/images/profiel-dark.png";
+  } else {
+    logo.src = "/logo-variants/text-only-logo.png";
+    icon.src = "/images/profiel.png";
+  }
+});
+
+
+function toggleDropdown() {
+  const dropdown = document.querySelector('.dropdown');
+  dropdown.classList.toggle('collapsed');
 }
+
+
+ 
