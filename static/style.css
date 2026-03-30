@@ -1184,15 +1184,18 @@ color: white;
 .formulier form{
   display: flex;
   flex-direction: column;
-  margin-top: auto;
   margin-bottom: auto;
   background: var(--blue-background-color);
   border-radius: 2em;
-  padding: 4em;
-  padding-top: 3em;
-  padding-bottom: 6em;
+  padding: 6em 4em 6em 4em;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
+
+.registratie form{
+  padding: 2em 4em 2em 4em;
+}
+
+
 /* 2. Zorg dat de tekst aan de linkerkant niet te breed wordt */
 .formulier section:first-of-type {
   flex: 1;
@@ -1238,8 +1241,12 @@ color: white;
     color: var(--common-background-color);
     border: none;
     border-radius: 1em;
+    padding: 1em;
     cursor: pointer;
     font-family:'Poppins', sans-serif;
+}
+
+.formulier form input {
     width: 100%; 
 }
 
@@ -1486,6 +1493,64 @@ color: white;
   #registratie-form input[type="submit"], form button {
     width: 100%;
   }
+
+  .profiel {
+  display: block; 
+  }
+
+  .profiel-content {
+    display: block;
+    margin: 0;
+  }
+  .profiel-naam{
+    display: block;
+  
+  }
+
+  .profiel-naam p{
+    display: block;
+    margin: 0;
+    margin-top: 2em;
+  }
+
+  .delete-btn {
+    margin-top: 2em;
+    margin-bottom: 3em;
+  }
+
+  .main-profile-img {
+    display: block;
+    align-items: center;
+  }
+
+  .data {
+    margin-bottom: 3em;
+  }
+
+  .edit-btn {
+    position:static;
+    margin-top: 3em;
+  }
+
+  .favorites-top {
+    display: block;
+  }
+
+  .favorites-top p {
+    margin-bottom: 3em;
+  }
+
+  .favorite-job-card__meta, .favorite-job-card__actions {
+    display: block;
+  }
+
+  .location, .favorite-job-card__button--secondary {
+    margin-top: 1em;
+  }
+
+  .formulier > section:first-of-type {
+  margin-top: 0em; /* Pas dit getal aan tot de tekst links goed staat */
+}
 }
 
 /******************************/
