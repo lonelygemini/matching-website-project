@@ -126,3 +126,39 @@ function toggleSidebar() {
   };
   document.addEventListener('DOMContentLoaded', initFavorites);
 }
+
+
+{
+  const initFavoriteRemoveCards = () => {
+    document.querySelectorAll(".favorite-remove-btn").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        const jobId = btn.dataset.id;
+
+        try {
+          const response = await fetch(`/favorites/remove/${jobId}`, {
+            method: "POST"
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            const card = btn.closest(".favorite-job-card");
+
+            if (card) {
+              card.style.transition = "opacity 0.25s ease";
+              card.style.opacity = "0";
+
+              setTimeout(() => {
+                card.remove();
+              }, 250);
+            }
+          }
+        } catch (err) {
+          console.error("Fout bij verwijderen van favoriet:", err);
+        }
+      });
+    });
+  };
+
+  document.addEventListener("DOMContentLoaded", initFavoriteRemoveCards);
+}
