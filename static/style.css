@@ -456,6 +456,7 @@ body.dark-mode.overzicht {
   width: 30em;
   border-radius: 1em;
   max-height: 4em;
+  margin-top: 3em;
   font-family:'Poppins', sans-serif;
 }
 
@@ -550,6 +551,7 @@ body.dark-mode.overzicht {
 }
 
 .detail button {
+  margin-top: 3em;
   font-family:'Poppins-regular', sans-serif;
   background-color: var(--button-color);
   color: var(--common-background-color);
@@ -956,6 +958,7 @@ color: white;
   padding: 4em;
   border-radius: 2em 0em 0em 2em;
   margin-left: 3em;
+  margin-top: 3em;
 }
 
 .job-info {
