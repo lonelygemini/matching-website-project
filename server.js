@@ -377,7 +377,7 @@ app.post('/favorites/remove/:jobID', async (req, res) => {
       { $pull: { favorites: jobID } }
     );
 
-    res.json({ success: true, action: 'removed' });
+    res.redirect( '/favorites' );
   } catch (error) {
     console.error(error);
     res.send('Fout bij verwijderen uit favorieten');
