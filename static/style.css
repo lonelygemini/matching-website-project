@@ -609,6 +609,7 @@ body.dark-mode.overzicht {
 .filterpagina label {
   list-style-type: none;
   font-family:'Poppins-regular', sans-serif;
+  color: var(--text-color);
 }
 
 .dropdown {
@@ -671,7 +672,7 @@ aside form {
 aside form p {
   font-size: 1em;
   font-weight: 600;
-  color: black;
+  color: var(--text-color);
   margin-left: 2.2em;
 }
 
@@ -815,6 +816,7 @@ aside form p {
       display: flex;
       align-items: center;
       gap: 6px;
+      color: var(--text-color);
     }
     
     aside form {

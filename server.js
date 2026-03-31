@@ -12,11 +12,11 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const fetchFn = global.fetch
   ? global.fetch
   : (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args))
-const multer = require('multer');
-const path = require('path'); 
+const multer = require('multer')
+const path = require('path')
 
-const bcrypt = require('bcryptjs'); 
-const saltRounds = 10;
+const bcrypt = require('bcryptjs') 
+const saltRounds = 10
 
 // ===============================
 // Multer setup
@@ -222,15 +222,15 @@ function showForm(req, res) {
   res.render('pages/inlog')
 }
 async function verwerkForm(req, res) {
-  const db = client.db(process.env.DB_NAME_USERS);
-  const collection = db.collection(process.env.DB_COLLECTION_USERS);
+  const db = client.db(process.env.DB_NAME_USERS)
+  const collection = db.collection(process.env.DB_COLLECTION_USERS)
   
-  const emailInput = req.body.email;
-  const wachtwoordInput = req.body.wachtwoord;
+  const emailInput = req.body.email
+  const wachtwoordInput = req.body.wachtwoord
 
   try {
     // 1. Zoek de gebruiker alleen op email
-    const gebruikerGevonden = await collection.findOne({ email: emailInput });
+    const gebruikerGevonden = await collection.findOne({ email: emailInput })
 
     // 2. Als de email niet bestaat
     if (!gebruikerGevonden) {
@@ -238,7 +238,7 @@ async function verwerkForm(req, res) {
     }
 
     // 3. Vergelijk het ingevoerde wachtwoord met de hash uit de database
-    const match = await bcrypt.compare(wachtwoordInput, gebruikerGevonden.wachtwoord);
+    const match = await bcrypt.compare(wachtwoordInput, gebruikerGevonden.wachtwoord)
 
     if (match) {
       // Wachtwoord klopt!
@@ -246,11 +246,11 @@ async function verwerkForm(req, res) {
         _id: gebruikerGevonden._id, 
         email: gebruikerGevonden.email,
         profielfoto: gebruikerGevonden.profielfoto
-      };
-      return res.redirect('/overzicht');
+      }
+      return res.redirect('/overzicht')
     } else {
       // Wachtwoord klopt niet
-      return res.render('pages/inlog', { error: 'E-mail of wachtwoord onjuist' });
+      return res.render('pages/inlog', { error: 'E-mail of wachtwoord onjuist' })
     }
 
   } catch (error) {
@@ -289,7 +289,7 @@ app.post('/nieuweregistratie', upload.single('profielfoto'), async (req, res) =>
 
   try {
     // HASHTAG TIJD: Hash het wachtwoord voordat we de user maken
-    const hashedPassword = await bcrypt.hash(req.body.wachtwoord, saltRounds);
+    const hashedPassword = await bcrypt.hash(req.body.wachtwoord, saltRounds)
 
     const nieuwUser = {
       name: req.body.name,
@@ -300,9 +300,9 @@ app.post('/nieuweregistratie', upload.single('profielfoto'), async (req, res) =>
       wachtwoord: hashedPassword, // Sla de hash op, niet het tekstwachtwoord!
       profielfoto: fotoPad,
       favorites: []
-    };
+    }
 
-    const result = await collection.insertOne(nieuwUser);
+    const result = await collection.insertOne(nieuwUser)
     
     req.session.user = { 
       _id: result.insertedId, 
@@ -311,10 +311,10 @@ app.post('/nieuweregistratie', upload.single('profielfoto'), async (req, res) =>
       profielfoto: nieuwUser.profielfoto
     }
 
-    res.redirect('/overzicht');
+    res.redirect('/overzicht')
   } catch (err) {
-    console.error(err);
-    res.send("Er ging iets mis met de registratie.");
+    console.error(err)
+    res.send('Er ging iets mis met de registratie.')
   }
 })
 
@@ -376,7 +376,7 @@ app.post('/favorites/remove/:jobID', async (req, res) => {
       { $pull: { favorites: jobID } }
     )
 
-    res.redirect( '/favorites' );
+    res.redirect( '/favorites' )
   } catch (error) {
     console.error(error)
     res.send('Fout bij verwijderen uit favorieten')
