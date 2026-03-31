@@ -32,8 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('h1, h2, p').forEach((el) => {
     observer.observe(el)
   })
-}
-
+})
 
 const toggle = document.getElementById('darkToggle')
 
