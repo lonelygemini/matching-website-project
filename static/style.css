@@ -1782,3 +1782,40 @@ dialog {
 
 }
 }
+
+
+/******************************/
+/*       404 NOT FOUND          */
+/******************************/
+
+
+.error {
+  font-family: Arial;
+  text-align: center;
+  background-color: #ffffff;
+  margin-top: 7em;
+}
+
+.error h1 {
+  font-size: 4em;
+  color: var(--blue-text-color);
+}
+
+.error p {
+  font-size: 1.25em;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+}
+
+.error a {
+  display: inline-block; 
+  text-decoration: none;
+  color: #3498db;
+  margin-top: 1.5em;
+}
+
+.error img {
+  width: 10em;
+  height: 9em;
+
+}
