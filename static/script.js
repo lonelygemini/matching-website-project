@@ -49,12 +49,7 @@ if (toggle) {
     }
   });
 }
-function toggleSidebar() {
-  const layout = document.getElementById("mainLayout");
-  layout.classList.toggle("sidebar-collapsed");
-}
- 
- 
+
 
 //================================
 // Melding profielfoto
@@ -111,7 +106,7 @@ function toggleSidebar() {
           if (data.success) {
             btn.classList.toggle("active");
             btn.textContent = btn.classList.contains("active") 
-              ? "Opgeslagen aan favorieten" 
+              ? "Toegevoegd aan favorieten" 
               : "Toevoegen aan favorieten";
           }
         } catch (err) {
