@@ -376,7 +376,7 @@ app.post('/favorites/remove/:jobID', async (req, res) => {
       { $pull: { favorites: jobID } }
     )
 
-    res.json({ success: true, action: 'removed' })
+    res.redirect( '/favorites' );
   } catch (error) {
     console.error(error)
     res.send('Fout bij verwijderen uit favorieten')
@@ -529,9 +529,7 @@ app.get('/footer', (req, res) => {
 // 404 handler
 // ===============================
 app.use((req, res) => {
-  res.status(404).send(`
-    Sorry, 404 not found>
-  `)
+  res.status(404).render('partials/notfound')
 })
 // ===============================
 // Start server (MOET ONDERAAN)

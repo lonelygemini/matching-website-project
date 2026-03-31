@@ -160,6 +160,7 @@ header .slider:before {
   background-color: white;
   border-radius: 50%;
   transition: 0.3s;
+  /* hfejdnssn */
 }
 
 header input:checked + .slider {
@@ -371,7 +372,7 @@ video {
 
 .indexpage {
   margin-top: 6em;
-  margin-bottom: 10em;
+  margin-bottom: 17em;
 }
 
 .indexpage h1 {
@@ -687,152 +688,188 @@ aside form p {
 /******************************/ 
 
 #toggleBtn {
-border: 0;
-border-radius: 0.5em;
-padding: 0.6em;
-padding-left: 1em;
-padding-right: 1em;
-margin-left: 1.3em;
-background-color: var(--button-color);
-color: white;
-
-}
-
-#toggleBtn2 {
-  display: none;
-}
-
-
-/* javascript */
-
-
-.layout.sidebar-collapsed {
-  grid-template-columns: 1fr;
-  gap: 0;
-}
-
-.layout.sidebar-collapsed .job-list {
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-.layout.sidebar-collapsed aside form {
-  display: none; 
-}
-
-.layout.sidebar-collapsed aside {
-  position: relative;
-}
-
-
-
-/* zoeken */
-
-.filterpagina article input {
-  background-color: var(--blue-background-color);
-  border: none;
-  padding: 1em;
-  width: 30em;
-  border-radius: 1em;
-  max-height: 4em;
-  font-family:'Poppins', sans-serif;
-}
-
-.filterpagina article form {
-  display: flex;
-  justify-content: right;
-  align-items: flex-end;
-  gap: 0.5em;
-  padding:2em;
-}
-
-.filterpagina article li {
-  list-style: none;
-  border-bottom: 1px solid #e5e5e5;
-  padding-bottom: 1em;
-}
-
-.filterpagina article ul {
-  background-color: var(--common-background-color);
-  padding: 2em;
+  border: 0;
   border-radius: 0.5em;
-  transition: 1s ease;
-  max-width: 400px;
-  width: 100%;
-  margin-left: auto;
-  position: absolute; /* of absolute / fixed, afhankelijk van je doel */
-  z-index: 9999;
-  right:2em;
-}
-
-.filterpagina article li h2 {
-  font-size: 1.2rem; 
-  color: var(--button-color);
-  padding-top: 2em;
-}
-
-.filterpagina article li p {
-  font-size: 1rem; 
-}
-
-
-@media (max-width: 800px) {
-  .job-list {
-    display: flex;
-    flex-direction: column;
-    margin-top: 2em;
-    justify-content: center;
-    margin-left: 0;
-
-  }
-
-  .layout.sidebar-collapsed .job-cardd {
-   width: 80%;
+  padding: 0.6em;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-left: 1.3em;
+  background-color: var(--button-color);
+  color: white;
   
   }
-
-  .dropdown li {
-    flex-direction: row;
-  }
-
-
-
-  .layout {
-    display: flex;
-    flex-direction: column;
-   
-  }
-
-
-  .jobCard {
-    margin-left: 0;
-  }
-
-  .dropdown {
-    align-items: center;
-  }
-
+  
   #toggleBtn2 {
-    display: block;
-    font-family:'Poppins-regular', sans-serif;
-    background-color: var(--button-color);
-    color: var(--common-background-color);
-    border: 0; 
-    padding: 0.5em;
-    padding-left: 5em;
-    padding-right: 5em;
-    border-radius: 0.5em;
-    margin-left: 10em;
-    margin-top: 1em;
-    font-size: 0.9em;
-  }
-
-  #toggleBtn {
     display: none;
   }
+  
+  
+  /* javascript */
+  
+  
+  .layout.sidebar-collapsed {
+    grid-template-columns: 0px 1fr; 
+    gap: 4em; 
+  }
+  
+  .layout.sidebar-collapsed section.job-list {
+    grid-template-columns: 1fr 1fr 1fr;
+  
+    
+  }
+  
+  .layout.sidebar-collapsed aside form {
+    display: none; 
+  }
+  
+  .layout.sidebar-collapsed aside {
+    position: relative;
+  }
+  
+  .layout.sidebar-collapsed aside #filterBar {
+    display: none;
+  }
+  
+  
+  /* zoeken */
+  
+  .filterpagina article input {
+    background-color: var(--blue-background-color);
+    border: none;
+    padding: 1em;
+    width: 30em;
+    border-radius: 1em;
+    max-height: 4em;
+    font-family:'Poppins', sans-serif;
+  }
+  
+  .filterpagina article form {
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+    gap: 0.5em;
+    padding:2em;
+  }
+  
+  .filterpagina article li {
+    list-style: none;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 1em;
+  }
+  
+  .filterpagina article ul {
+    background-color: var(--common-background-color);
+    padding: 2em;
+    border-radius: 0.5em;
+    transition: 1s ease;
+    max-width: 400px;
+    width: 100%;
+    margin-left: auto;
+    position: absolute; /* of absolute / fixed, afhankelijk van je doel */
+    z-index: 9999;
+    right:2em;
+  }
+  
+  .filterpagina article li h2 {
+    font-size: 1.2rem; 
+    color: var(--button-color);
+    padding-top: 2em;
+  }
+  
+  .filterpagina article li p {
+    font-size: 1rem; 
+  }
+  
+  
+  
+  @media (max-width: 800px) {
+    .job-list {
+      display: flex;
+      flex-direction: column;
+      margin-top: 2em;
+      justify-content: center;
+      margin-left: 0.4em;
+      margin-right: 1.8em;
+  
+  
+    }
 
-}
 
-
+    .layout.sidebar-collapsed .job-list {
+      width: 100%;
+    }
+  
+    .layout.sidebar-collapsed .job-cardd {
+     width: 90%;
+    
+    }
+  
+    .dropdown {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* 2 kolommen */
+      gap: 10px 20px;
+      padding: 0;
+    }
+    
+    .dropdown li {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    aside form {
+      margin-right: 2em;
+    }
+  
+    .layout {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+     
+    }
+  
+    .buttonsubmit {
+      margin-left: 1em;
+      padding-right: 0.1em;
+      padding-left: 0.1em;
+    }
+  
+    .filterpagina aside form {
+      padding-right: 0.5em;
+      width: 90%;
+    }
+  
+  
+    .jobCard {
+      margin-left: 0;
+  
+    }
+  
+    .dropdown {
+      align-items: center;
+    }
+  
+    #toggleBtn2 {
+      display: block;
+      font-family:'Poppins-regular', sans-serif;
+      background-color: var(--button-color);
+      color: var(--common-background-color);
+      border: 0; 
+      padding: 0.5em;
+      padding-left: 5em;
+      padding-right: 5em;
+      border-radius: 0.5em;
+      margin-left: 8em;
+      margin-top: 1em;
+      font-size: 0.9em;
+    }
+  
+    #toggleBtn {
+      display: none;
+    }
+    
+  
+  }
 
 
 /******************************/
@@ -1744,5 +1781,44 @@ dialog {
   .footer form input {
   width: 100%;
 
+  
+
 }
+}
+
+
+/******************************/
+/*       404 NOT FOUND          */
+/******************************/
+
+
+.error {
+  font-family: Arial;
+  text-align: center;
+  background-color: #ffffff;
+  margin-top: 7em;
+}
+
+.error h1 {
+  font-size: 4em;
+  color: var(--blue-text-color);
+}
+
+.error p {
+  font-size: 1.25em;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+}
+
+.error a {
+  display: inline-block; 
+  text-decoration: none;
+  color: #3498db;
+  margin-top: 1.5em;
+}
+
+.error img {
+  width: 10em;
+  height: 9em;
+
 }
