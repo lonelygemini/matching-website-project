@@ -143,7 +143,7 @@ app.get(['/overzicht', '/filter'], async (req, res) => {
  
   // Bedrijf filter
   if (company) {
-    if (company === 'other') {
+    if (company === 'Anders') {
       // 👉 ALLES behalve de bekende 5
       query.company = { $nin: excludedCompanies }
     } else if (Array.isArray(company)) {
