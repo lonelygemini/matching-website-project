@@ -32,13 +32,11 @@
       View details
     </a>
 
-    <form action="/favorites/remove/<%= job._id %>" method="POST">
-      <button 
-        type="submit"
-        class="favorite-job-card__button favorite-job-card__button--secondary">
-        Remove favourite
-      </button>
-    </form>
+    <button 
+      class="favorite-job-card__button favorite-job-card__button--secondary favorite-remove-btn"
+      data-id="<%= job._id %>">
+      Remove favourite
+    </button>
   </div>
 
 </article>

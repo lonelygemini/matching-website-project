@@ -100,21 +100,34 @@ app.get('/kaartje', async (req, res) => {
 
   const data = await collection.find().toArray()
       
-  res.render('partials/kaartje', { data: data })
+  res.render('partials/kaartje', { 
+    data: data,
+    user: req.session.user // 👈 dit toevoegen
+  })
 })
 
 app.get(['/overzicht', '/filter'], async (req, res) => {
   const db = client.db(process.env.DB_NAME)
   const collection = db.collection(process.env.DB_COLLECTION)
-
+ 
   const search = req.query.search || ''
   const location = req.query.location
   const company = req.query.company
-  const workSchedule = req.query.work_schedule
+  const workSchedule = req.query.workSchedule
   const sort = req.query.sort
-  // Bouw query
+ 
+  // Bedrijven die NIET onder "Iets anders" vallen
+  const excludedCompanies = [
+    'careervalue',
+    'bold company',
+    'youngcapital',
+    'devoteam',
+    'avanade'
+  ]
+ 
+  // Query opbouwen
   let query = {}
-
+  // Zoekfunctie
   if (search) {
     query.$or = [
       { title: { $regex: search, $options: 'i' } },
@@ -122,45 +135,61 @@ app.get(['/overzicht', '/filter'], async (req, res) => {
       { company: { $regex: search, $options: 'i' } }
     ]
   }
-
+ 
+  // Locatie filter
   if (location && location !== 'alles') {
     query.locations = { $regex: location, $options: 'i' }
   }
-
+ 
+  // Bedrijf filter
   if (company) {
-    if (Array.isArray(company)) {
+    if (company === 'other') {
+      // 👉 ALLES behalve de bekende 5
+      query.company = { $nin: excludedCompanies }
+    } else if (Array.isArray(company)) {
       query.company = { $in: company }
     } else {
       query.company = company
     }
   }
-
+ 
+  // Werkschema
   if (workSchedule) {
     query.workSchedule = workSchedule
   }
-
-  // Pipeline voor sort
+ 
+  // Aggregation pipeline
   const pipeline = [
     { $match: query },
     { $addFields: { dateObj: { $toDate: '$date' } } }
   ]
-
-  if (sort === 'newest') pipeline.push({ $sort: { dateObj: -1 } })
-  if (sort === 'oldest') pipeline.push({ $sort: { dateObj: 1 } })
-
+ 
+  // Sorteren
+  if (sort === 'newest') {
+    pipeline.push({ $sort: { dateObj: -1 } })
+  }
+ 
+  if (sort === 'oldest') {
+    pipeline.push({ $sort: { dateObj: 1 } })
+  }
+ 
+  // Data ophalen
   const jobs = await collection.aggregate(pipeline).toArray()
-
-  // 5 willekeurige jobs (optioneel)
-  const randomJobs = await collection.aggregate([{ $sample: { size: 5 } }]).toArray()
-
-  // Kies view
+ 
+  // Random jobs
+  const randomJobs = await collection.aggregate([
+    { $sample: { size: 5 } }
+  ]).toArray()
+ 
+  // View bepalen
   const viewName = req.path === '/filter' ? 'pages/filter' : 'pages/overzicht'
-
+ 
+  // Renderen
   res.render(viewName, {
     jobs,
-    search: req.query.search || '',
+    search,
     randomJobs,
-    filters: req.query, // hier kan je alles van search/sort doorgeven
+    filters: req.query,
   })
 })
 
@@ -335,13 +364,16 @@ app.get('/detail/:jobID', (req, res) => {
 // Favourites
 // ===============================
 
+// ========================================
+// ❤️ FAVORIET TOEVOEGEN
+// ========================================
 app.post('/favorites/add/:jobID', async (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ success: false })
+  }
+
   const db = client.db(process.env.DB_NAME_USERS)
   const collection = db.collection(process.env.DB_COLLECTION_USERS)
-
-  if (!req.session.user) {
-    return res.redirect('/inlog')
-  }
 
   const userId = req.session.user._id
   const jobID = req.params.jobID
@@ -355,9 +387,11 @@ app.post('/favorites/add/:jobID', async (req, res) => {
     res.json({ success: true, action: 'added' })
   } catch (error) {
     console.error(error)
-    res.send('Fout bij toevoegen aan favorieten')
+    res.status(500).json({ success: false })
   }
 })
+
+
 
 app.post('/favorites/remove/:jobID', async (req, res) => {
   const db = client.db(process.env.DB_NAME_USERS)
@@ -376,7 +410,7 @@ app.post('/favorites/remove/:jobID', async (req, res) => {
       { $pull: { favorites: jobID } }
     )
 
-    res.redirect( '/favorites' )
+    res.json({ success: true, action: 'deleted' })
   } catch (error) {
     console.error(error)
     res.send('Fout bij verwijderen uit favorieten')

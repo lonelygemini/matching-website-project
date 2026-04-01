@@ -650,13 +650,18 @@ aside form {
   gap: 2em;
 }
 
-
+.job-list > p {
+  font-weight: bold;
+  width: 400%;
+  font-size: 1.5em;
+  text-align: center;
+  margin-top: 8em;
+  margin-left: 3em;
+}
 
 .filterpagina {
   background-color: var(--common-background-color);
-
 }
-
 
 
 .filterpagina aside form {
@@ -766,7 +771,7 @@ aside form p {
     max-width: 400px;
     width: 100%;
     margin-left: auto;
-    position: absolute; /* of absolute / fixed, afhankelijk van je doel */
+    position: absolute; 
     z-index: 9999;
     right:2em;
   }
