@@ -609,6 +609,7 @@ body.dark-mode.overzicht {
 .filterpagina label {
   list-style-type: none;
   font-family:'Poppins-regular', sans-serif;
+  color: var(--text-color);
 }
 
 .dropdown {
@@ -649,13 +650,18 @@ aside form {
   gap: 2em;
 }
 
-
+.job-list > p {
+  font-weight: bold;
+  width: 400%;
+  font-size: 1.5em;
+  text-align: center;
+  margin-top: 8em;
+  margin-left: 3em;
+}
 
 .filterpagina {
   background-color: var(--common-background-color);
-
 }
-
 
 
 .filterpagina aside form {
@@ -671,7 +677,7 @@ aside form {
 aside form p {
   font-size: 1em;
   font-weight: 600;
-  color: black;
+  color: var(--text-color);
   margin-left: 2.2em;
 }
 
@@ -710,11 +716,11 @@ aside form p {
   .layout.sidebar-collapsed {
     grid-template-columns: 0px 1fr; 
     gap: 4em; 
+    margin-right: 3em;
   }
   
   .layout.sidebar-collapsed section.job-list {
     grid-template-columns: 1fr 1fr 1fr;
-  
     
   }
   
@@ -765,7 +771,7 @@ aside form p {
     max-width: 400px;
     width: 100%;
     margin-left: auto;
-    position: absolute; /* of absolute / fixed, afhankelijk van je doel */
+    position: absolute; 
     z-index: 9999;
     right:2em;
   }
@@ -815,6 +821,7 @@ aside form p {
       display: flex;
       align-items: center;
       gap: 6px;
+      color: var(--text-color);
     }
     
     aside form {
@@ -887,7 +894,7 @@ aside form p {
   margin: 0.8em;
   padding: 2em;
   border-radius: 1em;
-  width: 100%;
+  width: auto;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

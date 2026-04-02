@@ -12,11 +12,11 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const fetchFn = global.fetch
   ? global.fetch
   : (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args))
-const multer = require('multer');
-const path = require('path'); 
+const multer = require('multer')
+const path = require('path')
 
-const bcrypt = require('bcryptjs'); 
-const saltRounds = 10;
+const bcrypt = require('bcryptjs') 
+const saltRounds = 10
 
 // ===============================
 // Multer setup
@@ -100,21 +100,35 @@ app.get('/kaartje', async (req, res) => {
 
   const data = await collection.find().toArray()
       
-  res.render('partials/kaartje', { data: data })
+  res.render('partials/kaartje', { 
+    data: data,
+    user: req.session.user // 👈 dit toevoegen
+  })
 })
 
 app.get(['/overzicht', '/filter'], async (req, res) => {
   const db = client.db(process.env.DB_NAME)
   const collection = db.collection(process.env.DB_COLLECTION)
-
+ 
   const search = req.query.search || ''
   const location = req.query.location
   const company = req.query.company
   const workSchedule = req.query.work_schedule
   const sort = req.query.sort
-  // Bouw query
+ 
+  // Bedrijven die NIET onder "Iets anders" vallen
+  const excludedCompanies = [
+    'CareerValue',
+    'BOLD Company',
+    'YoungCapital',
+    'Devoteam',
+    'Avanade'
+  ]
+ 
+  // Query opbouwen
   let query = {}
-
+ 
+  //  Zoekfunctie
   if (search) {
     query.$or = [
       { title: { $regex: search, $options: 'i' } },
@@ -122,45 +136,61 @@ app.get(['/overzicht', '/filter'], async (req, res) => {
       { company: { $regex: search, $options: 'i' } }
     ]
   }
-
+ 
+  // Locatie filter
   if (location && location !== 'alles') {
     query.locations = { $regex: location, $options: 'i' }
   }
-
+ 
+  // Bedrijf filter
   if (company) {
-    if (Array.isArray(company)) {
+    if (company === 'other') {
+      // 👉 ALLES behalve de bekende 5
+      query.company = { $nin: excludedCompanies }
+    } else if (Array.isArray(company)) {
       query.company = { $in: company }
     } else {
       query.company = company
     }
   }
 
+  // Werkschema
   if (workSchedule) {
     query.workSchedule = workSchedule
   }
-
-  // Pipeline voor sort
+ 
+  // Aggregation pipeline
   const pipeline = [
     { $match: query },
     { $addFields: { dateObj: { $toDate: '$date' } } }
   ]
-
-  if (sort === 'newest') pipeline.push({ $sort: { dateObj: -1 } })
-  if (sort === 'oldest') pipeline.push({ $sort: { dateObj: 1 } })
-
+ 
+  // Sorteren
+  if (sort === 'newest') {
+    pipeline.push({ $sort: { dateObj: -1 } })
+  }
+ 
+  if (sort === 'oldest') {
+    pipeline.push({ $sort: { dateObj: 1 } })
+  }
+ 
+  // Data ophalen
   const jobs = await collection.aggregate(pipeline).toArray()
-
-  // 5 willekeurige jobs (optioneel)
-  const randomJobs = await collection.aggregate([{ $sample: { size: 5 } }]).toArray()
-
-  // Kies view
+ 
+  // Optioneel: random jobs
+  const randomJobs = await collection.aggregate([
+    { $sample: { size: 5 } }
+  ]).toArray()
+ 
+  // View bepalen
   const viewName = req.path === '/filter' ? 'pages/filter' : 'pages/overzicht'
-
+ 
+  // Renderen
   res.render(viewName, {
     jobs,
-    search: req.query.search || '',
+    search,
     randomJobs,
-    filters: req.query, // hier kan je alles van search/sort doorgeven
+    filters: req.query,
   })
 })
 
@@ -222,15 +252,15 @@ function showForm(req, res) {
   res.render('pages/inlog')
 }
 async function verwerkForm(req, res) {
-  const db = client.db(process.env.DB_NAME_USERS);
-  const collection = db.collection(process.env.DB_COLLECTION_USERS);
+  const db = client.db(process.env.DB_NAME_USERS)
+  const collection = db.collection(process.env.DB_COLLECTION_USERS)
   
-  const emailInput = req.body.email;
-  const wachtwoordInput = req.body.wachtwoord;
+  const emailInput = req.body.email
+  const wachtwoordInput = req.body.wachtwoord
 
   try {
     // 1. Zoek de gebruiker alleen op email
-    const gebruikerGevonden = await collection.findOne({ email: emailInput });
+    const gebruikerGevonden = await collection.findOne({ email: emailInput })
 
     // 2. Als de email niet bestaat
     if (!gebruikerGevonden) {
@@ -238,7 +268,7 @@ async function verwerkForm(req, res) {
     }
 
     // 3. Vergelijk het ingevoerde wachtwoord met de hash uit de database
-    const match = await bcrypt.compare(wachtwoordInput, gebruikerGevonden.wachtwoord);
+    const match = await bcrypt.compare(wachtwoordInput, gebruikerGevonden.wachtwoord)
 
     if (match) {
       // Wachtwoord klopt!
@@ -246,11 +276,11 @@ async function verwerkForm(req, res) {
         _id: gebruikerGevonden._id, 
         email: gebruikerGevonden.email,
         profielfoto: gebruikerGevonden.profielfoto
-      };
-      return res.redirect('/overzicht');
+      }
+      return res.redirect('/overzicht')
     } else {
       // Wachtwoord klopt niet
-      return res.render('pages/inlog', { error: 'E-mail of wachtwoord onjuist' });
+      return res.render('pages/inlog', { error: 'E-mail of wachtwoord onjuist' })
     }
 
   } catch (error) {
@@ -289,7 +319,7 @@ app.post('/nieuweregistratie', upload.single('profielfoto'), async (req, res) =>
 
   try {
     // HASHTAG TIJD: Hash het wachtwoord voordat we de user maken
-    const hashedPassword = await bcrypt.hash(req.body.wachtwoord, saltRounds);
+    const hashedPassword = await bcrypt.hash(req.body.wachtwoord, saltRounds)
 
     const nieuwUser = {
       name: req.body.name,
@@ -300,9 +330,9 @@ app.post('/nieuweregistratie', upload.single('profielfoto'), async (req, res) =>
       wachtwoord: hashedPassword, // Sla de hash op, niet het tekstwachtwoord!
       profielfoto: fotoPad,
       favorites: []
-    };
+    }
 
-    const result = await collection.insertOne(nieuwUser);
+    const result = await collection.insertOne(nieuwUser)
     
     req.session.user = { 
       _id: result.insertedId, 
@@ -311,10 +341,10 @@ app.post('/nieuweregistratie', upload.single('profielfoto'), async (req, res) =>
       profielfoto: nieuwUser.profielfoto
     }
 
-    res.redirect('/overzicht');
+    res.redirect('/overzicht')
   } catch (err) {
-    console.error(err);
-    res.send("Er ging iets mis met de registratie.");
+    console.error(err)
+    res.send('Er ging iets mis met de registratie.')
   }
 })
 
@@ -335,13 +365,16 @@ app.get('/detail/:jobID', (req, res) => {
 // Favourites
 // ===============================
 
+// ========================================
+// FAVORIET TOEVOEGEN
+// ========================================
 app.post('/favorites/add/:jobID', async (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ success: false })
+  }
+
   const db = client.db(process.env.DB_NAME_USERS)
   const collection = db.collection(process.env.DB_COLLECTION_USERS)
-
-  if (!req.session.user) {
-    return res.redirect('/inlog')
-  }
 
   const userId = req.session.user._id
   const jobID = req.params.jobID
@@ -355,9 +388,11 @@ app.post('/favorites/add/:jobID', async (req, res) => {
     res.json({ success: true, action: 'added' })
   } catch (error) {
     console.error(error)
-    res.send('Fout bij toevoegen aan favorieten')
+    res.status(500).json({ success: false })
   }
 })
+
+
 
 app.post('/favorites/remove/:jobID', async (req, res) => {
   const db = client.db(process.env.DB_NAME_USERS)
@@ -376,7 +411,7 @@ app.post('/favorites/remove/:jobID', async (req, res) => {
       { $pull: { favorites: jobID } }
     )
 
-    res.redirect( '/favorites' );
+    res.json({ success: true, action: 'deleted' })
   } catch (error) {
     console.error(error)
     res.send('Fout bij verwijderen uit favorieten')

@@ -27,15 +27,21 @@
       </p>
     </div>
 
-<div class="jobCard-actions">
-  <a href="/detail/<%= job._id %>" class="button-primary">Bekijk details</a>
+  <div class="jobCard-actions">
+    <a href="/detail/<%= job._id %>" class="button-primary">Bekijk details</a>
 
-  <button 
-    class="button-primary favorite-btn" 
-    data-id="<%= job._id %>">
-    Toevoegen aan favorieten
-  </button>
-</div>
+    <% if (user) { %>
+      <button 
+        class="button-primary favorite-btn" 
+        data-id="<%= job._id %>">
+        Toevoegen aan favorieten
+      </button>
+    <% } else { %>
+      <a href="/inlog" class="button-primary">
+        Log in om favoriet toe te voegen
+      </a>
+    <% } %>
+  </div>
   </section>
 
   
