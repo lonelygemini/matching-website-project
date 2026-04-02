@@ -365,7 +365,7 @@ app.get('/detail/:jobID', (req, res) => {
 // ===============================
 
 // ========================================
-// ❤️ FAVORIET TOEVOEGEN
+// FAVORIET TOEVOEGEN
 // ========================================
 app.post('/favorites/add/:jobID', async (req, res) => {
   if (!req.session.user) {
