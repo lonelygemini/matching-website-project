@@ -113,21 +113,22 @@ app.get(['/overzicht', '/filter'], async (req, res) => {
   const search = req.query.search || ''
   const location = req.query.location
   const company = req.query.company
-  const workSchedule = req.query.workSchedule
+  const workSchedule = req.query.work_schedule
   const sort = req.query.sort
  
   // Bedrijven die NIET onder "Iets anders" vallen
   const excludedCompanies = [
-    'careervalue',
-    'bold company',
-    'youngcapital',
-    'devoteam',
-    'avanade'
+    'CareerValue',
+    'BOLD Company',
+    'YoungCapital',
+    'Devoteam',
+    'Avanade'
   ]
  
   // Query opbouwen
   let query = {}
-  // Zoekfunctie
+ 
+  //  Zoekfunctie
   if (search) {
     query.$or = [
       { title: { $regex: search, $options: 'i' } },
@@ -143,7 +144,7 @@ app.get(['/overzicht', '/filter'], async (req, res) => {
  
   // Bedrijf filter
   if (company) {
-    if (company === 'Anders') {
+    if (company === 'other') {
       // 👉 ALLES behalve de bekende 5
       query.company = { $nin: excludedCompanies }
     } else if (Array.isArray(company)) {
@@ -152,7 +153,7 @@ app.get(['/overzicht', '/filter'], async (req, res) => {
       query.company = company
     }
   }
- 
+
   // Werkschema
   if (workSchedule) {
     query.workSchedule = workSchedule
@@ -176,7 +177,7 @@ app.get(['/overzicht', '/filter'], async (req, res) => {
   // Data ophalen
   const jobs = await collection.aggregate(pipeline).toArray()
  
-  // Random jobs
+  // Optioneel: random jobs
   const randomJobs = await collection.aggregate([
     { $sample: { size: 5 } }
   ]).toArray()
