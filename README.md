@@ -9,7 +9,41 @@ Voor dit project hebben we vacatures voor developers als thema gekozen. De websi
 
 
 ## Issues/ TO-DO's
-
+1. Issue
+We maken op dit moment gebruik van twee databases. Dit is natuurlijk niet de bedoeling.
+ 
+To do
+Alleen de database jobs gebruiken en dan een mapje users toevoegen. Dit moet dan uiteraard ook in de code aangepast worden.
+ 
+2. Issue
+Op de edit-pagina kan je je wachtwoord nog veranderen.
+ 
+To do
+Een aparte pagina maken voor het wijzigen van je wachtwoord en hier nog een extra beveiliging op zetten, zodat dit niet zomaar kan gebeuren. Eerst het oude wachtwoord vragen en dan pas je nieuwe kunnen maken of eerst een e-mail sturen ter controle.
+ 
+3. Issue
+De dark/light mode werkt nog niet naar behoren. Als je switch van pagina’s dan verdwijnt de dark mode.
+ 
+To do
+Ervoor zorgen dat als je dark mode hebt aanstaan hij aan blijft.
+ 
+4. Issue
+Bij het registratieformulier kan je een profielfoto toevoegen aan je account. Als je deze hebt toegevoegd krijg je een melding, maar krijg je je profielfoto nog niet te zien in het registratieformulier.
+ 
+To do
+Ervoor zorgen dat je je profielfoto na het selecteren gelijk ook in het registratieformulier te zien krijgt.
+ 
+5. Issue
+Code kan schoner
+ 
+To do
+Controleren op classes en CSS styling. We hebben gebruik gemaakt van heel veel classes en denken dat dit zeker minder kan. Controleer ook op dubbele CSS, vooral bij aanroeping van font-family en font-size.
+ 
+6. Issue
+We hebben weinig security… We gebruiken tot nu toe allen bycrypt en hash, maar dit kan natuurlijk uitgebreider.
+ 
+To do
+Meer security toevoegen, zoals rate limiting en account lockout.
 
 ## Features
 Op de Jobconnect website kun je: 
@@ -57,38 +91,43 @@ Open http://localhost:1500 in je browser.
 ## Projectstructuur
 matching-website-project/
 │
-├── node_modules/
+├── node_modules/ # Alle externe bibliotheken die npm installeert (Express, EJS, etc.).
 │
-├── static/
-│ ├── image/
-│ └── style.css
+├── static/ # Bestanden die direct naar de browser worden gestuurd (geen bewerking nodig).
+│   ├── images/ # Algemene afbeeldingen voor de website.
+│   ├── logo-variants/ # Verschillende versies en formaten van je logo's.
+│   ├── video/ # Videobestanden voor de site.
+│   ├── script.js/ # Client-side JavaScript (bijv. voor animaties of formulier-checks).
+│   └── style.css # De centrale stylesheet voor de vormgeving van je hele site.
 │
-├── views/
-│ ├── pages/
-│ │ ├── detail.ejs
-│ │ ├── favorites.ejs
-│ │ ├── filter.ejs
-│ │ ├── index.ejs
-│ │ ├── inlog.ejs
-│ │ ├── overzicht.ejs
-│ │ ├── registratie.ejs
-│ │ └── submitted.ejs
-│ │
-│ └── partials/
-│ ├── bookmark-card.ejs
-│ ├── footer.ejs
-│ ├── header.ejs
-│ └── kaartje.ejs
+├── views/ # De "gezichten" van je website (EJS templates).
+│   ├── pages/ # De volledige pagina's die een eigen URL hebben.
+│   │   ├── detail.ejs # Specifieke informatiepagina van één item/persoon.
+│   │   ├── editprofiel.ejs # Formulier om een bestaand profiel aan te passen.
+│   │   ├── favorites.ejs # Overzicht van de door de gebruiker bewaarde items.
+│   │   ├── filter.ejs # Zoek- en filterinterface.
+│   │   ├── index.ejs # De homepage (vaak de eerste pagina die je ziet).
+│   │   ├── inlog.ejs # Het inlogscherm.
+│   │   ├── overzicht.ejs # De verzamelpagina met alle matches/items.
+│   │   ├── profiel.ejs # De persoonlijke profielpagina.
+│   │   └── registratie.ejs # Pagina om een nieuw account aan te maken.
+│   │
+│   └── partials/ # Herbruikbare brokken code die je in de pages plakt.
+│       ├── bookmark-card.ejs # Specifiek kaartje voor op de favorietenpagina.
+│       ├── footer.ejs # De onderkant van de website (copyright, links).
+│       ├── header.ejs # De bovenkant (navigatie, logo).
+│       ├── kaartje.ejs # De standaard preview-kaart voor in het overzicht.
+│       └── notfound.ejs # De 404-foutmelding pagina.
 │
-├── .env
-├── .gitattributes
-├── .gitignore
-├── .eslint.config.mjs
-├── .eslintignore
-├── package-lock.json
-├── package.json
-├── README.md
-└── server.js
+├── .env # Geheime variabelen (zoals database wachtwoorden).
+├── .eslint.config.mjs # Regels voor de code-kwaliteit (linter).
+├── .eslintignore # Bestanden die de linter moet overslaan.
+├── .gitattributes # Instellingen voor hoe Git met bepaalde bestanden omgaat.
+├── .gitignore # Vertelt Git welke bestanden NIET geüpload moeten worden (zoals node_modules).
+├── package-lock.json # Exacte versies van dependencies voor consistentie.
+├── package.json # De "inhoudsopgave" van je project met scripts en versies.
+├── README.md # Uitleg over het project voor andere developers.
+└── server.js # De hoofdmotor van je app; regelt de routes en start de server.
 
 ## Mappen uitleg
 - **static/** → CSS en afbeeldingen  
@@ -117,7 +156,11 @@ Alle pull requests worden eerst door een ander teamlid beoordeeld voordat ze wor
 Door bij te dragen aan dit project ga je ermee akkoord dat jouw bijdragen vallen onder de MIT License. 
 
 ## Code of Conduct
-/hoe wij communiceren/ 
+- Wij maken de website in het Nederlands
+- Als iemand een code van iemand anders heeft aangepast, dan melden we dit gelijk om conflicten te voorkomen.
+- We kunnen pas een pull request sturen als iemand naar de code gekeken heeft.
+- We geven elkaar tips als de code beter kan.
+- We helpen elkaar bij merge conflicts.
 
 ## License
 MIT License © 2026 Team 4

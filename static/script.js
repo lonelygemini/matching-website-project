@@ -160,5 +160,7 @@ function toggleSidebar() {
   }
   document.addEventListener('DOMContentLoaded', initFavoriteRemoveCards)
 }
+
+
  
  
