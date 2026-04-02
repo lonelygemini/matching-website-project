@@ -462,6 +462,7 @@ body.dark-mode.overzicht {
   font-family:'Poppins', sans-serif;
 }
 
+
 .overzicht form {
   display: flex;
   justify-content: center;
@@ -812,7 +813,7 @@ aside form p {
   
     .dropdown {
       display: grid;
-      grid-template-columns: repeat(2, 1fr); /* 2 kolommen */
+      grid-template-columns: repeat(2, 1fr); 
       gap: 10px 20px;
       padding: 0;
     }
@@ -874,7 +875,6 @@ aside form p {
     #toggleBtn {
       display: none;
     }
-    
   
   }
 
@@ -894,7 +894,7 @@ aside form p {
   margin: 0.8em;
   padding: 2em;
   border-radius: 1em;
-  width: auto;
+  width: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -902,7 +902,7 @@ aside form p {
 
 .card-header {
   display: grid;
-  grid-template-columns: 7fr 3fr; /* Links pakt alle ruimte, Rechts pakt wat nodig is */
+  grid-template-columns: 7fr 3fr; 
   align-items: start;
   gap: 0.5em;
   width: 100%;
@@ -1330,6 +1330,24 @@ aside form p {
 
   .formulier form input[type="submit"], form button {
     width: 100%;
+  }
+
+  .jobCard-actions {
+    display: block;
+  }
+
+  .jobCard-actions button.button-primary {
+    margin-top: 2em;
+  }
+
+  .filterpagina article ul {
+    width: auto;
+  }
+
+  .overzicht ul {
+    right: 0;
+    left: 0;
+    max-width: 250px;
   }
 }
 

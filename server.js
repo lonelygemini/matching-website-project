@@ -102,7 +102,7 @@ app.get('/kaartje', async (req, res) => {
       
   res.render('partials/kaartje', { 
     data: data,
-    user: req.session.user // 👈 dit toevoegen
+    user: req.session.user // 
   })
 })
 
@@ -145,7 +145,6 @@ app.get(['/overzicht', '/filter'], async (req, res) => {
   // Bedrijf filter
   if (company) {
     if (company === 'other') {
-      // 👉 ALLES behalve de bekende 5
       query.company = { $nin: excludedCompanies }
     } else if (Array.isArray(company)) {
       query.company = { $in: company }
@@ -159,7 +158,6 @@ app.get(['/overzicht', '/filter'], async (req, res) => {
     query.workSchedule = workSchedule
   }
  
-  // Aggregation pipeline
   const pipeline = [
     { $match: query },
     { $addFields: { dateObj: { $toDate: '$date' } } }
@@ -177,7 +175,7 @@ app.get(['/overzicht', '/filter'], async (req, res) => {
   // Data ophalen
   const jobs = await collection.aggregate(pipeline).toArray()
  
-  // Optioneel: random jobs
+
   const randomJobs = await collection.aggregate([
     { $sample: { size: 5 } }
   ]).toArray()
